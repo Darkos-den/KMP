@@ -69,7 +69,10 @@ fun DataHomeScreen(
         }
 
         items.forEach {
-            Text(text = it.data)
+            Text(
+                text = it.data,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
         }
     }
 }
