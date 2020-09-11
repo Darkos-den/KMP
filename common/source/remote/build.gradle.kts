@@ -4,6 +4,8 @@ import com.darkos.depend.implementation
 val commonDependencyList = listOf(
     implementation(Libs.Ktor.CORE),
     implementation(Libs.Ktor.LOGGING),
+    implementation(Libs.Ktor.JSON),
+    implementation(Libs.Ktor.SERIALIZATION),
     implementation(Libs.Coroutines.COMMON),
     implementation(Libs.Serialization.CORE),
     implementation(Libs.Serialization.PROTOBUF),
@@ -13,6 +15,8 @@ val commonDependencyList = listOf(
 val androidDependencyList = listOf(
     implementation(Libs.Ktor.ANDROID),
     implementation(Libs.Ktor.LOGGING_JVM),
+    implementation(Libs.Ktor.JSON_JVM),
+    implementation(Libs.Ktor.SERIALIZATION_JVM),
     implementation(Libs.Coroutines.ANDROID),
     implementation(Libs.Serialization.CORE)
 )

@@ -30,5 +30,5 @@ compileKotlin.kotlinOptions {
 dependencies {
     implementation("com.android.tools.build:gradle:${gradleVersion}")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-    api("com.github.Darkos-den:depend:1.0.4")
+    api("com.github.Darkos-den:depend:1.0.8")
 }

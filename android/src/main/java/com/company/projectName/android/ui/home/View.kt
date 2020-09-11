@@ -27,7 +27,7 @@ fun HomeScreen(
                     EmptyHomeScreen(reloadClick)
                 }
                 is HomeState.Data -> {
-                    DataHomeScreen(state.list)
+                    DataHomeScreen(state.list, reloadClick)
                 }
                 is HomeState.Initial -> {
                     InitialHomeScreen()
@@ -59,8 +59,19 @@ fun EmptyHomeScreen(reloadClick: ()->Unit) {
 }
 
 @Composable
-fun DataHomeScreen(items: List<SampleModel>) {
-    TODO()
+fun DataHomeScreen(
+    items: List<SampleModel>,
+    reloadClick: () -> Unit
+) {
+    Column {
+        Button(onClick = reloadClick) {
+            Text(text = "reload")
+        }
+
+        items.forEach {
+            Text(text = it.data)
+        }
+    }
 }
 
 @Composable
