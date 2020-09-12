@@ -21,7 +21,8 @@ object DomainModule {
                     navigator = instance()
                 ),
                 authEffectHandler = AuthEffectHandler(
-                    remote = instance()
+                    remote = instance(),
+                    secure = instance()
                 ),
                 sampleEffectHandler = SampleEffectHandler(
                     remote = instance()

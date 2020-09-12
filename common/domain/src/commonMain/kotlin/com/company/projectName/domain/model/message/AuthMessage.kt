@@ -3,12 +3,21 @@ package com.company.projectName.domain.model.message
 import com.darkos.mvu.models.Message
 
 sealed class AuthMessage : Message() {
-    object LoginValidationSuccess : AuthMessage()
-    class LoginValidationError(
-        val emailError: String?,
-        val passwordError: String?
-    ) : AuthMessage()
+    sealed class LoginValidation: AuthMessage(){
+        object Success : LoginValidation()
+        class Error(
+            val emailError: String?,
+            val passwordError: String?
+        ) : LoginValidation()
+    }
 
-    object LoginSuccess: AuthMessage()
-    class LoginError(val message: String): AuthMessage()
+    sealed class Login: AuthMessage(){
+        object Success: Login()
+        class Error(val message: String): Login()
+    }
+
+    sealed class CheckUser: AuthMessage(){
+        object Found: CheckUser()
+        object NotFound: CheckUser()
+    }
 }

@@ -27,5 +27,6 @@ allprojects {
         maven(url = "https://dl.bintray.com/kotlin/ktor")
         maven(url = "https://dl.bintray.com/kotlin/kotlinx")
         maven(url = "https://dl.bintray.com/aakira/maven")
+        maven(url = "https://dl.bintray.com/netguru/maven")
     }
 }

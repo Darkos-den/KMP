@@ -1,4 +1,4 @@
-package com.company.projectName.entity.source
+package com.company.projectName.entity.source.remote
 
 import com.company.projectName.entity.models.SampleModel
 import com.company.projectName.entity.models.common.RemoteResult

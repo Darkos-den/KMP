@@ -2,7 +2,6 @@ import com.darkos.depend.applyDependencies
 import com.darkos.depend.implementation
 
 val commonDependencyList = listOf(
-    implementation(Libs.Ktor.CORE),
     implementation(Libs.Coroutines.COMMON),
     implementation(Libs.Serialization.CORE),
     implementation(Libs.Serialization.PROTOBUF),
@@ -10,7 +9,6 @@ val commonDependencyList = listOf(
 )
 
 val androidDependencyList = listOf(
-    implementation(Libs.Ktor.ANDROID),
     implementation(Libs.Coroutines.ANDROID),
     implementation(Libs.Serialization.CORE)
 )
@@ -42,6 +40,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
                 implementation("com.darkos:mvu:1.0.0")
+                implementation("com.netguru.kissme:common:0.2.5")
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
@@ -53,6 +52,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkos:mvu-jvm:1.0.0")
+                implementation("com.netguru.kissme:android:0.2.5")
 
                 implementation(project(":common:entity"))
             }

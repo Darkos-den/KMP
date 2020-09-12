@@ -5,11 +5,13 @@ import com.company.projectName.android.AppMessageProcessor
 import com.company.projectName.android.AppNavigator
 import com.company.projectName.domain.common.MessageProcessor
 import com.company.projectName.domain.common.Navigator
+import com.company.projectName.domain.common.SecureStorage
 import com.company.projectName.domain.di.DomainModule
 import com.company.projectName.domain.repository.AuthRepository
 import com.company.projectName.domain.repository.SampleRepository
-import com.company.projectName.entity.source.IAuthRemoteRepository
-import com.company.projectName.entity.source.ISampleRemoteRepository
+import com.company.projectName.entity.source.remote.IAuthRemoteRepository
+import com.company.projectName.entity.source.remote.ISampleRemoteRepository
+import com.company.projectName.entity.source.secure.ISecureStorage
 import com.darkos.core.presentation.di.PresentationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
@@ -24,6 +26,7 @@ object AppModule {
         bind<MessageProcessor>() with singleton { AppMessageProcessor() }
         bind<IAuthRemoteRepository>() with provider { AuthRepository() }
         bind<ISampleRemoteRepository>() with provider { SampleRepository() }
+        bind<ISecureStorage>() with provider { SecureStorage() }
 
         import(PresentationModule.get())
         import(DomainModule.get())

@@ -2,7 +2,7 @@ package com.company.projectName.domain.repository
 
 import com.company.projectName.domain.repository.base.BaseRepository
 import com.company.projectName.entity.models.common.RemoteResult
-import com.company.projectName.entity.source.IAuthRemoteRepository
+import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import io.ktor.client.request.*
 
 class AuthRepository : BaseRepository(), IAuthRemoteRepository {

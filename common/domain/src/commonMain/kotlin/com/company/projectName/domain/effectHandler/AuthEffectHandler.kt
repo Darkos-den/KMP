@@ -3,13 +3,15 @@ package com.company.projectName.domain.effectHandler
 import com.company.projectName.domain.model.effect.AuthEffect
 import com.company.projectName.domain.model.message.AuthMessage
 import com.company.projectName.entity.models.common.RemoteResult
-import com.company.projectName.entity.source.IAuthRemoteRepository
+import com.company.projectName.entity.source.remote.IAuthRemoteRepository
+import com.company.projectName.entity.source.secure.ISecureStorage
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message
 
 class AuthEffectHandler(
-    private val remote: IAuthRemoteRepository
+    private val remote: IAuthRemoteRepository,
+    private val secure: ISecureStorage
 ) : EffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -20,7 +22,7 @@ class AuthEffectHandler(
         return when (effect) {
             is AuthEffect.ValidateLoginData -> {
                 effect.dto.let {
-                    AuthMessage.LoginValidationError(
+                    AuthMessage.LoginValidation.Error(
                         emailError = it.email
                             .checkByRegex(EMAIL_REGEX) { "Email error message" },
                         passwordError = it.password
@@ -29,7 +31,7 @@ class AuthEffectHandler(
                         msg.takeIf { error ->
                             error.passwordError == null && error.emailError == null
                         }?.let {
-                            AuthMessage.LoginValidationSuccess
+                            AuthMessage.LoginValidation.Success
                         } ?: msg
                     }
                 }
@@ -38,12 +40,20 @@ class AuthEffectHandler(
                 remote.login(effect.dto.email, effect.dto.password).let {
                     when (it) {
                         is RemoteResult.Success -> {
-                            AuthMessage.LoginSuccess
+                            secure.saveToken(it.data)
+                            AuthMessage.Login.Success
                         }
                         is RemoteResult.Error -> {
-                            AuthMessage.LoginError(it.error.message.orEmpty())
+                            AuthMessage.Login.Error(it.error.message.orEmpty())
                         }
                     }
+                }
+            }
+            is AuthEffect.CheckUser -> {
+                if (secure.getToken() == null) {
+                    AuthMessage.CheckUser.NotFound
+                } else {
+                    AuthMessage.CheckUser.Found
                 }
             }
         }

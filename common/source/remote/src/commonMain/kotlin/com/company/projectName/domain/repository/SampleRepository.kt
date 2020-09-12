@@ -5,7 +5,7 @@ import com.company.projectName.domain.repository.base.BaseRepository
 import com.company.projectName.entity.models.SampleModel
 import com.company.projectName.entity.models.common.RemoteResult
 import com.company.projectName.entity.models.common.mapAsList
-import com.company.projectName.entity.source.ISampleRemoteRepository
+import com.company.projectName.entity.source.remote.ISampleRemoteRepository
 import io.ktor.client.request.*
 
 class SampleRepository : BaseRepository(), ISampleRemoteRepository {

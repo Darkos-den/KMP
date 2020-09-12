@@ -36,7 +36,7 @@ val loginReducer = reducer<LoginState> { state, message ->
                 )
             )
         }
-        is AuthMessage.LoginValidationSuccess -> {
+        is AuthMessage.LoginValidation.Success -> {
             StateCmdData(
                 state = state,
                 effect = AuthEffect.Login(
@@ -47,16 +47,16 @@ val loginReducer = reducer<LoginState> { state, message ->
                 )
             )
         }
-        is AuthMessage.LoginValidationError -> {
+        is AuthMessage.LoginValidation.Error -> {
             processLoginValidationError(state, message)
         }
-        is AuthMessage.LoginSuccess -> {
+        is AuthMessage.Login.Success -> {
             StateCmdData(
                 state = state,
                 effect = NavigationEffect.NavigateToHome
             )
         }
-        is AuthMessage.LoginError -> {
+        is AuthMessage.Login.Error -> {
             StateCmdData(
                 state = LoginState.Edit(
                     email = state.email,
@@ -73,7 +73,7 @@ val loginReducer = reducer<LoginState> { state, message ->
 
 private fun processLoginValidationError(
     state: LoginState,
-    message: AuthMessage.LoginValidationError
+    message: AuthMessage.LoginValidation.Error
 ): StateCmdData<LoginState> {
     return state.updateWithoutCmd {
         LoginState.Edit(
