@@ -48,6 +48,8 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
 
+                implementation("com.github.aakira:napier:1.3.0")
+
                 implementation(project(":common:entity"))
             }
         }
@@ -56,6 +58,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
+
+                implementation("com.github.aakira:napier-android:1.3.0")
 
                 implementation(project(":common:entity"))
             }

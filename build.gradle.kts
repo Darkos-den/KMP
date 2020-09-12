@@ -26,5 +26,6 @@ allprojects {
         maven("https://darkos.bintray.com/mvu")
         maven(url = "https://dl.bintray.com/kotlin/ktor")
         maven(url = "https://dl.bintray.com/kotlin/kotlinx")
+        maven(url = "https://dl.bintray.com/aakira/maven")
     }
 }

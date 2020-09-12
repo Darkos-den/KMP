@@ -63,6 +63,8 @@ dependencies {
     implementation("com.darkos:mvu-jvm:1.0.0")
     implementation("com.github.Darkos-den.core2:mvu-program:1.0.8")
 
+    implementation("com.github.aakira:napier-android:1.3.0")
+
     implementation(project(":common:core"))
     implementation(project(":common:domain"))
     implementation(project(":common:entity"))
