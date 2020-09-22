@@ -1,12 +1,9 @@
 package com.company.projectName.domain.feature.splash
 
-import com.company.projectName.domain.common.updateStateWithoutCmd
 import com.company.projectName.domain.common.updateWithoutCmd
-import com.company.projectName.domain.model.effect.AuthEffect
-import com.company.projectName.domain.model.effect.GeneralEffect
-import com.company.projectName.domain.model.effect.NavigationEffect
-import com.company.projectName.domain.model.message.AuthMessage
-import com.company.projectName.domain.model.message.GeneralMessage
+import com.company.projectName.domain.model.mvu.auth.AuthEffect
+import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.projectName.domain.model.mvu.auth.AuthMessage
 import com.darkos.mvu.models.ComponentInitialized
 import com.darkos.mvu.models.StateCmdData
 import com.darkos.mvu.reducer

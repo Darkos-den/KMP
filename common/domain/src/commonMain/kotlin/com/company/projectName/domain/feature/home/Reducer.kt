@@ -2,9 +2,9 @@ package com.company.projectName.domain.feature.home
 
 import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.feature.login.createException
-import com.company.projectName.domain.model.effect.GeneralEffect
-import com.company.projectName.domain.model.effect.SampleEffect
-import com.company.projectName.domain.model.message.SampleMessage
+import com.company.projectName.domain.model.mvu.general.GeneralEffect
+import com.company.projectName.domain.model.mvu.sample.SampleEffect
+import com.company.projectName.domain.model.mvu.sample.SampleMessage
 import com.darkos.mvu.models.ComponentInitialized
 import com.darkos.mvu.models.None
 import com.darkos.mvu.models.StateCmdData

@@ -1,4 +1,4 @@
-package com.company.projectName.domain.model.effect
+package com.company.projectName.domain.model.mvu.navigation
 
 import com.darkos.mvu.models.Effect
 

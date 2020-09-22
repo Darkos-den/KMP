@@ -1,10 +1,9 @@
 package com.company.projectName.domain.effectHandler
 
-import com.company.projectName.domain.model.effect.SampleEffect
-import com.company.projectName.domain.model.message.SampleMessage
+import com.company.projectName.domain.model.mvu.sample.SampleEffect
+import com.company.projectName.domain.model.mvu.sample.SampleMessage
 import com.company.projectName.entity.models.common.RemoteResult
 import com.company.projectName.entity.source.remote.ISampleRemoteRepository
-import com.company.projectName.entity.source.secure.ISecureStorage
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message

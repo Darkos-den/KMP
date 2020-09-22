@@ -4,10 +4,10 @@ import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.feature.textField.processError
 import com.company.projectName.domain.feature.textField.processTextFieldValueChanged
 import com.company.projectName.domain.model.dto.LoginDTO
-import com.company.projectName.domain.model.effect.AuthEffect
-import com.company.projectName.domain.model.effect.GeneralEffect
-import com.company.projectName.domain.model.effect.NavigationEffect
-import com.company.projectName.domain.model.message.AuthMessage
+import com.company.projectName.domain.model.mvu.auth.AuthEffect
+import com.company.projectName.domain.model.mvu.general.GeneralEffect
+import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.projectName.domain.model.mvu.auth.AuthMessage
 import com.darkos.mvu.models.StateCmdData
 import com.darkos.mvu.reducer
 

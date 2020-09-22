@@ -1,4 +1,4 @@
-package com.company.projectName.domain.model.message
+package com.company.projectName.domain.model.mvu.auth
 
 import com.darkos.mvu.models.Message
 

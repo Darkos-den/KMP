@@ -2,7 +2,7 @@ package com.company.projectName.domain.effectHandler
 
 import com.company.projectName.domain.common.Navigation
 import com.company.projectName.domain.common.Navigator
-import com.company.projectName.domain.model.effect.NavigationEffect
+import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Idle

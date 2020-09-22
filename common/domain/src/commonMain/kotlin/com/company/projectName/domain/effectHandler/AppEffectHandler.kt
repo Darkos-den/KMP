@@ -1,9 +1,9 @@
 package com.company.projectName.domain.effectHandler
 
-import com.company.projectName.domain.model.effect.GeneralEffect
-import com.company.projectName.domain.model.effect.NavigationEffect
-import com.company.projectName.domain.model.effect.AuthEffect
-import com.company.projectName.domain.model.effect.SampleEffect
+import com.company.projectName.domain.model.mvu.general.GeneralEffect
+import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.projectName.domain.model.mvu.auth.AuthEffect
+import com.company.projectName.domain.model.mvu.sample.SampleEffect
 import com.company.projectName.domain.model.exception.NotSupportedMessageException
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect

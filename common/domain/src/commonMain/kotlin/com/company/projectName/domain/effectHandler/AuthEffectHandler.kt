@@ -1,7 +1,7 @@
 package com.company.projectName.domain.effectHandler
 
-import com.company.projectName.domain.model.effect.AuthEffect
-import com.company.projectName.domain.model.message.AuthMessage
+import com.company.projectName.domain.model.mvu.auth.AuthEffect
+import com.company.projectName.domain.model.mvu.auth.AuthMessage
 import com.company.projectName.entity.models.common.RemoteResult
 import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import com.company.projectName.entity.source.secure.ISecureStorage
