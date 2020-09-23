@@ -1,6 +1,6 @@
 package com.company.projectName.domain.model.mvu.auth
 
-import com.company.projectName.domain.model.dto.LoginDTO
+import com.company.projectName.entity.models.dto.LoginDTO
 import com.darkos.mvu.models.Effect
 
 internal sealed class AuthEffect : Effect() {

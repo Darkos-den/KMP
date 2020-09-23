@@ -2,6 +2,8 @@ package com.company.projectName.domain.common
 
 import com.company.projectName.entity.source.secure.ISecureStorage
 import com.netguru.kissme.Kissme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class SecureStorage : ISecureStorage {
 
@@ -13,8 +15,10 @@ class SecureStorage : ISecureStorage {
         storage.putString(KEY_TOKEN, token)
     }
 
-    override fun getToken(): String? {
-        return storage.getString(KEY_TOKEN, null)
+    override suspend fun getToken(): String? {
+        return withContext(Dispatchers.Main){
+            storage.getString(KEY_TOKEN, null)
+        }
     }
 
     companion object {

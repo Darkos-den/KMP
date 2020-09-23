@@ -3,5 +3,7 @@ include(
     ":common:core",
     ":common:entity",
     ":common:domain",
-    ":common:source:remote"
+    ":common:source:remote",
+    ":common:feature:validation",
+    ":common:feature:login"
 )

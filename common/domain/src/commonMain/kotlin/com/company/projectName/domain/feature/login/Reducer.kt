@@ -1,87 +1,106 @@
 package com.company.projectName.domain.feature.login
 
 import com.company.projectName.domain.common.updateWithoutCmd
+import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
+import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_PASSWORD
 import com.company.projectName.domain.feature.textField.processError
 import com.company.projectName.domain.feature.textField.processTextFieldValueChanged
-import com.company.projectName.domain.model.dto.LoginDTO
-import com.company.projectName.domain.model.mvu.auth.AuthEffect
+import com.company.projectName.entity.models.dto.LoginDTO
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
-import com.company.projectName.domain.model.mvu.auth.AuthMessage
+import com.company.projectName.login.model.mvu.LoginEffect
+import com.company.projectName.login.model.mvu.LoginMessage
+import com.company.projectName.validation.model.Field
+import com.company.projectName.validation.model.mvu.ValidationEffect
+import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.models.StateCmdData
 import com.darkos.mvu.reducer
 
+private const val FIELD_ID_EMAIL: Long = 1
+private const val FIELD_ID_PASSWORD: Long = 2
+
 val loginReducer = reducer<LoginState> { state, message ->
     when (message) {
-        is LoginMessage.EmailChanged -> {
+        is LoginScreenMessage.EmailChanged -> {
             processEmailChanged(state, message)
         }
-        is LoginMessage.PasswordChanged -> {
+        is LoginScreenMessage.PasswordChanged -> {
             processPasswordChanged(state, message)
         }
-        is LoginMessage.PasswordVisibleClick -> {
+        is LoginScreenMessage.PasswordVisibleClick -> {
             processPasswordVisibleClick(state)
         }
-        is LoginMessage.SubmitClick -> {
+        is LoginScreenMessage.SubmitClick -> {
             StateCmdData(
                 state = LoginState.Progress(
                     email = state.email,
                     password = state.password
                 ),
-                effect = AuthEffect.ValidateLoginData(
-                    dto = LoginDTO(
-                        email = state.email.value,
-                        password = state.password.fieldState.value
+                effect = ValidationEffect.Validate(
+                    fields = listOf(
+                        Field(
+                            id = FIELD_ID_EMAIL,
+                            type = FIELD_TYPE_EMAIL,
+                            value = state.email.value
+                        ),
+                        Field(
+                            id = FIELD_ID_PASSWORD,
+                            type = FIELD_TYPE_PASSWORD,
+                            value = state.password.fieldState.value
+                        )
                     )
                 )
             )
         }
-        is AuthMessage.LoginValidation.Success -> {
-            StateCmdData(
-                state = state,
-                effect = AuthEffect.Login(
-                    dto = LoginDTO(
-                        email = state.email.value,
-                        password = state.password.fieldState.value
-                    )
-                )
-            )
-        }
-        is AuthMessage.LoginValidation.Error -> {
-            processLoginValidationError(state, message)
-        }
-        is AuthMessage.Login.Success -> {
+        is LoginMessage.Success -> {
             StateCmdData(
                 state = state,
                 effect = NavigationEffect.NavigateToHome
             )
         }
-        is AuthMessage.Login.Error -> {
+        is LoginMessage.Error -> {
             StateCmdData(
                 state = LoginState.Edit(
                     email = state.email,
                     password = state.password
                 ),
-                effect = GeneralEffect.ShowUserMessage(message.message)
+                effect = GeneralEffect.ShowUserMessage(message.e.message.orEmpty())
+            )
+        }
+        is ValidationMessage.Error -> {
+            state as LoginState.Progress
+            var tmp: LoginState.Progress = state
+            message.wrongFields.forEach {
+                when (it.id) {
+                    FIELD_ID_EMAIL -> tmp = tmp.copy(email = processError(state.email, "email error"))
+                    FIELD_ID_PASSWORD -> tmp = tmp.copy(
+                        password = state.password.copy(
+                            fieldState = processError(state.password.fieldState, "password error")
+                        )
+                    )
+                }
+            }
+            state.updateWithoutCmd {
+                LoginState.Edit(
+                    email = tmp.email,
+                    password = tmp.password
+                )
+            }
+        }
+        is ValidationMessage.Success -> {
+            StateCmdData(
+                state = state,
+                effect = LoginEffect.Login(
+                    LoginDTO(
+                        email = state.email.value,
+                        password = state.password.fieldState.value
+                    )
+                )
             )
         }
         else -> {
             state.updateWithoutCmd()
         }
-    }
-}
-
-private fun processLoginValidationError(
-    state: LoginState,
-    message: AuthMessage.LoginValidation.Error
-): StateCmdData<LoginState> {
-    return state.updateWithoutCmd {
-        LoginState.Edit(
-            email = processError(state.email, message.emailError),
-            password = state.password.copy(
-                fieldState = processError(state.password.fieldState, message.passwordError)
-            )
-        )
     }
 }
 
@@ -104,7 +123,7 @@ private fun processPasswordVisibleClick(state: LoginState): StateCmdData<LoginSt
 
 private fun processPasswordChanged(
     state: LoginState,
-    message: LoginMessage.PasswordChanged
+    message: LoginScreenMessage.PasswordChanged
 ): StateCmdData<LoginState> {
     return state.updateWithoutCmd {
         when (it) {
@@ -124,7 +143,7 @@ private fun processPasswordChanged(
 
 private fun processEmailChanged(
     state: LoginState,
-    message: LoginMessage.EmailChanged
+    message: LoginScreenMessage.EmailChanged
 ): StateCmdData<LoginState> {
     return state.updateWithoutCmd {
         when (it) {

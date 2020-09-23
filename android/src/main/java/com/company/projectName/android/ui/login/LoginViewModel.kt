@@ -2,7 +2,7 @@ package com.company.projectName.android.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.company.projectName.domain.feature.login.LoginMessage
+import com.company.projectName.domain.feature.login.LoginScreenMessage
 import com.company.projectName.domain.feature.login.LoginState
 import com.company.projectName.domain.feature.login.loginReducer
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
@@ -37,18 +37,18 @@ class LoginViewModel(
     }
 
     fun emailChanged(value: String){
-        program.accept(LoginMessage.EmailChanged(value))
+        program.accept(LoginScreenMessage.EmailChanged(value))
     }
 
     fun passwordChanged(value: String){
-        program.accept(LoginMessage.PasswordChanged(value))
+        program.accept(LoginScreenMessage.PasswordChanged(value))
     }
 
     fun passwordVisibleClick(){
-        program.accept(LoginMessage.PasswordVisibleClick)
+        program.accept(LoginScreenMessage.PasswordVisibleClick)
     }
 
     fun submitClick(){
-        program.accept(LoginMessage.SubmitClick)
+        program.accept(LoginScreenMessage.SubmitClick)
     }
 }

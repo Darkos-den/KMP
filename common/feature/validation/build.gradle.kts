@@ -2,10 +2,6 @@ import com.darkos.depend.applyDependencies
 import com.darkos.depend.implementation
 
 val commonDependencyList = listOf(
-    implementation(Libs.Ktor.CORE),
-    implementation(Libs.Ktor.LOGGING),
-    implementation(Libs.Ktor.JSON),
-    implementation(Libs.Ktor.SERIALIZATION),
     implementation(Libs.Coroutines.COMMON),
     implementation(Libs.Serialization.CORE),
     implementation(Libs.Serialization.PROTOBUF),
@@ -13,10 +9,6 @@ val commonDependencyList = listOf(
 )
 
 val androidDependencyList = listOf(
-    implementation(Libs.Ktor.ANDROID),
-    implementation(Libs.Ktor.LOGGING_JVM),
-    implementation(Libs.Ktor.JSON_JVM),
-    implementation(Libs.Ktor.SERIALIZATION_JVM),
     implementation(Libs.Coroutines.ANDROID),
     implementation(Libs.Serialization.CORE)
 )
@@ -47,11 +39,10 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
+                implementation("com.darkos:mvu:1.0.0")
 
-                implementation("com.github.aakira:napier:1.3.0")
-
+                implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:login"))
             }
         }
 
@@ -59,11 +50,9 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
-
-                implementation("com.github.aakira:napier-android:1.3.0")
+                implementation("com.darkos:mvu-jvm:1.0.0")
 
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:login"))
             }
         }
     }
