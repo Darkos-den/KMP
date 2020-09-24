@@ -8,23 +8,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import com.company.projectName.android.compose.FillParentProgressIndicator
-import com.company.projectName.domain.feature.login.LoginState
+import com.company.projectName.domain.feature.login.LoginScreenState
 import com.company.projectName.domain.feature.textField.TextFieldState
 
 @Composable
 fun LoginScreen(
-    state: LoginState,
+    state: LoginScreenState,
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit,
     passwordVisibleClick: () -> Unit,
@@ -33,15 +30,23 @@ fun LoginScreen(
     Stack {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             LoginTextField(
-                state = state.email,
+                state = if(state.emailError.isEmpty()){
+                    TextFieldState.Edit(state.vhod.email)
+                }else{
+                    TextFieldState.Error(state.vhod.email, state.emailError)
+                },
                 textChanged = emailChanged,
                 keyboardType = KeyboardType.Email,
                 modifier = Modifier.fillMaxWidth()
             )
 
             PasswordField(
-                state = state.password.fieldState,
-                visible = state.password.visible,
+                state = if(state.passwordError.isEmpty()){
+                    TextFieldState.Edit(state.vhod.password)
+                }else{
+                    TextFieldState.Error(state.vhod.password, state.passwordError)
+                },
+                visible = state.passwordVisible,
                 passwordVisibleClick = passwordVisibleClick,
                 passwordChanged = passwordChanged
             )
@@ -49,7 +54,7 @@ fun LoginScreen(
             SubmitButton(submitClick)
         }
 
-        if(state is LoginState.Progress){
+        if(state.vhod.progress){
             FillParentProgressIndicator()
         }
     }
@@ -121,19 +126,10 @@ private fun LoginTextField(
     modifier: Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
-    var selection by remember { mutableStateOf(TextRange(0, 0)) }
+    var textState by remember { mutableStateOf(String()) }
 
     TextField(
-        value = TextFieldValue(
-            text = state.value,
-            selection = selection.let {
-                if (it.start > state.value.length) {
-                    TextRange(state.value.length, state.value.length)
-                } else {
-                    it
-                }
-            }
-        ),
+        value = textState,
         label = {
             if (state is TextFieldState.Error) {
                 Text(
@@ -153,11 +149,7 @@ private fun LoginTextField(
             MaterialTheme.colors.onSurface
         },
         onValueChange = {
-            selection = it.selection
-
-            if (it.text != state.value) {
-                textChanged(it.text)
-            }
+            textState = it
         },
         keyboardType = keyboardType,
         visualTransformation = visualTransformation,
@@ -169,7 +161,7 @@ private fun LoginTextField(
 @Composable
 fun initialPreview() {
     LoginScreen(
-        state = LoginState.Initial,
+        state = LoginScreenState.Initial,
         emailChanged = {},
         passwordChanged = {},
         passwordVisibleClick = {},

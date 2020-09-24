@@ -3,6 +3,7 @@ package com.company.projectName.login.model.mvu
 import com.darkos.mvu.models.Message
 
 sealed class LoginMessage : Message() {
-    class Error(val e: Exception) : LoginMessage()
-    object Success: LoginMessage()
+    object LoginClick : LoginMessage()
+    object LoginSuccess: LoginMessage()
+    class LoginFailed(val e: Exception): LoginMessage()
 }

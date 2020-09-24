@@ -1,7 +1,7 @@
 package com.company.projectName.domain.feature.home
 
 import com.company.projectName.domain.common.updateWithoutCmd
-import com.company.projectName.domain.feature.login.createException
+import com.company.projectName.domain.model.exception.NotSupportedMessageException
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.sample.SampleEffect
 import com.company.projectName.domain.model.mvu.sample.SampleMessage
@@ -20,7 +20,7 @@ val homeReducer = reducer<HomeState> { state, message ->
                 state = when (state) {
                     is HomeState.Data -> state.copy(showProgress = true)
                     is HomeState.Empty -> state.copy(showProgress = true)
-                    is HomeState.Initial -> throw createException()
+                    is HomeState.Initial -> throw NotSupportedMessageException()
                 },
                 effect = SampleEffect.LoadContent
             )

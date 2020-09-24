@@ -1,25 +1,31 @@
 package com.company.projectName.android.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.company.projectName.domain.feature.login.LoginScreenMessage
-import com.company.projectName.domain.feature.login.LoginState
-import com.company.projectName.domain.feature.login.loginReducer
+import com.company.projectName.domain.feature.login.*
+import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu_program.Program
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
     effectHandler: EffectHandler
-) : BaseViewModelImpl(), Component<LoginState> {
+) : BaseViewModelImpl(), Component<LoginScreenState> {
 
-    private val stateSource = MutableLiveData<LoginState>()
-    val state: LiveData<LoginState>
-        get() = stateSource
+    private val stateSource = Channel<LoginScreenState>()
+    val state: Flow<LoginScreenState> = channelFlow {
+        while (true) {
+            stateSource.receive().let {
+                send(it)
+            }
+        }
+    }
 
     private val program = Program(
-        initialState = LoginState.Initial,
+        initialState = LoginScreenState.Initial,
         effectHandler = effectHandler,
         reducer = loginReducer,
         component = this
@@ -32,23 +38,25 @@ class LoginViewModel(
         super.onCleared()
     }
 
-    override fun render(state: LoginState) {
-        stateSource.postValue(state)
+    override fun render(state: LoginScreenState) {
+        ioScope.launch {
+            stateSource.send(state)
+        }
     }
 
-    fun emailChanged(value: String){
+    fun emailChanged(value: String) {
         program.accept(LoginScreenMessage.EmailChanged(value))
     }
 
-    fun passwordChanged(value: String){
+    fun passwordChanged(value: String) {
         program.accept(LoginScreenMessage.PasswordChanged(value))
     }
 
-    fun passwordVisibleClick(){
-        program.accept(LoginScreenMessage.PasswordVisibleClick)
+    fun passwordVisibleClick() {
+//        program.accept(LoginScreenMessage.PasswordVisibleClick)
     }
 
-    fun submitClick(){
-        program.accept(LoginScreenMessage.SubmitClick)
+    fun submitClick() {
+        program.accept(LoginMessage.LoginClick)
     }
 }

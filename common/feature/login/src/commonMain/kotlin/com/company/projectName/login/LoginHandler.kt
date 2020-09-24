@@ -21,11 +21,11 @@ abstract class LoginHandler<T : Any, R : Any>(
         return remote.login(effect.data as T).let {
             when (it) {
                 is RemoteResult.Error -> {
-                    LoginMessage.Error(it.error)
+                    LoginMessage.LoginFailed(it.error)
                 }
                 is RemoteResult.Success -> {
                     processLoginResult(it.data)
-                    LoginMessage.Success
+                    LoginMessage.LoginSuccess
                 }
             }
         }
