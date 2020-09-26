@@ -3,27 +3,21 @@ package com.company.projectName.domain.feature.login
 import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
-import com.company.projectName.login.EmailPassordFeature
 import com.company.projectName.login.EmailPasswordMessage
 import com.company.projectName.login.LoginFeature
+import com.company.projectName.login.LoginReducer
+import com.company.projectName.login.map
 import com.company.projectName.login.model.EmailPassword
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.mvu.models.MVUState
-import com.darkos.mvu.models.StateCmdData
 import com.darkos.mvu.reducer
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
 
-fun <T : MVUState, U : MVUState> StateCmdData<T>.map(mapper: (T) -> U): StateCmdData<U> {
-    return StateCmdData(
-        state = mapper(state),
-        effect = effect
-    )
-}
-
 data class Vhod(
-    val emailPassword: EmailPassword,
+    val email: String,
+    val password: String,
     val emailError: String,
     val passwordError: String,
     val progress: Boolean
@@ -42,7 +36,18 @@ val feature = LoginFeature<Vhod> {
         }
     }
     WithoutValidation {
-
+        registerField(
+            valueChangedMessage = LoginScreenMessage.EmailChanged::class,
+            mapTo = { state, field ->
+                state.copy(email = field.value)
+            }
+        )
+        registerField(
+            valueChangedMessage = LoginScreenMessage.PasswordChanged::class,
+            mapTo = { state, field ->
+                state.copy(password = field.value)
+            }
+        )
     }
     WithValidation {
 
