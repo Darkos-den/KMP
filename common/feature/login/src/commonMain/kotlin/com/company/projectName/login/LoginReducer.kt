@@ -1,54 +1,47 @@
 package com.company.projectName.login
 
-import com.company.projectName.login.model.LoginState
-import com.company.projectName.login.model.copyProgress
 import com.company.projectName.login.model.mvu.LoginEffect
 import com.company.projectName.login.model.mvu.LoginMessage
+import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
-import com.darkos.mvu.models.Effect
-import com.darkos.mvu.models.Message
-import com.darkos.mvu.models.None
-import com.darkos.mvu.models.StateCmdData
+import com.darkos.mvu.models.*
 import kotlin.reflect.KClass
 
-class LoginReducer<T : LoginState> private constructor(
-    private val messageProcessors: List<MessageProcessor<T>>,
-    private val successEffectBuilder: ((T)->Effect)?,
-    private val failedEffectBuilder: ((T, LoginMessage.LoginFailed)->Effect)?
+class LoginReducer<T : MVUState> private constructor(
+    private val statusProcessor: StatusProcessor<T>?
 ) : Reducer<T> {
 
-    class MessageProcessor<T : LoginState>(
-        val messageClass: KClass<out Message>,
-        val process: (T, Message) -> T
-    )
-
     override fun update(state: T, message: Message): StateCmdData<T> {
-        messageProcessors.forEach {
-            if (it.messageClass.isInstance(message)) {
-                return StateCmdData(
-                    state = it.process(state, message),
-                    effect = None()
-                )
-            }
-        }
         if (message is LoginMessage) {
             return when (message) {
                 is LoginMessage.LoginClick -> {
                     StateCmdData(
-                        state = state.copyProgress(true),
+                        state = statusProcessor?.onStateChanged?.let {
+                            it(state, true)
+                        } ?: state,
                         effect = LoginEffect.Login(state)
                     )
                 }
+                is ValidationMessage.Success -> {
+                    throw IllegalArgumentException()
+                }
+                is ValidationMessage.Error -> {
+                    throw IllegalArgumentException()
+                }
                 is LoginMessage.LoginSuccess -> {
                     StateCmdData(
-                        state = state.copyProgress(false),
-                        effect = successEffectBuilder?.invoke(state) ?: None()
+                        state = statusProcessor?.onStateChanged?.let {
+                            it(state, false)
+                        } ?: state,
+                        effect = statusProcessor?.onSuccess?.invoke() ?: None()
                     )
                 }
                 is LoginMessage.LoginFailed -> {
                     StateCmdData(
-                        state = state.copyProgress(false),
-                        effect = failedEffectBuilder?.invoke(state, message) ?: None()
+                        state = statusProcessor?.onStateChanged?.let {
+                            it(state, false)
+                        } ?: state,
+                        effect = statusProcessor?.onFailed?.invoke() ?: None()
                     )
                 }
             }
@@ -56,47 +49,61 @@ class LoginReducer<T : LoginState> private constructor(
         throw IllegalArgumentException()
     }
 
-    class Values<T : LoginState> {
-        private var processors: List<MessageProcessor<T>> = emptyList()
+    internal class StatusProcessor<T : MVUState>(
+        val onStateChanged: ((T, Boolean) -> T)?,
+        val onSuccess: (() -> Effect)?,
+        val onFailed: (() -> Effect)?
+    )
 
-        fun <M : Message> registerMessage(
-            messageClass: KClass<M>,
-            processor: (T, M) -> T
-        ) {
-            val process: (T, Message) -> T = { state, message ->
-                processor(state, message as M)
-            }
+    class WithoutValidationField(
+        val valueChangedMessage: KClass<out Message>,
+        val value: String
+    )
 
-            processors = processors + MessageProcessor(messageClass, process)
+    class StatusProcessorBuilder<T : MVUState> {
+        private var onStateChanged: ((T, Boolean) -> T)? = null
+        private var onSuccess: (() -> Effect)? = null
+        private var onFailed: (() -> Effect)? = null
+
+        fun OnStateChanged(block: (T, Boolean) -> T) {
+            onStateChanged = block
         }
 
-        fun build() = processors
+        fun OnSuccess(block: () -> Effect) {
+            onSuccess = block
+        }
+
+        fun OnFailed(block: () -> Effect) {
+            onFailed = block
+        }
+
+        internal fun build(): StatusProcessor<T>? = StatusProcessor(
+            onStateChanged,
+            onSuccess,
+            onFailed
+        )
     }
 
-    class Builder<T : LoginState> {
-        private var values: List<MessageProcessor<T>> = emptyList()
-        private var successEffectBuilder: ((T)->Effect)? = null
-        private var failedEffectBuilder: ((T, LoginMessage.LoginFailed)->Effect)? = null
+    class Builder<T : MVUState> {
+        private var statusProcessor: StatusProcessor<T>? = null
 
-        fun ValueChanes(block: Values<T>.() -> Unit) {
-            values = Values<T>().apply(block).build()
+        fun ProcessStatus(block: StatusProcessorBuilder<T>.() -> Unit) {
+            statusProcessor = StatusProcessorBuilder<T>().apply(block).build()
         }
 
-        fun LoginSuccessEffect(block: (T)->Effect){
-            successEffectBuilder = block
-        }
-
-        fun LoginFailedEffect(block: (T, LoginMessage.LoginFailed)->Effect){
-            failedEffectBuilder = block
-        }
-
-        fun Validation() {
+        fun WithoutValidation(block: () -> Unit) {
 
         }
 
-        fun build() = LoginReducer(values, successEffectBuilder, failedEffectBuilder)
+        fun WithValidation(block: () -> Unit) {
+
+        }
+
+        fun build() = LoginReducer(
+            statusProcessor = statusProcessor
+        )
     }
 }
 
-fun <T : LoginState> LoginFeature(block: LoginReducer.Builder<T>.() -> Unit) =
+fun <T : MVUState> LoginFeature(block: LoginReducer.Builder<T>.() -> Unit) =
     LoginReducer.Builder<T>().apply(block).build()

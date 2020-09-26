@@ -43,6 +43,7 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
+                implementation(project(":common:feature:validation"))
             }
         }
 
@@ -53,6 +54,7 @@ kotlin {
                 implementation("com.darkos:mvu-jvm:1.0.0")
 
                 implementation(project(":common:entity"))
+                implementation(project(":common:feature:validation"))
             }
         }
     }

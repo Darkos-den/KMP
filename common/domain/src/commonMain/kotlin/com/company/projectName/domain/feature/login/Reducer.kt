@@ -3,7 +3,10 @@ package com.company.projectName.domain.feature.login
 import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.projectName.login.EmailPassordFeature
+import com.company.projectName.login.EmailPasswordMessage
 import com.company.projectName.login.LoginFeature
+import com.company.projectName.login.model.EmailPassword
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.mvu.models.MVUState
 import com.darkos.mvu.models.StateCmdData
@@ -19,26 +22,35 @@ fun <T : MVUState, U : MVUState> StateCmdData<T>.map(mapper: (T) -> U): StateCmd
     )
 }
 
-val feature = LoginFeature<VhodState> {
-    ValueChanes {
-        registerMessage(LoginScreenMessage.EmailChanged::class) { state, message ->
-            state.copy(email = message.newValue)
-        }
-        registerMessage(LoginScreenMessage.PasswordChanged::class) { state, message ->
-            state.copy(password = message.newValue)
-        }
-    }
+data class Vhod(
+    val emailPassword: EmailPassword,
+    val emailError: String,
+    val passwordError: String,
+    val progress: Boolean
+) : MVUState()
 
-    LoginSuccessEffect {
-        NavigationEffect.NavigateToHome
+val feature = LoginFeature<Vhod> {
+    ProcessStatus {
+        OnSuccess {
+            NavigationEffect.NavigateToHome
+        }
+        OnFailed {
+            GeneralEffect.ShowUserMessage("error")
+        }
+        OnStateChanged { state, value ->
+            state.copy(progress = value)
+        }
     }
-    LoginFailedEffect { _, loginFailed ->
-        GeneralEffect.ShowUserMessage(loginFailed.e.message.orEmpty())
+    WithoutValidation {
+
+    }
+    WithValidation {
+
     }
 }
 
 val loginReducer = reducer<LoginScreenState> { state, message ->
-    if (message is LoginScreenMessage || message is LoginMessage) {
+    if (message is EmailPasswordMessage || message is LoginMessage) {
         return@reducer feature.update(state.vhod, message).map {
             state.copy(vhod = it)
         }
