@@ -2,6 +2,7 @@ package com.company.projectName.login
 
 import com.company.projectName.login.model.mvu.LoginEffect
 import com.company.projectName.login.model.mvu.LoginMessage
+import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.models.*
@@ -99,6 +100,12 @@ class LoginReducer<T : MVUState> private constructor(
         val value: String
     ) : MVUState()
 
+    data class WithValidationField(
+        val value: String,
+        val error: Exception?,
+        val fieldType: Int
+    ) : MVUState()
+
     class WithoutValidationReducer<T : MVUState>(
         val valueChangedMessage: KClass<out FieldValueChanged>,
         val mapTo: (T, WithoutValidationField) -> T
@@ -114,6 +121,39 @@ class LoginReducer<T : MVUState> private constructor(
                 )
             } else {
                 throw IllegalArgumentException()
+            }
+        }
+    }
+
+    class WithValidationReducer<T : MVUState>(
+        val valueChangedMessage: KClass<out FieldValueChanged>,
+        val mapFrom: (T)->WithValidationField,
+        val mapTo: (T, WithoutValidationField) -> T
+    ) : Reducer<WithValidationField> {
+        override fun update(
+            state: WithValidationField,
+            message: Message
+        ): StateCmdData<WithValidationField> {
+            return if (valueChangedMessage.isInstance(message)) {
+                StateCmdData(
+                    state = state.copy(
+                        value = (message as FieldValueChanged).newValue,
+                        error = null
+                    ),
+                    effect = None()
+                )
+            } else {
+                when(message){
+                    is ValidationMessage.Error -> {
+                        StateCmdData()
+                    }
+                    is ValidationMessage.Success -> {
+                        StateCmdData()
+                    }
+                    else -> {
+                        throw IllegalArgumentException()
+                    }
+                }
             }
         }
     }
