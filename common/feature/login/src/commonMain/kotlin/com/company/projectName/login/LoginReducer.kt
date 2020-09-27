@@ -34,7 +34,11 @@ class LoginReducer<T : MVUState> private constructor(
                         state = validation.map(state),
                         message = ValidationMessage.ValidationClick
                     ).map {
-                        validation.mapper(it)
+                        validation.mapper(state, it).let {
+                            statusProcessor?.onStateChanged?.let {
+                                it(state, true)
+                            } ?: state
+                        }
                     }
                 } ?: run {
                     StateCmdData(
@@ -75,7 +79,7 @@ class LoginReducer<T : MVUState> private constructor(
                         state = validation.map(state),
                         message = message
                     ).map {
-                        validation.mapper(it)
+                        validation.mapper(state, it)
                     }
                 } ?: throw IllegalArgumentException()
             }
@@ -120,19 +124,13 @@ class LoginReducer<T : MVUState> private constructor(
         val value: String
     ) : MVUState()
 
-    data class WithValidationField(
-        val value: String,
-        val error: Exception?,
-        val fieldType: Int
-    ) : MVUState()
-
     data class ValidationState(
         val fields: List<Field>
     ) : MVUState()
 
     class ValidationReducer<T : MVUState>(
         private val withValidationProcessors: List<WithValidationReducer<T>>,
-        val mapper: (ValidationState) -> T,
+        val mapper: (T, ValidationState) -> T,
         private val errorEffect: Effect?
     ) : Reducer<ValidationState> {
 
@@ -177,6 +175,32 @@ class LoginReducer<T : MVUState> private constructor(
                 }
             }
         }
+    }
+
+    class ValidationBuilder<T: MVUState>{
+        private var processors: List<WithValidationReducer<T>> = emptyList()
+        var errorEffect: Effect? = null
+        private var mapper: ((T, ValidationState) -> T)? = null
+
+        fun RegisterValidationMapper(block: (T, ValidationState) -> T){
+            mapper = block
+        }
+
+        fun registerField(
+            fieldId: Long,
+            valueChangedMessage: KClass<out FieldValueChanged>,
+            map: (T) -> Field
+        ){
+            processors = processors + WithValidationReducer(
+                fieldId, valueChangedMessage, map
+            )
+        }
+
+        internal fun build() = ValidationReducer(
+            withValidationProcessors = processors,
+            mapper = mapper!!,
+            errorEffect = errorEffect
+        )
     }
 
     class WithoutValidationReducer<T : MVUState>(
@@ -236,6 +260,7 @@ class LoginReducer<T : MVUState> private constructor(
     class Builder<T : MVUState> {
         private var statusProcessor: StatusProcessor<T>? = null
         private var withoutValidationProcessors: List<WithoutValidationReducer<T>> = emptyList()
+        private var validation: ValidationReducer<T>? = null
 
         fun ProcessStatus(block: StatusProcessorBuilder<T>.() -> Unit) {
             statusProcessor = StatusProcessorBuilder<T>().apply(block).build()
@@ -245,13 +270,14 @@ class LoginReducer<T : MVUState> private constructor(
             withoutValidationProcessors = WithoutValidationBuilder<T>().apply(block).build()
         }
 
-        fun WithValidation(block: () -> Unit) {
-
+        fun WithValidation(block: ValidationBuilder<T>.() -> Unit) {
+            validation = ValidationBuilder<T>().apply(block).build()
         }
 
         fun build() = LoginReducer(
             statusProcessor = statusProcessor,
-            withoutValidationProcessors = withoutValidationProcessors
+            withoutValidationProcessors = withoutValidationProcessors,
+            validation = validation
         )
     }
 }

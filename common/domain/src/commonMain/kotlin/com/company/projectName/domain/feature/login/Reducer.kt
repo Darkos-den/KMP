@@ -1,14 +1,16 @@
 package com.company.projectName.domain.feature.login
 
 import com.company.projectName.domain.common.updateWithoutCmd
+import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
 import com.company.projectName.login.EmailPasswordMessage
 import com.company.projectName.login.LoginFeature
 import com.company.projectName.login.LoginReducer
 import com.company.projectName.login.map
-import com.company.projectName.login.model.EmailPassword
 import com.company.projectName.login.model.mvu.LoginMessage
+import com.company.projectName.validation.model.Field
+import com.company.projectName.validation.model.FieldValidationStatus
 import com.darkos.mvu.models.MVUState
 import com.darkos.mvu.reducer
 
@@ -37,12 +39,6 @@ val feature = LoginFeature<Vhod> {
     }
     WithoutValidation {
         registerField(
-            valueChangedMessage = LoginScreenMessage.EmailChanged::class,
-            mapTo = { state, field ->
-                state.copy(email = field.value)
-            }
-        )
-        registerField(
             valueChangedMessage = LoginScreenMessage.PasswordChanged::class,
             mapTo = { state, field ->
                 state.copy(password = field.value)
@@ -50,7 +46,32 @@ val feature = LoginFeature<Vhod> {
         )
     }
     WithValidation {
+        errorEffect = GeneralEffect.ShowUserMessage("error")
 
+        registerField(
+            fieldId = 1,
+            valueChangedMessage = LoginScreenMessage.EmailChanged::class,
+            map = {
+                Field(
+                    id = 1,
+                    type = FIELD_TYPE_EMAIL,
+                    value = it.email
+                )
+            }
+        )
+
+        RegisterValidationMapper { state, fields ->
+            state.copy(
+                email = fields.fields.firstOrNull {
+                    it.id == 1L
+                }?.value ?: state.email,
+                emailError = fields.fields.firstOrNull {
+                    it.id == 1L
+                }?.takeIf { it.status == FieldValidationStatus.INVALID }?.let {
+                    "Email error"
+                } ?: ""
+            )
+        }
     }
 }
 
