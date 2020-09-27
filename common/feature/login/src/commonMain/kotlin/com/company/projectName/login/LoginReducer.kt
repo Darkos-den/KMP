@@ -3,7 +3,7 @@ package com.company.projectName.login
 import com.company.projectName.login.model.mvu.LoginEffect
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.company.projectName.validation.model.Field
-import com.company.projectName.validation.model.mvu.ValidationEffect
+import com.company.projectName.validation.model.FieldValidationStatus
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.models.*
@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 class LoginReducer<T : MVUState> private constructor(
     private val statusProcessor: StatusProcessor<T>?,
     private val withoutValidationProcessors: List<WithoutValidationReducer<T>>,
-    private val validation: ValidationReducer?
+    private val validation: ValidationReducer<T>?
 ) : Reducer<T> {
 
     override fun update(state: T, message: Message): StateCmdData<T> {
@@ -29,31 +29,29 @@ class LoginReducer<T : MVUState> private constructor(
 
         return when (message) {
             is LoginMessage.LoginClick -> {
-                if(withValidationProcessors.isEmpty()){
+                validation?.let { validation ->
+                    validation.update(
+                        state = validation.map(state),
+                        message = ValidationMessage.ValidationClick
+                    ).map {
+                        validation.mapper(it)
+                    }
+                } ?: run {
                     StateCmdData(
                         state = statusProcessor?.onStateChanged?.let {
                             it(state, true)
                         } ?: state,
                         effect = LoginEffect.Login(state)
                     )
-                }else{
-                    withValidationProcessors.map {
-                        it.mapFrom(state)
-                    }.let {
-                        StateCmdData(
-                            state = statusProcessor?.onStateChanged?.let {
-                                it(state, true)
-                            } ?: state,
-                            effect = ValidationEffect.Validate(it)
-                        )
-                    }
                 }
             }
             is ValidationMessage.Success -> {
-                throw IllegalArgumentException()
-            }
-            is ValidationMessage.Error -> {
-                throw IllegalArgumentException()
+                StateCmdData(
+                    state = statusProcessor?.onStateChanged?.let {
+                        it(state, true)
+                    } ?: state,
+                    effect = LoginEffect.Login(state)
+                )
             }
             is LoginMessage.LoginSuccess -> {
                 StateCmdData(
@@ -72,9 +70,14 @@ class LoginReducer<T : MVUState> private constructor(
                 )
             }
             else -> {
-                validation?.update()?: run {
-                    throw IllegalArgumentException()
-                }
+                validation?.let { validation ->
+                    validation.update(
+                        state = validation.map(state),
+                        message = message
+                    ).map {
+                        validation.mapper(it)
+                    }
+                } ?: throw IllegalArgumentException()
             }
         }
     }
@@ -123,44 +126,54 @@ class LoginReducer<T : MVUState> private constructor(
         val fieldType: Int
     ) : MVUState()
 
-    class ValidationState(
+    data class ValidationState(
         val fields: List<Field>
-    ): MVUState()
+    ) : MVUState()
 
-    class ValidationReducer<T: MVUState>(
+    class ValidationReducer<T : MVUState>(
         private val withValidationProcessors: List<WithValidationReducer<T>>,
-        val mapper: (ValidationState)->T
-    ): Reducer<ValidationState>{
+        val mapper: (ValidationState) -> T,
+        private val errorEffect: Effect?
+    ) : Reducer<ValidationState> {
+
+        fun map(state: T): ValidationState {
+            return ValidationState(
+                fields = withValidationProcessors.map {
+                    it.map(state)
+                }
+            )
+        }
+
         override fun update(
             state: ValidationState,
             message: Message
         ): StateCmdData<ValidationState> {
-            withValidationProcessors.firstOrNull {
-                it.valueChangedMessage.isInstance(message)
-            }?.let { reducer ->
-                reducer.update(
-                    state = reducer.mapFrom(state)
-                    message = message
-                ).map {
-                    reducer.mapTo(state, it)
-                }
-            }
-
-            return when(message){
+            return when (message) {
                 is ValidationMessage.ValidationClick -> {
                     StateCmdData(
-                        state = ,
+                        state = state,
                         effect = LoginEffect.Login(state)
                     )
                 }
                 is ValidationMessage.Error -> {
-                    StateCmdData()
-                }
-                is ValidationMessage.Success -> {
-                    StateCmdData()
+                    StateCmdData(
+                        state = state,
+                        effect = errorEffect ?: None()
+                    )
                 }
                 else -> {
-                    throw IllegalArgumentException()
+                    withValidationProcessors.firstOrNull {
+                        it.valueChangedMessage.isInstance(message)
+                    }?.let { reducer ->
+                        reducer.update(
+                            state = state.fields.first { it.id == reducer.fieldId },
+                            message = message
+                        ).map {
+                            state.copy(
+                                fields = state.fields.replaceById(it.id, it)
+                            )
+                        }
+                    } ?: throw IllegalArgumentException()
                 }
             }
         }
@@ -186,35 +199,31 @@ class LoginReducer<T : MVUState> private constructor(
     }
 
     class WithValidationReducer<T : MVUState>(
+        val fieldId: Long,
         val valueChangedMessage: KClass<out FieldValueChanged>,
-        val mapFrom: (T)->WithValidationField,
-        val mapTo: (T, WithoutValidationField) -> T
-    ) : Reducer<WithValidationField> {
+        val map: (T) -> Field
+    ) : Reducer<Field> {
         override fun update(
-            state: WithValidationField,
+            state: Field,
             message: Message
-        ): StateCmdData<WithValidationField> {
-            return if (valueChangedMessage.isInstance(message)) {
-                StateCmdData(
-                    state = state.copy(
-                        value = (message as FieldValueChanged).newValue,
-                        error = null
-                    ),
-                    effect = None()
-                )
-            } else {
-                throw IllegalArgumentException()
-            }
+        ): StateCmdData<Field> {
+            return StateCmdData(
+                state = state.copy(
+                    value = (message as FieldValueChanged).newValue,
+                    status = FieldValidationStatus.VALID
+                ),
+                effect = None()
+            )
         }
     }
 
-    class WithoutValidationBuilder<T: MVUState> {
+    class WithoutValidationBuilder<T : MVUState> {
         private var reducers: List<WithoutValidationReducer<T>> = emptyList()
 
         fun registerField(
             valueChangedMessage: KClass<out FieldValueChanged>,
             mapTo: (T, WithoutValidationField) -> T
-        ){
+        ) {
             reducers = reducers + WithoutValidationReducer(
                 valueChangedMessage = valueChangedMessage,
                 mapTo = mapTo
@@ -244,6 +253,16 @@ class LoginReducer<T : MVUState> private constructor(
             statusProcessor = statusProcessor,
             withoutValidationProcessors = withoutValidationProcessors
         )
+    }
+}
+
+fun List<Field>.replaceById(id: Long, newValue: Field): List<Field> {
+    return this.map {
+        if (it.id == id) {
+            newValue
+        } else {
+            it
+        }
     }
 }
 
