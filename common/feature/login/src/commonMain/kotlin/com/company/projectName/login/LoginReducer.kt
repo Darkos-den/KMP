@@ -2,6 +2,7 @@ package com.company.projectName.login
 
 import com.company.projectName.login.model.mvu.LoginEffect
 import com.company.projectName.login.model.mvu.LoginMessage
+import com.company.projectName.validation.model.Field
 import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
@@ -10,7 +11,8 @@ import kotlin.reflect.KClass
 
 class LoginReducer<T : MVUState> private constructor(
     private val statusProcessor: StatusProcessor<T>?,
-    private val withoutValidationProcessors: List<WithoutValidationReducer<T>>
+    private val withoutValidationProcessors: List<WithoutValidationReducer<T>>,
+    private val validation: ValidationReducer?
 ) : Reducer<T> {
 
     override fun update(state: T, message: Message): StateCmdData<T> {
@@ -27,12 +29,25 @@ class LoginReducer<T : MVUState> private constructor(
 
         return when (message) {
             is LoginMessage.LoginClick -> {
-                StateCmdData(
-                    state = statusProcessor?.onStateChanged?.let {
-                        it(state, true)
-                    } ?: state,
-                    effect = LoginEffect.Login(state)
-                )
+                if(withValidationProcessors.isEmpty()){
+                    StateCmdData(
+                        state = statusProcessor?.onStateChanged?.let {
+                            it(state, true)
+                        } ?: state,
+                        effect = LoginEffect.Login(state)
+                    )
+                }else{
+                    withValidationProcessors.map {
+                        it.mapFrom(state)
+                    }.let {
+                        StateCmdData(
+                            state = statusProcessor?.onStateChanged?.let {
+                                it(state, true)
+                            } ?: state,
+                            effect = ValidationEffect.Validate(it)
+                        )
+                    }
+                }
             }
             is ValidationMessage.Success -> {
                 throw IllegalArgumentException()
@@ -57,7 +72,9 @@ class LoginReducer<T : MVUState> private constructor(
                 )
             }
             else -> {
-                throw IllegalArgumentException()
+                validation?.update()?: run {
+                    throw IllegalArgumentException()
+                }
             }
         }
     }
@@ -106,6 +123,49 @@ class LoginReducer<T : MVUState> private constructor(
         val fieldType: Int
     ) : MVUState()
 
+    class ValidationState(
+        val fields: List<Field>
+    ): MVUState()
+
+    class ValidationReducer<T: MVUState>(
+        private val withValidationProcessors: List<WithValidationReducer<T>>,
+        val mapper: (ValidationState)->T
+    ): Reducer<ValidationState>{
+        override fun update(
+            state: ValidationState,
+            message: Message
+        ): StateCmdData<ValidationState> {
+            withValidationProcessors.firstOrNull {
+                it.valueChangedMessage.isInstance(message)
+            }?.let { reducer ->
+                reducer.update(
+                    state = reducer.mapFrom(state)
+                    message = message
+                ).map {
+                    reducer.mapTo(state, it)
+                }
+            }
+
+            return when(message){
+                is ValidationMessage.ValidationClick -> {
+                    StateCmdData(
+                        state = ,
+                        effect = LoginEffect.Login(state)
+                    )
+                }
+                is ValidationMessage.Error -> {
+                    StateCmdData()
+                }
+                is ValidationMessage.Success -> {
+                    StateCmdData()
+                }
+                else -> {
+                    throw IllegalArgumentException()
+                }
+            }
+        }
+    }
+
     class WithoutValidationReducer<T : MVUState>(
         val valueChangedMessage: KClass<out FieldValueChanged>,
         val mapTo: (T, WithoutValidationField) -> T
@@ -143,17 +203,7 @@ class LoginReducer<T : MVUState> private constructor(
                     effect = None()
                 )
             } else {
-                when(message){
-                    is ValidationMessage.Error -> {
-                        StateCmdData()
-                    }
-                    is ValidationMessage.Success -> {
-                        StateCmdData()
-                    }
-                    else -> {
-                        throw IllegalArgumentException()
-                    }
-                }
+                throw IllegalArgumentException()
             }
         }
     }
