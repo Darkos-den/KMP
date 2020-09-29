@@ -20,7 +20,7 @@ class LoginReducer<T : MVUState> private constructor(
         withoutValidationProcessors.firstOrNull {
             it.valueChangedMessage.isInstance(message)
         }?.let { reducer ->
-            reducer.update(
+            return reducer.update(
                 state = WithoutValidationField(""),
                 message = message
             ).map {
