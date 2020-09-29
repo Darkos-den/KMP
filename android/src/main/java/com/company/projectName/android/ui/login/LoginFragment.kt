@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.foundation.Text
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Recomposer
 import androidx.compose.runtime.collectAsState
@@ -40,28 +41,37 @@ class LoginFragment : LayoutFragment(
     override val viewModel: LoginViewModel by viewModel()
 
     override fun viewCreated(savedInstanceState: Bundle?) {
-        val binding = FragmentLoginBinding.bind(requireView())
+        (view as ViewGroup).setContent(Recomposer.current()) {
+            val state by viewModel.state.collectAsState(initial = LoginScreenState.Initial)
 
-        binding.etEmail.addTextChangedListener {
-            it?.toString()?.let {
-                viewModel.emailChanged(it)
-            }
-        }
-        binding.etPassword.addTextChangedListener {
-            it?.toString()?.let {
-                viewModel.passwordChanged(it)
-            }
+            TextField(
+                value = state.email,
+                label = {},
+                onValueChange = viewModel::emailChanged)
         }
 
-        CoroutineScope(Dispatchers.Main).launch {
-            viewModel.state.collect {
-                if(binding.etEmail.text.toString() != it.email) {
-                    binding.etEmail.setText(it.email)
-                }
-                if(binding.etPassword.text.toString() != it.password) {
-                    binding.etPassword.setText(it.password)
-                }
-            }
-        }
+//        val binding = FragmentLoginBinding.bind(requireView())
+//
+//        binding.etEmail.addTextChangedListener {
+//            it?.toString()?.let {
+//                viewModel.emailChanged(it)
+//            }
+//        }
+//        binding.etPassword.addTextChangedListener {
+//            it?.toString()?.let {
+//                viewModel.passwordChanged(it)
+//            }
+//        }
+//
+//        CoroutineScope(Dispatchers.Main).launch {
+//            viewModel.state.collect {
+//                if(binding.etEmail.text.toString() != it.email) {
+//                    binding.etEmail.setText(it.email)
+//                }
+//                if(binding.etPassword.text.toString() != it.password) {
+//                    binding.etPassword.setText(it.password)
+//                }
+//            }
+//        }
     }
 }
