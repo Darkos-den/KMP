@@ -6,22 +6,20 @@ import com.company.projectName.login.model.LoginState
 import com.darkos.mvu.models.MVUState
 
 data class LoginScreenState(
-    val vhod: EmailPassword,
+    val email: String,
+    val password: String,
     val emailError: String,
     val passwordError: String,
-    val passwordVisible: Boolean
+    val progress: Boolean
 ) : MVUState() {
 
     companion object {
         val Initial = LoginScreenState(
-            vhod = EmailPassword(
-                email = "",
-                password = "",
-                progress = false
-            ),
             emailError = "",
             passwordError = "",
-            passwordVisible = false
+            password = "",
+            email = "",
+            progress = false
         )
     }
 }

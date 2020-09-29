@@ -4,6 +4,7 @@ import com.company.projectName.login.model.mvu.LoginEffect
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.company.projectName.validation.model.Field
 import com.company.projectName.validation.model.FieldValidationStatus
+import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.models.*
@@ -56,6 +57,20 @@ class LoginReducer<T : MVUState> private constructor(
                     } ?: state,
                     effect = LoginEffect.Login(state)
                 )
+            }
+            is ValidationMessage.Error -> {
+                validation?.let { validation ->
+                    validation.update(
+                        state = validation.map(state),
+                        message = message
+                    ).map {
+                        validation.mapper(state, it)
+                    }.map { newState ->
+                        statusProcessor?.onStateChanged?.let {
+                            it(newState, false)
+                        } ?: state
+                    }
+                } ?: throw IllegalArgumentException()
             }
             is LoginMessage.LoginSuccess -> {
                 StateCmdData(
@@ -150,12 +165,17 @@ class LoginReducer<T : MVUState> private constructor(
                 is ValidationMessage.ValidationClick -> {
                     StateCmdData(
                         state = state,
-                        effect = LoginEffect.Login(state)
+                        effect = ValidationEffect.Validate(state.fields)
                     )
                 }
                 is ValidationMessage.Error -> {
+                    var fields = state.fields
+                    message.wrongFields.forEach {
+                        fields = fields.replaceById(it.id, it)
+                    }
+
                     StateCmdData(
-                        state = state,
+                        state = ValidationState(fields),
                         effect = errorEffect ?: None()
                     )
                 }
@@ -177,12 +197,12 @@ class LoginReducer<T : MVUState> private constructor(
         }
     }
 
-    class ValidationBuilder<T: MVUState>{
+    class ValidationBuilder<T : MVUState> {
         private var processors: List<WithValidationReducer<T>> = emptyList()
         var errorEffect: Effect? = null
         private var mapper: ((T, ValidationState) -> T)? = null
 
-        fun RegisterValidationMapper(block: (T, ValidationState) -> T){
+        fun RegisterValidationMapper(block: (T, ValidationState) -> T) {
             mapper = block
         }
 
@@ -190,7 +210,7 @@ class LoginReducer<T : MVUState> private constructor(
             fieldId: Long,
             valueChangedMessage: KClass<out FieldValueChanged>,
             map: (T) -> Field
-        ){
+        ) {
             processors = processors + WithValidationReducer(
                 fieldId, valueChangedMessage, map
             )

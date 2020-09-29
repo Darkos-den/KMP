@@ -37,7 +37,7 @@ class LoginFragment : LayoutFragment(
         (view as ViewGroup).setContent(Recomposer.current()) {
             val state by viewModel.state.collectAsState(initial = LoginScreenState.Initial)
 
-            Log.d("SKA", "email: ${state.vhod.email}")
+//            Log.d("SKA", "email: ${state.vhod.email}")
 
             Scaffold(
                 topBar = {

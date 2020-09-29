@@ -7,7 +7,7 @@ class ValidateEffectHandler: ValidationEffectHandler() {
     override fun validate(field: Field): Boolean {
         return when (field.type) {
             FIELD_TYPE_EMAIL -> false
-            FIELD_TYPE_PASSWORD -> true
+            FIELD_TYPE_PASSWORD -> false
             else -> false
         }
     }

@@ -1,6 +1,7 @@
 package com.company.projectName.validation
 
 import com.company.projectName.validation.model.Field
+import com.company.projectName.validation.model.FieldValidationStatus
 import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.EffectHandler
@@ -20,6 +21,8 @@ abstract class ValidationEffectHandler : EffectHandler {
             validate(it).not()
         }.takeIf {
             it.isNotEmpty()
+        }?.map {
+            it.copy(status = FieldValidationStatus.INVALID)
         }?.let {
             ValidationMessage.Error(it)
         } ?: run {

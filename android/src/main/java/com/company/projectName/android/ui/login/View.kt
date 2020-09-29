@@ -31,9 +31,9 @@ fun LoginScreen(
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             LoginTextField(
                 state = if(state.emailError.isEmpty()){
-                    TextFieldState.Edit(state.vhod.email)
+                    TextFieldState.Edit(state.email)
                 }else{
-                    TextFieldState.Error(state.vhod.email, state.emailError)
+                    TextFieldState.Error(state.email, state.emailError)
                 },
                 textChanged = emailChanged,
                 keyboardType = KeyboardType.Email,
@@ -42,11 +42,11 @@ fun LoginScreen(
 
             PasswordField(
                 state = if(state.passwordError.isEmpty()){
-                    TextFieldState.Edit(state.vhod.password)
+                    TextFieldState.Edit(state.password)
                 }else{
-                    TextFieldState.Error(state.vhod.password, state.passwordError)
+                    TextFieldState.Error(state.password, state.passwordError)
                 },
-                visible = state.passwordVisible,
+                visible = false,
                 passwordVisibleClick = passwordVisibleClick,
                 passwordChanged = passwordChanged
             )
@@ -54,7 +54,7 @@ fun LoginScreen(
             SubmitButton(submitClick)
         }
 
-        if(state.vhod.progress){
+        if(state.progress){
             FillParentProgressIndicator()
         }
     }

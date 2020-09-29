@@ -11,21 +11,14 @@ import com.company.projectName.login.map
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.company.projectName.validation.model.Field
 import com.company.projectName.validation.model.FieldValidationStatus
+import com.darkos.mvu.models.ComponentInitialized
 import com.darkos.mvu.models.MVUState
 import com.darkos.mvu.reducer
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
 
-data class Vhod(
-    val email: String,
-    val password: String,
-    val emailError: String,
-    val passwordError: String,
-    val progress: Boolean
-) : MVUState()
-
-val feature = LoginFeature<Vhod> {
+val feature = LoginFeature<LoginScreenState> {
     ProcessStatus {
         OnSuccess {
             NavigationEffect.NavigateToHome
@@ -46,14 +39,12 @@ val feature = LoginFeature<Vhod> {
         )
     }
     WithValidation {
-        errorEffect = GeneralEffect.ShowUserMessage("error")
-
         registerField(
-            fieldId = 1,
+            fieldId = FIELD_ID_EMAIL,
             valueChangedMessage = LoginScreenMessage.EmailChanged::class,
             map = {
                 Field(
-                    id = 1,
+                    id = FIELD_ID_EMAIL,
                     type = FIELD_TYPE_EMAIL,
                     value = it.email
                 )
@@ -63,10 +54,10 @@ val feature = LoginFeature<Vhod> {
         RegisterValidationMapper { state, fields ->
             state.copy(
                 email = fields.fields.firstOrNull {
-                    it.id == 1L
+                    it.id == FIELD_ID_EMAIL
                 }?.value ?: state.email,
                 emailError = fields.fields.firstOrNull {
-                    it.id == 1L
+                    it.id == FIELD_ID_EMAIL
                 }?.takeIf { it.status == FieldValidationStatus.INVALID }?.let {
                     "Email error"
                 } ?: ""
@@ -76,11 +67,9 @@ val feature = LoginFeature<Vhod> {
 }
 
 val loginReducer = reducer<LoginScreenState> { state, message ->
-    if (message is EmailPasswordMessage || message is LoginMessage) {
-        return@reducer feature.update(state.vhod, message).map {
-            state.copy(vhod = it)
-        }
+    if(message is ComponentInitialized){
+        state.updateWithoutCmd()
+    }else{
+        feature.update(state, message)
     }
-
-    state.updateWithoutCmd()
 }
