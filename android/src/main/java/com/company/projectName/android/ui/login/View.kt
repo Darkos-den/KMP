@@ -126,10 +126,8 @@ private fun LoginTextField(
     modifier: Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
-    var textState by remember { mutableStateOf(String()) }
-
     TextField(
-        value = textState,
+        value = state.value,
         label = {
             if (state is TextFieldState.Error) {
                 Text(
@@ -149,7 +147,9 @@ private fun LoginTextField(
             MaterialTheme.colors.onSurface
         },
         onValueChange = {
-            textState = it
+            if(it != state.value){
+                textChanged(it)
+            }
         },
         keyboardType = keyboardType,
         visualTransformation = visualTransformation,

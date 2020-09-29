@@ -85,7 +85,7 @@ class LoginReducer<T : MVUState> private constructor(
                     state = statusProcessor?.onStateChanged?.let {
                         it(state, false)
                     } ?: state,
-                    effect = statusProcessor?.onFailed?.invoke() ?: None()
+                    effect = statusProcessor?.onFailed?.invoke(message.e) ?: None()
                 )
             }
             else -> {
@@ -104,13 +104,13 @@ class LoginReducer<T : MVUState> private constructor(
     internal class StatusProcessor<T : MVUState>(
         val onStateChanged: ((T, Boolean) -> T)?,
         val onSuccess: (() -> Effect)?,
-        val onFailed: (() -> Effect)?
+        val onFailed: ((Exception) -> Effect)?
     )
 
     class StatusProcessorBuilder<T : MVUState> {
         private var onStateChanged: ((T, Boolean) -> T)? = null
         private var onSuccess: (() -> Effect)? = null
-        private var onFailed: (() -> Effect)? = null
+        private var onFailed: ((Exception) -> Effect)? = null
 
         fun OnStateChanged(block: (T, Boolean) -> T) {
             onStateChanged = block
@@ -120,7 +120,7 @@ class LoginReducer<T : MVUState> private constructor(
             onSuccess = block
         }
 
-        fun OnFailed(block: () -> Effect) {
+        fun OnFailed(block: (Exception) -> Effect) {
             onFailed = block
         }
 

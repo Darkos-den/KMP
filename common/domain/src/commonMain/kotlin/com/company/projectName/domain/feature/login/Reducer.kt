@@ -4,7 +4,6 @@ import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
-import com.company.projectName.login.EmailPasswordMessage
 import com.company.projectName.login.LoginFeature
 import com.company.projectName.login.LoginReducer
 import com.company.projectName.login.map
@@ -24,7 +23,7 @@ val feature = LoginFeature<LoginScreenState> {
             NavigationEffect.NavigateToHome
         }
         OnFailed {
-            GeneralEffect.ShowUserMessage("error")
+            GeneralEffect.ShowUserMessage(it.message ?: "Something went wrong")
         }
         OnStateChanged { state, value ->
             state.copy(progress = value)
@@ -67,9 +66,9 @@ val feature = LoginFeature<LoginScreenState> {
 }
 
 val loginReducer = reducer<LoginScreenState> { state, message ->
-    if(message is ComponentInitialized){
+    if (message is ComponentInitialized) {
         state.updateWithoutCmd()
-    }else{
+    } else {
         feature.update(state, message)
     }
 }

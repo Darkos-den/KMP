@@ -1,9 +1,9 @@
 package com.company.projectName.android.ui.login
 
+import com.company.projectName.domain.feature.login.LoginScreenMessage
 import com.company.projectName.domain.feature.login.LoginScreenState
 import com.company.projectName.domain.feature.login.feature
 import com.company.projectName.domain.feature.login.loginReducer
-import com.company.projectName.login.EmailPasswordMessage
 import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
@@ -48,11 +48,11 @@ class LoginViewModel(
     }
 
     fun emailChanged(value: String) {
-        program.accept(EmailPasswordMessage.EmailChanged(value))
+        program.accept(LoginScreenMessage.EmailChanged(value))
     }
 
     fun passwordChanged(value: String) {
-        program.accept(EmailPasswordMessage.PasswordChanged(value))
+        program.accept(LoginScreenMessage.PasswordChanged(value))
     }
 
     fun passwordVisibleClick() {

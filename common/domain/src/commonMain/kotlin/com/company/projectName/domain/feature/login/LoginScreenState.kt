@@ -1,8 +1,5 @@
 package com.company.projectName.domain.feature.login
 
-import com.company.projectName.domain.feature.textField.TextFieldState
-import com.company.projectName.login.model.EmailPassword
-import com.company.projectName.login.model.LoginState
 import com.darkos.mvu.models.MVUState
 
 data class LoginScreenState(
