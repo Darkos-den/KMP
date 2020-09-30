@@ -10,7 +10,7 @@ import com.darkos.mvu.models.Message
 
 abstract class ValidationEffectHandler : EffectHandler {
 
-    abstract fun validate(field: Field): Boolean
+    abstract suspend fun validate(field: Field): Boolean
 
     override suspend fun call(effect: Effect): Message {
         require(effect is ValidationEffect.Validate) {

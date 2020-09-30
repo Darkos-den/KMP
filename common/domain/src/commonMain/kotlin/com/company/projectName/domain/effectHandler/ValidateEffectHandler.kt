@@ -2,9 +2,11 @@ package com.company.projectName.domain.effectHandler
 
 import com.company.projectName.validation.ValidationEffectHandler
 import com.company.projectName.validation.model.Field
+import kotlinx.coroutines.delay
 
 class ValidateEffectHandler: ValidationEffectHandler() {
-    override fun validate(field: Field): Boolean {
+    override suspend fun validate(field: Field): Boolean {
+        delay(2000)
         return when (field.type) {
             FIELD_TYPE_EMAIL -> false
             FIELD_TYPE_PASSWORD -> false

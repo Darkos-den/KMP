@@ -7,9 +7,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Recomposer
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.setContent
 import androidx.core.widget.addTextChangedListener
 import com.company.projectName.domain.feature.login.LoginScreenState
@@ -42,36 +40,15 @@ class LoginFragment : LayoutFragment(
 
     override fun viewCreated(savedInstanceState: Bundle?) {
         (view as ViewGroup).setContent(Recomposer.current()) {
-            val state by viewModel.state.collectAsState(initial = LoginScreenState.Initial)
+            val state by viewModel.state.collectAsState(context = Dispatchers.Main.immediate)
 
-            TextField(
-                value = state.email,
-                label = {},
-                onValueChange = viewModel::emailChanged)
+            LoginScreen(
+                state = state,
+                emailChanged = viewModel::emailChanged,
+                passwordChanged = viewModel::passwordChanged,
+                passwordVisibleClick = viewModel::passwordVisibleClick,
+                submitClick = viewModel::submitClick
+            )
         }
-
-//        val binding = FragmentLoginBinding.bind(requireView())
-//
-//        binding.etEmail.addTextChangedListener {
-//            it?.toString()?.let {
-//                viewModel.emailChanged(it)
-//            }
-//        }
-//        binding.etPassword.addTextChangedListener {
-//            it?.toString()?.let {
-//                viewModel.passwordChanged(it)
-//            }
-//        }
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            viewModel.state.collect {
-//                if(binding.etEmail.text.toString() != it.email) {
-//                    binding.etEmail.setText(it.email)
-//                }
-//                if(binding.etPassword.text.toString() != it.password) {
-//                    binding.etPassword.setText(it.password)
-//                }
-//            }
-//        }
     }
 }

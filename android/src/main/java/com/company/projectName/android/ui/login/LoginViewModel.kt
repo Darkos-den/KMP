@@ -9,8 +9,13 @@ import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu_program.Program
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 
@@ -18,14 +23,10 @@ class LoginViewModel(
     effectHandler: EffectHandler
 ) : BaseViewModelImpl(), Component<LoginScreenState> {
 
-    private val stateSource = Channel<LoginScreenState>()
-    val state: Flow<LoginScreenState> = channelFlow {
-        while (true) {
-            stateSource.receive().let {
-                send(it)
-            }
-        }
-    }
+//    private val stateSource = Channel<LoginScreenState>()
+    val state: MutableStateFlow<LoginScreenState> = MutableStateFlow(LoginScreenState.Initial)
+
+    var callback: (String)->Unit = {}
 
     private val program = Program(
         initialState = LoginScreenState.Initial,
@@ -42,9 +43,7 @@ class LoginViewModel(
     }
 
     override fun render(state: LoginScreenState) {
-        ioScope.launch {
-            stateSource.send(state)
-        }
+        this@LoginViewModel.state.value = state
     }
 
     fun emailChanged(value: String) {
