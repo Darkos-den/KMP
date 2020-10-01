@@ -60,7 +60,7 @@ android {
 dependencies {
     applyDependencies(dependencyList)
     implementation("com.github.Darkos-den.core2:presentation:1.0.9")
-    implementation("com.darkos:mvu-jvm:1.0.0")
+    implementation("com.darkosinc.mvu:core-jvm:1.0.0")
     implementation("com.github.Darkos-den.core2:mvu-program:1.0.9")
 
     implementation("com.github.aakira:napier-android:1.3.0")

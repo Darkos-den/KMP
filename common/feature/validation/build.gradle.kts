@@ -39,7 +39,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
-                implementation("com.darkos:mvu:1.0.0")
+                implementation("com.darkosinc.mvu:core:1.0.0")
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
@@ -50,7 +50,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
-                implementation("com.darkos:mvu-jvm:1.0.0")
+                implementation("com.darkosinc.mvu:core-jvm:1.0.0")
 
                 implementation(project(":common:entity"))
             }

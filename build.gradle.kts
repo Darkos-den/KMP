@@ -23,7 +23,7 @@ allprojects {
         jcenter()
         google()
         maven("https://jitpack.io")
-        maven("https://darkos.bintray.com/mvu")
+        maven("https://dl.bintray.com/darkosinc/MVU")
         maven(url = "https://dl.bintray.com/kotlin/ktor")
         maven(url = "https://dl.bintray.com/kotlin/kotlinx")
         maven(url = "https://dl.bintray.com/aakira/maven")

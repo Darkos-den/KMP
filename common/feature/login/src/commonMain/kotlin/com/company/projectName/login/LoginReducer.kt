@@ -7,16 +7,18 @@ import com.company.projectName.validation.model.FieldValidationStatus
 import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.company.projectName.validation.model.mvu.ValidationMessage
 import com.darkos.mvu.Reducer
+import com.darkos.mvu.map
 import com.darkos.mvu.models.*
 import kotlin.reflect.KClass
 
-class LoginReducer<T : MVUState> private constructor(
-    private val statusProcessor: StatusProcessor<T>?,
-    private val withoutValidationProcessors: List<WithoutValidationReducer<T>>,
-    private val validation: ValidationReducer<T>?
-) : Reducer<T> {
+class LoginReducer<State : MVUState, Request : Any> private constructor(
+    private val loginEffectCreator: LoginEffectCreator<State, Request>,
+    private val statusProcessor: StatusProcessor<State>?,
+    private val withoutValidationProcessors: List<WithoutValidationReducer<State>>,
+    private val validation: ValidationReducer<State>?
+) : Reducer<State> {
 
-    override fun update(state: T, message: Message): StateCmdData<T> {
+    override fun update(state: State, message: Message): StateCmdData<State> {
         withoutValidationProcessors.firstOrNull {
             it.valueChangedMessage.isInstance(message)
         }?.let { reducer ->
@@ -46,7 +48,7 @@ class LoginReducer<T : MVUState> private constructor(
                         state = statusProcessor?.onStateChanged?.let {
                             it(state, true)
                         } ?: state,
-                        effect = LoginEffect.Login(state)
+                        effect = loginEffectCreator.create(state)
                     )
                 }
             }
@@ -55,7 +57,7 @@ class LoginReducer<T : MVUState> private constructor(
                     state = statusProcessor?.onStateChanged?.let {
                         it(state, true)
                     } ?: state,
-                    effect = LoginEffect.Login(state)
+                    effect = loginEffectCreator.create(state)
                 )
             }
             is ValidationMessage.Error -> {
@@ -97,6 +99,16 @@ class LoginReducer<T : MVUState> private constructor(
                         validation.mapper(state, it)
                     }
                 } ?: throw IllegalArgumentException()
+            }
+        }
+    }
+
+    class LoginEffectCreator<State : MVUState, Request : Any>(
+        map: (State) -> Request
+    ) {
+        val create: (State) -> LoginEffect.Login<Request> = {
+            map(it).let {
+                LoginEffect.Login(it)
             }
         }
     }
@@ -277,24 +289,30 @@ class LoginReducer<T : MVUState> private constructor(
         internal fun build() = reducers
     }
 
-    class Builder<T : MVUState> {
-        private var statusProcessor: StatusProcessor<T>? = null
-        private var withoutValidationProcessors: List<WithoutValidationReducer<T>> = emptyList()
-        private var validation: ValidationReducer<T>? = null
+    class Builder<State : MVUState, Request : Any> {
+        private var statusProcessor: StatusProcessor<State>? = null
+        private var withoutValidationProcessors: List<WithoutValidationReducer<State>> = emptyList()
+        private var validation: ValidationReducer<State>? = null
+        private var loginEffectCreator: LoginEffectCreator<State, Request>? = null
 
-        fun ProcessStatus(block: StatusProcessorBuilder<T>.() -> Unit) {
-            statusProcessor = StatusProcessorBuilder<T>().apply(block).build()
+        fun ProcessStatus(block: StatusProcessorBuilder<State>.() -> Unit) {
+            statusProcessor = StatusProcessorBuilder<State>().apply(block).build()
         }
 
-        fun WithoutValidation(block: WithoutValidationBuilder<T>.() -> Unit) {
-            withoutValidationProcessors = WithoutValidationBuilder<T>().apply(block).build()
+        fun WithoutValidation(block: WithoutValidationBuilder<State>.() -> Unit) {
+            withoutValidationProcessors = WithoutValidationBuilder<State>().apply(block).build()
         }
 
-        fun WithValidation(block: ValidationBuilder<T>.() -> Unit) {
-            validation = ValidationBuilder<T>().apply(block).build()
+        fun WithValidation(block: ValidationBuilder<State>.() -> Unit) {
+            validation = ValidationBuilder<State>().apply(block).build()
+        }
+
+        fun MapStateToLoginRequest(block: (State) -> Request) {
+            loginEffectCreator = LoginEffectCreator(block)
         }
 
         fun build() = LoginReducer(
+            loginEffectCreator = loginEffectCreator!!,
             statusProcessor = statusProcessor,
             withoutValidationProcessors = withoutValidationProcessors,
             validation = validation
@@ -312,12 +330,5 @@ fun List<Field>.replaceById(id: Long, newValue: Field): List<Field> {
     }
 }
 
-fun <T : MVUState> LoginFeature(block: LoginReducer.Builder<T>.() -> Unit) =
-    LoginReducer.Builder<T>().apply(block).build()
-
-fun <T : MVUState, U : MVUState> StateCmdData<T>.map(mapper: (T) -> U): StateCmdData<U> {
-    return StateCmdData(
-        state = mapper(state),
-        effect = effect
-    )
-}
+fun <State : MVUState, Request : Any> LoginFeature(block: LoginReducer.Builder<State, Request>.() -> Unit) =
+    LoginReducer.Builder<State, Request>().apply(block).build()

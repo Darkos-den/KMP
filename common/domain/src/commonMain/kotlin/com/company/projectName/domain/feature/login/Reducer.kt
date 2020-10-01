@@ -4,6 +4,7 @@ import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.projectName.entity.models.dto.LoginDTO
 import com.company.projectName.login.LoginFeature
 import com.company.projectName.login.LoginReducer
 import com.company.projectName.login.map
@@ -17,7 +18,13 @@ import com.darkos.mvu.reducer
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
 
-val feature = LoginFeature<LoginScreenState> {
+val feature = LoginFeature<LoginScreenState, LoginDTO> {
+    MapStateToLoginRequest {
+        LoginDTO(
+            email = it.email,
+            password = it.password
+        )
+    }
     ProcessStatus {
         OnSuccess {
             NavigationEffect.NavigateToHome

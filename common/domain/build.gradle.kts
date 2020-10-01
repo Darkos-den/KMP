@@ -39,7 +39,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
-                implementation("com.darkos:mvu:1.0.0")
+                implementation("com.darkosinc.mvu:core:1.0.0")
                 implementation("com.netguru.kissme:common:0.2.5")
 
                 implementation(project(":common:core"))
@@ -53,7 +53,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
-                implementation("com.darkos:mvu-jvm:1.0.0")
+                implementation("com.darkosinc.mvu:core-jvm:1.0.0")
                 implementation("com.netguru.kissme:android:0.2.5")
 
                 implementation(project(":common:entity"))

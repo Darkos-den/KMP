@@ -4,5 +4,5 @@ import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.MVUState
 
 sealed class LoginEffect : Effect() {
-    class Login<T : MVUState>(val data: T) : LoginEffect()
+    class Login<T : Any>(val data: T) : LoginEffect()
 }

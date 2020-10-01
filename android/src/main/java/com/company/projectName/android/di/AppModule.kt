@@ -7,6 +7,11 @@ import com.company.projectName.domain.common.MessageProcessor
 import com.company.projectName.domain.common.Navigator
 import com.company.projectName.domain.common.SecureStorage
 import com.company.projectName.domain.di.DomainModule
+import com.company.projectName.domain.effectHandler.LoginEffectHandler
+import com.company.projectName.domain.feature.home.HomeState
+import com.company.projectName.domain.feature.login.LoginScreenState
+import com.company.projectName.domain.feature.login.feature
+import com.company.projectName.domain.feature.login.loginReducer
 import com.company.projectName.domain.repository.AuthRepository
 import com.company.projectName.domain.repository.LoginRepository
 import com.company.projectName.domain.repository.SampleRepository
@@ -15,11 +20,15 @@ import com.company.projectName.entity.models.dto.TokenDTO
 import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import com.company.projectName.entity.source.remote.ISampleRemoteRepository
 import com.company.projectName.entity.source.secure.ISecureStorage
+import com.company.projectName.login.LoginReducer
 import com.company.projectName.login.LoginRemote
+import com.company.projectName.login.di.LoginModule
 import com.darkos.core.presentation.di.PresentationModule
+import com.darkos.mvu.Reducer
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
@@ -36,6 +45,19 @@ object AppModule {
         import(PresentationModule.get())
         import(DomainModule.get())
         import(NavigationModule.get())
+
+        LoginModule.get<LoginScreenState, LoginDTO, TokenDTO>(
+            handlerCreator = {
+                LoginEffectHandler(
+                    remote = instance()
+                )
+            },
+            reducerCreator = {
+                feature
+            }
+        ).let {
+            import(it)
+        }
 
         bind<Navigator>() with singleton { AppNavigator() }
     }

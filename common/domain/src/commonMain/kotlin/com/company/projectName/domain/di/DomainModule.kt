@@ -27,9 +27,7 @@ object DomainModule {
                 sampleEffectHandler = SampleEffectHandler(
                     remote = instance()
                 ),
-                loginEffectHandler = LoginEffectHandler(
-                    remote = instance()
-                ),
+                loginEffectHandler = instance(),
                 validateEffectHandler = ValidateEffectHandler()
             )
         }
