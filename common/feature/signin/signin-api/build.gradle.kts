@@ -1,17 +1,5 @@
 import com.darkos.depend.applyDependencies
 import com.darkos.depend.implementation
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
-plugins {
-    id("org.jetbrains.kotlin.multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization")
-    id("org.jetbrains.kotlin.kapt")
-
-    id("com.android.library")
-    id("app-config-android")
-}
-
-applyMultiPlatformSourceSets()
 
 val commonDependencyList = listOf(
     implementation(Libs.Coroutines.COMMON),
@@ -25,6 +13,24 @@ val androidDependencyList = listOf(
     implementation(Libs.Serialization.CORE)
 )
 
+//val iosDeps = listOf(
+//    implementation(Libs.Coroutines.NATIVE),
+//    implementation(Libs.Serialization.NATIVE)
+////    *Libs.Ktor.defaultIos
+//)
+
+plugins {
+    id("org.jetbrains.kotlin.multiplatform")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("org.jetbrains.kotlin.kapt")
+    id("kotlin-android-extensions")
+
+    id("com.android.library")
+    id("app-config-android")
+}
+
+applyMultiPlatformSourceSets()
+
 kotlin {
     android("android")
 
@@ -34,6 +40,9 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
                 implementation("com.darkosinc.mvu:core:1.0.0")
+
+                implementation(project(":common:core"))
+                implementation(project(":common:entity"))
             }
         }
 
@@ -42,6 +51,8 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
+
+                implementation(project(":common:entity"))
             }
         }
     }

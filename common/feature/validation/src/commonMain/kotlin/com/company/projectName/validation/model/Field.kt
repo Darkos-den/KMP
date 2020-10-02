@@ -4,7 +4,7 @@ import com.darkos.mvu.models.MVUState
 
 data class Field(
     val id: Long,
-    val type: Int,
+    val type: ValidationFieldType,
     val value: String,
     val status: FieldValidationStatus = FieldValidationStatus.VALID
 ): MVUState()

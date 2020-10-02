@@ -1,14 +1,11 @@
 package com.company.projectName.domain.effectHandler
 
-import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
-import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_PASSWORD
 import com.company.projectName.domain.model.exception.NotSupportedMessageException
 import com.company.projectName.domain.model.mvu.auth.AuthEffect
 import com.company.projectName.domain.model.mvu.general.GeneralEffect
-import com.company.projectName.domain.model.mvu.navigation.NavigationEffect
+import com.company.core.model.navigation.NavigationEffect
 import com.company.projectName.domain.model.mvu.sample.SampleEffect
 import com.company.projectName.login.model.mvu.LoginEffect
-import com.company.projectName.validation.ValidationEffectHandler
 import com.company.projectName.validation.model.mvu.ValidationEffect
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect

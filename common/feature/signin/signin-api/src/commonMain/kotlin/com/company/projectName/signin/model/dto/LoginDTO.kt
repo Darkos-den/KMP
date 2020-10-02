@@ -1,4 +1,4 @@
-package com.company.projectName.entity.models.dto
+package com.company.projectName.signin.model.dto
 
 data class LoginDTO(
     val email: String,

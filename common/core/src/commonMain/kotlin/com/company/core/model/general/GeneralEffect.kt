@@ -1,8 +1,8 @@
-package com.company.projectName.domain.model.mvu.general
+package com.company.core.model.general
 
 import com.darkos.mvu.models.Effect
 
-internal sealed class GeneralEffect: Effect() {
+sealed class GeneralEffect: Effect() {
     class Timer(val delay: Long): GeneralEffect()
     class ShowUserMessage(val message: String): GeneralEffect()
 }

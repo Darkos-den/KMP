@@ -5,5 +5,7 @@ include(
     ":common:domain",
     ":common:source:remote",
     ":common:feature:validation",
-    ":common:feature:login"
+    ":common:feature:login",
+    ":common:feature:signin:signin-impl",
+    ":common:feature:signin:signin-api"
 )

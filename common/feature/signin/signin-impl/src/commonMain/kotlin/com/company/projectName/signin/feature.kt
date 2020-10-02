@@ -1,15 +1,12 @@
-package com.company.projectName.domain.feature.login
+package com.company.projectName.signin
 
 import com.company.core.model.general.GeneralEffect
-import com.company.projectName.domain.common.updateWithoutCmd
-import com.company.projectName.domain.effectHandler.ValidateEffectHandler.Companion.FIELD_TYPE_EMAIL
 import com.company.core.model.navigation.NavigationEffect
 import com.company.projectName.entity.models.dto.LoginDTO
 import com.company.projectName.login.LoginFeature
-import com.company.projectName.validation.model.Field
-import com.company.projectName.validation.model.FieldValidationStatus
-import com.darkos.mvu.models.ComponentInitialized
-import com.darkos.mvu.reducer
+import com.company.projectName.signin.model.dto.LoginDTO
+import com.company.projectName.signin.model.mvu.LoginScreenMessage
+import com.company.projectName.signin.model.mvu.LoginScreenState
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
@@ -48,7 +45,7 @@ val feature = LoginFeature<LoginScreenState, LoginDTO> {
                 Field(
                     id = FIELD_ID_EMAIL,
                     type = FIELD_TYPE_EMAIL,
-                    value = it.email
+                    value = it.email.trim()
                 )
             }
         )
@@ -65,13 +62,5 @@ val feature = LoginFeature<LoginScreenState, LoginDTO> {
                 } ?: ""
             )
         }
-    }
-}
-
-val loginReducer = reducer<LoginScreenState> { state, message ->
-    if (message is ComponentInitialized) {
-        state.updateWithoutCmd()
-    } else {
-        feature.update(state, message)
     }
 }
