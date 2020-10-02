@@ -4,7 +4,8 @@ include(
     ":common:entity",
     ":common:domain",
     ":common:source:remote",
-    ":common:feature:validation",
+    ":common:feature:validation:validation-api",
+    ":common:feature:validation:validation-impl",
     ":common:feature:login",
     ":common:feature:signin:signin-impl",
     ":common:feature:signin:signin-api"
