@@ -6,7 +6,8 @@ include(
     ":common:source:remote",
     ":common:feature:validation:validation-api",
     ":common:feature:validation:validation-impl",
-    ":common:feature:login",
+    ":common:feature:login:login-api",
+    ":common:feature:login:login-impl",
     ":common:feature:signin:signin-impl",
     ":common:feature:signin:signin-api"
 )
