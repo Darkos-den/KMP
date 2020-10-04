@@ -1,8 +1,8 @@
 package com.company.projectName.login
 
 import com.company.projectName.entity.models.common.RemoteResult
-import com.company.projectName.login.model.LoginEffect
-import com.company.projectName.login.model.LoginMessage
+import com.company.projectName.login.model.mvu.LoginEffect
+import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message
