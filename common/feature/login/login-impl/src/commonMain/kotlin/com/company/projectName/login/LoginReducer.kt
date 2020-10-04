@@ -1,14 +1,14 @@
 package com.company.projectName.login
 
-import com.company.projectName.login.model.mvu.LoginEffect
-import com.company.projectName.login.model.mvu.LoginMessage
-import com.company.projectName.validation.model.Field
-import com.company.projectName.validation.model.FieldValidationStatus
-import com.company.projectName.validation.model.mvu.ValidationEffect
-import com.company.projectName.validation.model.mvu.ValidationMessage
+import com.company.projectName.login.model.LoginEffect
+import com.company.projectName.login.model.LoginMessage
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.map
 import com.darkos.mvu.models.*
+import com.darkos.mvu.validation.model.Field
+import com.darkos.mvu.validation.model.FieldValidationStatus
+import com.darkos.mvu.validation.model.mvu.ValidationEffect
+import com.darkos.mvu.validation.model.mvu.ValidationMessage
 import kotlin.reflect.KClass
 
 class LoginReducer<State : MVUState, Request : Any> private constructor(

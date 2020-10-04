@@ -40,11 +40,11 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
                 implementation("com.darkosinc.mvu:core:1.0.0")
+                implementation("com.darkosinc.mvu:validation-api:1.0.0")
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:login:login-api"))
-                implementation(project(":common:feature:validation:validation-api"))
             }
         }
 
@@ -53,10 +53,10 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
+                implementation("com.darkosinc.mvu:validation-api-jvm:1.0.0")
 
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:login:login-api"))
-                implementation(project(":common:feature:validation:validation-api"))
             }
         }
     }

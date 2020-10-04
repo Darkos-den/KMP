@@ -43,6 +43,7 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
+                implementation(project(":common:feature:login:login-api"))
             }
         }
 
@@ -53,6 +54,7 @@ kotlin {
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
 
                 implementation(project(":common:entity"))
+                implementation(project(":common:feature:login:login-api"))
             }
         }
     }

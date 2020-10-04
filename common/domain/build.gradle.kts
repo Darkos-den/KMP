@@ -44,8 +44,6 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:validation"))
-                implementation(project(":common:feature:login"))
             }
         }
 
@@ -57,8 +55,6 @@ kotlin {
                 implementation("com.netguru.kissme:android:0.2.5")
 
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:validation"))
-                implementation(project(":common:feature:login"))
             }
         }
     }

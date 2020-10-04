@@ -43,8 +43,8 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:login"))
                 implementation(project(":common:feature:signin:signin-api"))
+                implementation(project(":common:feature:login:login-impl"))
             }
         }
 
@@ -56,7 +56,7 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:login"))
+                implementation(project(":common:feature:login:login-impl"))
                 implementation(project(":common:feature:signin:signin-api"))
             }
         }
