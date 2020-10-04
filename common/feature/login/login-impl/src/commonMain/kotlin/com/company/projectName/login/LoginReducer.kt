@@ -1,7 +1,6 @@
 package com.company.projectName.login
 
-import com.company.projectName.login.model.LoginEffect
-import com.company.projectName.login.model.LoginMessage
+import com.company.projectName.login.model.*
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.map
 import com.darkos.mvu.models.*
@@ -143,98 +142,6 @@ class LoginReducer<State : MVUState, Request : Any> private constructor(
         )
     }
 
-    abstract class FieldValueChanged(
-        val newValue: String
-    ) : Message()
-
-    data class WithoutValidationField(
-        val value: String
-    ) : MVUState()
-
-    data class ValidationState(
-        val fields: List<Field>
-    ) : MVUState()
-
-    class ValidationReducer<T : MVUState>(
-        private val withValidationProcessors: List<WithValidationReducer<T>>,
-        val mapper: (T, ValidationState) -> T,
-        private val errorEffect: Effect?
-    ) : Reducer<ValidationState> {
-
-        fun map(state: T): ValidationState {
-            return ValidationState(
-                fields = withValidationProcessors.map {
-                    it.map(state)
-                }
-            )
-        }
-
-        override fun update(
-            state: ValidationState,
-            message: Message
-        ): StateCmdData<ValidationState> {
-            return when (message) {
-                is ValidationMessage.ValidationClick -> {
-                    StateCmdData(
-                        state = state,
-                        effect = ValidationEffect.Validate(state.fields)
-                    )
-                }
-                is ValidationMessage.Error -> {
-                    var fields = state.fields
-                    message.wrongFields.forEach {
-                        fields = fields.replaceById(it.id, it)
-                    }
-
-                    StateCmdData(
-                        state = ValidationState(fields),
-                        effect = errorEffect ?: None()
-                    )
-                }
-                else -> {
-                    withValidationProcessors.firstOrNull {
-                        it.valueChangedMessage.isInstance(message)
-                    }?.let { reducer ->
-                        reducer.update(
-                            state = state.fields.first { it.id == reducer.fieldId },
-                            message = message
-                        ).map {
-                            state.copy(
-                                fields = state.fields.replaceById(it.id, it)
-                            )
-                        }
-                    } ?: throw IllegalArgumentException()
-                }
-            }
-        }
-    }
-
-    class ValidationBuilder<T : MVUState> {
-        private var processors: List<WithValidationReducer<T>> = emptyList()
-        var errorEffect: Effect? = null
-        private var mapper: ((T, ValidationState) -> T)? = null
-
-        fun RegisterValidationMapper(block: (T, ValidationState) -> T) {
-            mapper = block
-        }
-
-        fun registerField(
-            fieldId: Long,
-            valueChangedMessage: KClass<out FieldValueChanged>,
-            map: (T) -> Field
-        ) {
-            processors = processors + WithValidationReducer(
-                fieldId, valueChangedMessage, map
-            )
-        }
-
-        internal fun build() = ValidationReducer(
-            withValidationProcessors = processors,
-            mapper = mapper!!,
-            errorEffect = errorEffect
-        )
-    }
-
     class WithoutValidationReducer<T : MVUState>(
         val valueChangedMessage: KClass<out FieldValueChanged>,
         val mapTo: (T, WithoutValidationField) -> T
@@ -251,25 +158,6 @@ class LoginReducer<State : MVUState, Request : Any> private constructor(
             } else {
                 throw IllegalArgumentException()
             }
-        }
-    }
-
-    class WithValidationReducer<T : MVUState>(
-        val fieldId: Long,
-        val valueChangedMessage: KClass<out FieldValueChanged>,
-        val map: (T) -> Field
-    ) : Reducer<Field> {
-        override fun update(
-            state: Field,
-            message: Message
-        ): StateCmdData<Field> {
-            return StateCmdData(
-                state = state.copy(
-                    value = (message as FieldValueChanged).newValue,
-                    status = FieldValidationStatus.VALID
-                ),
-                effect = None()
-            )
         }
     }
 
@@ -320,15 +208,5 @@ class LoginReducer<State : MVUState, Request : Any> private constructor(
     }
 }
 
-fun List<Field>.replaceById(id: Long, newValue: Field): List<Field> {
-    return this.map {
-        if (it.id == id) {
-            newValue
-        } else {
-            it
-        }
-    }
-}
 
-fun <State : MVUState, Request : Any> LoginFeature(block: LoginReducer.Builder<State, Request>.() -> Unit) =
-    LoginReducer.Builder<State, Request>().apply(block).build()
+

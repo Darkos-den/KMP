@@ -2,11 +2,12 @@ package com.company.projectName.signin
 
 import com.company.core.model.general.GeneralEffect
 import com.company.core.model.navigation.NavigationEffect
-import com.company.projectName.entity.models.dto.LoginDTO
 import com.company.projectName.login.LoginFeature
 import com.company.projectName.signin.model.dto.LoginDTO
 import com.company.projectName.signin.model.mvu.LoginScreenMessage
 import com.company.projectName.signin.model.mvu.LoginScreenState
+import com.darkos.mvu.validation.model.Field
+import com.darkos.mvu.validation.model.ValidationFieldType
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
@@ -44,7 +45,7 @@ val feature = LoginFeature<LoginScreenState, LoginDTO> {
             map = {
                 Field(
                     id = FIELD_ID_EMAIL,
-                    type = FIELD_TYPE_EMAIL,
+                    type = ValidationFieldType.Email,
                     value = it.email.trim()
                 )
             }
