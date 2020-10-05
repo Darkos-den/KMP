@@ -3,11 +3,11 @@ package com.company.projectName.signin
 import com.company.projectName.login.LoginEffectHandler
 import com.company.projectName.signin.model.dto.LoginDTO
 import com.company.projectName.signin.model.dto.TokenDTO
-import com.darkos.mvu.validation.ValidationHandler
+import com.darkos.mvu.validation.IValidationHandler
 
 class LoginEffectHandler(
     remote: SignInRemote,
-    validation: ValidationHandler
+    validation: IValidationHandler
 ) : LoginEffectHandler<LoginDTO, TokenDTO>(remote, validation) {
 
     override suspend fun processLoginResult(result: TokenDTO) {

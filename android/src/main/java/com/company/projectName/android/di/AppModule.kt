@@ -7,9 +7,6 @@ import com.company.projectName.domain.common.MessageProcessor
 import com.company.projectName.domain.common.Navigator
 import com.company.projectName.domain.common.SecureStorage
 import com.company.projectName.domain.di.DomainModule
-import com.company.projectName.domain.effectHandler.LoginEffectHandler
-import com.company.projectName.domain.feature.login.LoginScreenState
-import com.company.projectName.domain.feature.login.feature
 import com.company.projectName.domain.repository.AuthRepository
 import com.company.projectName.domain.repository.LoginRepository
 import com.company.projectName.domain.repository.SampleRepository
@@ -32,24 +29,10 @@ object AppModule {
         bind<IAuthRemoteRepository>() with provider { AuthRepository() }
         bind<ISampleRemoteRepository>() with provider { SampleRepository() }
         bind<ISecureStorage>() with provider { SecureStorage() }
-        bind<LoginRemote<LoginDTO,TokenDTO>>() with provider { LoginRepository() }
 
         import(PresentationModule.get())
         import(DomainModule.get())
         import(NavigationModule.get())
-
-        LoginModule.get<LoginScreenState, LoginDTO, TokenDTO>(
-            handlerCreator = {
-                LoginEffectHandler(
-                    remote = instance()
-                )
-            },
-            reducerCreator = {
-                feature
-            }
-        ).let {
-            import(it)
-        }
 
         bind<Navigator>() with singleton { AppNavigator() }
     }

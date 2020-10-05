@@ -2,7 +2,6 @@ package com.company.projectName.domain.feature.home
 
 import com.company.projectName.domain.common.updateWithoutCmd
 import com.company.projectName.domain.model.exception.NotSupportedMessageException
-import com.company.projectName.domain.model.mvu.general.GeneralEffect
 import com.company.projectName.domain.model.mvu.sample.SampleEffect
 import com.company.projectName.domain.model.mvu.sample.SampleMessage
 import com.darkos.mvu.models.ComponentInitialized
@@ -48,7 +47,7 @@ val homeReducer = reducer<HomeState> { state, message ->
                     is HomeState.Empty -> state.copy(showProgress = false)
                     is HomeState.Initial -> HomeState.Empty(showProgress = false)
                 },
-                effect = GeneralEffect.ShowUserMessage(message.message)
+                effect = /*GeneralEffect.ShowUserMessage(message.message)*/None()//ty
             )
         }
         else -> state.updateWithoutCmd()

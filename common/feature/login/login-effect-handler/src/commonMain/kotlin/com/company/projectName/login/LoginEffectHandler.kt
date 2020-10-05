@@ -6,12 +6,12 @@ import com.company.projectName.login.model.mvu.LoginMessage
 import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message
-import com.darkos.mvu.validation.ValidationHandler
+import com.darkos.mvu.validation.IValidationHandler
 import com.darkos.mvu.validation.model.mvu.ValidationEffect
 
 abstract class LoginEffectHandler<T : Any, R : Any>(
     private val remote: LoginRemote<T, R>,
-    private val validationHandler: ValidationHandler
+    private val validationHandler: IValidationHandler
 ) : EffectHandler {
 
     abstract suspend fun processLoginResult(result: R)

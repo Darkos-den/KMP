@@ -10,7 +10,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.setContent
 import androidx.core.widget.addTextChangedListener
-import com.company.projectName.domain.feature.login.LoginScreenState
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
 import com.darkos.core.presentation.fragment.LayoutFragment

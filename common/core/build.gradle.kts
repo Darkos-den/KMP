@@ -34,8 +34,8 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
                 implementation("com.darkosinc.mvu:core:1.0.0")
-                implementation("com.darkosinc.mvu:validation-api:1.0.1")
-                implementation("com.darkosinc.mvu:validation:1.0.2")
+                implementation("com.darkosinc.mvu:validation-api:1.0.2")
+                implementation("com.darkosinc.mvu:validation:1.0.3")
             }
         }
 
@@ -44,8 +44,8 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
-                implementation("com.darkosinc.mvu:validation-api-jvm:1.0.1")
-                implementation("com.darkosinc.mvu:validation:1.0.2")
+                implementation("com.darkosinc.mvu:validation-api-jvm:1.0.2")
+                implementation("com.darkosinc.mvu:validation-jvm:1.0.3")
             }
         }
     }
