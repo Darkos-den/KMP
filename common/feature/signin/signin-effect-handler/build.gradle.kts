@@ -44,7 +44,7 @@ kotlin {
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:signin:signin-api"))
-                implementation(project(":common:feature:login:login-impl"))
+                implementation(project(":common:feature:login:login-effect-handler"))
             }
         }
 
@@ -56,7 +56,7 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:login:login-impl"))
+                implementation(project(":common:feature:login:login-effect-handler"))
                 implementation(project(":common:feature:signin:signin-api"))
             }
         }

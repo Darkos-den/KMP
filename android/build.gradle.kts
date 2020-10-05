@@ -69,5 +69,4 @@ dependencies {
     implementation(project(":common:domain"))
     implementation(project(":common:entity"))
     implementation(project(":common:source:remote"))
-    implementation(project(":common:feature:login"))
 }

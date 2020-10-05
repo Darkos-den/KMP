@@ -7,6 +7,7 @@ import com.company.projectName.signin.model.dto.LoginDTO
 import com.company.projectName.signin.model.mvu.LoginScreenMessage
 import com.company.projectName.signin.model.mvu.LoginScreenState
 import com.darkos.mvu.validation.model.Field
+import com.darkos.mvu.validation.model.FieldValidationStatus
 import com.darkos.mvu.validation.model.ValidationFieldType
 
 private const val FIELD_ID_EMAIL: Long = 1
