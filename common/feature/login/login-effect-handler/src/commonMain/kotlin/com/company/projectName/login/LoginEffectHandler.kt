@@ -15,14 +15,28 @@ abstract class LoginEffectHandler<T : Any, R : Any>(
 ) : EffectHandler {
 
     abstract suspend fun processLoginResult(result: R)
+    abstract fun processError(error: Exception): Message
+    abstract fun processSuccess(): Message
 
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
             is ValidationEffect -> validationHandler.call(effect)
-            is LoginEffect.Login<*> -> {
+            is LoginEffect -> processLoginEffect(effect)
+            else -> throw IllegalArgumentException("new supported effect $effect")
+        }
+    }
+
+    private suspend fun processLoginEffect(effect: LoginEffect): Message {
+        return when (effect) {
+            is LoginEffect.Process<*> -> {
                 login(effect.data as T)
             }
-            else -> throw IllegalArgumentException("new supported effect $effect")
+            is LoginEffect.Error -> {
+                processError(effect.e)
+            }
+            is LoginEffect.Success -> {
+                processSuccess()
+            }
         }
     }
 

@@ -6,9 +6,9 @@ import com.darkos.mvu.models.MVUState
 internal class LoginEffectCreator<State : MVUState, Request : Any>(
     map: (State) -> Request
 ) {
-    val create: (State) -> LoginEffect.Login<Request> = {
+    val create: (State) -> LoginEffect.Process<Request> = {
         map(it).let {
-            LoginEffect.Login(it)
+            LoginEffect.Process(it)
         }
     }
 }

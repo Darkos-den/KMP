@@ -1,14 +1,13 @@
 package com.company.projectName.signin.model.mvu
 
 import com.company.projectName.login.model.FieldValueChanged
-import com.darkos.mvu.validation.model.mvu.ValidationMessage
 
-sealed class LoginScreenMessage {
+sealed class LoginScreenMessage(value: String): FieldValueChanged(value) {
     class EmailChanged(
         value: String
-    ) : ValidationMessage.FieldValueChanged(value)
+    ) : LoginScreenMessage(value)
 
     class PasswordChanged(
         value: String
-    ) : FieldValueChanged(value)
+    ) : LoginScreenMessage(value)
 }

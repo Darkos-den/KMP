@@ -1,14 +1,10 @@
 package com.company.projectName.signin
 
-import com.company.core.model.general.GeneralEffect
-import com.company.core.model.navigation.NavigationEffect
 import com.company.projectName.login.LoginFeature
+import com.company.projectName.login.LoginReducer
 import com.company.projectName.signin.model.dto.LoginDTO
 import com.company.projectName.signin.model.mvu.LoginScreenMessage
 import com.company.projectName.signin.model.mvu.LoginScreenState
-import com.darkos.mvu.validation.model.Field
-import com.darkos.mvu.validation.model.FieldValidationStatus
-import com.darkos.mvu.validation.model.ValidationFieldType
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
@@ -20,16 +16,8 @@ val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
             password = it.password
         )
     }
-    ProcessStatus {
-        OnSuccess {
-            NavigationEffect.NavigateToHome
-        }
-        OnFailed {
-            GeneralEffect.ShowUserMessage(it.message ?: "Something went wrong")
-        }
-        OnStateChanged { state, value ->
-            state.copy(progress = value)
-        }
+    ProcessProgress { state, value ->
+        state.copy(progress = value)
     }
     WithoutValidation {
         registerField(
@@ -42,21 +30,18 @@ val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
     WithValidation {
         registerField(
             fieldId = FIELD_ID_EMAIL,
-            valueChangedMessage = LoginScreenMessage.EmailChanged::class,
+            fieldType = LoginReducer.FieldType.Email,
+            messageClass = LoginScreenMessage.EmailChanged::class,
             map = {
-                Field(
-                    id = FIELD_ID_EMAIL,
-                    type = ValidationFieldType.Email,
-                    value = it.email.trim()
-                )
+                it.email.trim()
             }
         )
 
         RegisterValidationMapper { state, fields ->
             state.copy(
-                emailError = fields.fields.firstOrNull {
+                emailError = fields.firstOrNull {
                     it.id == FIELD_ID_EMAIL
-                }?.takeIf { it.status == FieldValidationStatus.INVALID }?.let {
+                }?.takeIf { it.valid.not() }?.let {
                     "Email error"
                 } ?: ""
             )
