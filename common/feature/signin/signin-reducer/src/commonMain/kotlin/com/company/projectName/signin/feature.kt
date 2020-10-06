@@ -13,7 +13,7 @@ import com.darkos.mvu.validation.model.ValidationFieldType
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
 
-val feature = LoginFeature<LoginScreenState, LoginDTO> {
+val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
     MapStateToLoginRequest {
         LoginDTO(
             email = it.email,
@@ -54,9 +54,6 @@ val feature = LoginFeature<LoginScreenState, LoginDTO> {
 
         RegisterValidationMapper { state, fields ->
             state.copy(
-                email = fields.fields.firstOrNull {
-                    it.id == FIELD_ID_EMAIL
-                }?.value ?: state.email,
                 emailError = fields.fields.firstOrNull {
                     it.id == FIELD_ID_EMAIL
                 }?.takeIf { it.status == FieldValidationStatus.INVALID }?.let {

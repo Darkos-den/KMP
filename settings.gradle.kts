@@ -11,5 +11,10 @@ include(
 
     ":common:feature:signin:signin-api",
     ":common:feature:signin:signin-reducer",
-    ":common:feature:signin:signin-effect-handler"
+    ":common:feature:signin:signin-effect-handler",
+
+    ":common:feature:auth:auth-api",
+    ":common:feature:auth:auth-android",
+    ":common:feature:auth:auth-reducer",
+    ":common:feature:auth:auth-effect-handler"
 )
