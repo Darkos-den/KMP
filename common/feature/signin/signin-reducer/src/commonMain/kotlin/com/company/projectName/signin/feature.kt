@@ -3,13 +3,13 @@ package com.company.projectName.signin
 import com.company.projectName.login.LoginFeature
 import com.company.projectName.login.LoginReducer
 import com.company.projectName.signin.model.dto.LoginDTO
-import com.company.projectName.signin.model.mvu.LoginScreenMessage
-import com.company.projectName.signin.model.mvu.LoginScreenState
+import com.company.projectName.signin.model.mvu.SignInMessage
+import com.company.projectName.signin.model.mvu.SignInScreenState
 
 private const val FIELD_ID_EMAIL: Long = 1
 private const val FIELD_ID_PASSWORD: Long = 2
 
-val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
+val signInReducer = LoginFeature<SignInScreenState, LoginDTO> {
     MapStateToLoginRequest {
         LoginDTO(
             email = it.email,
@@ -21,7 +21,7 @@ val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
     }
     WithoutValidation {
         registerField(
-            valueChangedMessage = LoginScreenMessage.PasswordChanged::class,
+            valueChangedMessage = SignInMessage.PasswordChanged::class,
             mapTo = { state, field ->
                 state.copy(password = field.value)
             }
@@ -31,7 +31,7 @@ val loginReducer = LoginFeature<LoginScreenState, LoginDTO> {
         registerField(
             fieldId = FIELD_ID_EMAIL,
             fieldType = LoginReducer.FieldType.Email,
-            messageClass = LoginScreenMessage.EmailChanged::class,
+            messageClass = SignInMessage.EmailChanged::class,
             map = {
                 it.email.trim()
             }

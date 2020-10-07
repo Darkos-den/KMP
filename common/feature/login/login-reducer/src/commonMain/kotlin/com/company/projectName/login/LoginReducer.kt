@@ -257,7 +257,8 @@ class LoginReducer<State : MVUState, Request : Any> private constructor(
             loginEffectCreator = loginEffectCreator!!,
             progressProcessor = progressProcessor,
             withoutValidationProcessors = withoutValidationProcessors,
-            validation = validation
+            validation = validation,
+            validationMessages = validationMessages
         )
     }
 }
