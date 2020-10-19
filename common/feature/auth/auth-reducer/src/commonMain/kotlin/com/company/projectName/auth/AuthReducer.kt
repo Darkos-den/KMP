@@ -2,9 +2,9 @@ package com.company.projectName.auth
 
 import com.company.projectName.auth.model.mvu.AuthMessage
 import com.company.projectName.auth.model.mvu.AuthScreenState
+import com.company.projectName.signin.LoginByEmailReducer
+import com.company.projectName.signin.model.mvu.LoginByEmailState
 import com.company.projectName.signin.model.mvu.SignInMessage
-import com.company.projectName.signin.model.mvu.SignInScreenState
-import com.company.projectName.signin.signInReducer
 import com.darkos.mvu.map
 import com.darkos.mvu.models.Message
 import com.darkos.mvu.models.None
@@ -12,7 +12,11 @@ import com.darkos.mvu.models.StateCmdData
 
 class AuthReducer : IAuthReducer {
 
-    private fun mapToAuthState(state: SignInScreenState): AuthScreenState {
+    private val loginByEmailReducer = LoginByEmailReducer {
+        enableEmailValidation()
+    }
+
+    private fun mapToAuthState(state: LoginByEmailState): AuthScreenState {
         return AuthScreenState(
             email = state.email,
             password = state.password,
@@ -22,8 +26,8 @@ class AuthReducer : IAuthReducer {
         )
     }
 
-    private fun mapToSignInState(state: AuthScreenState): SignInScreenState {
-        return SignInScreenState(
+    private fun mapToSignInState(state: AuthScreenState): LoginByEmailState {
+        return LoginByEmailState(
             email = state.email,
             password = state.password,
             emailError = state.emailError,
@@ -35,7 +39,7 @@ class AuthReducer : IAuthReducer {
     override fun update(state: AuthScreenState, message: Message): StateCmdData<AuthScreenState> {
         return when (val translated = translate(message)) {
             is SignInMessage -> {
-                signInReducer.update(
+                loginByEmailReducer.update(
                     state = mapToSignInState(state),
                     message = translated
                 ).map(this::mapToAuthState)

@@ -1,18 +1,25 @@
 package com.company.projectName.auth
 
-import com.company.projectName.signin.SignInRemote
-import com.company.projectName.signin.model.dto.LoginDTO
+import com.company.projectName.signin.LoginByEmailRemote
+import com.company.projectName.signin.LoginByEmailEffectHandler
 import com.company.projectName.signin.model.dto.TokenDTO
+import com.darkos.mvu.models.Message
 import com.darkos.mvu.validation.IValidationHandler
 
 class AuthEffectHandler(
-    remote: SignInRemote,
+    remote: LoginByEmailRemote,
     validation: IValidationHandler
-) : AuthEffectHandler<LoginDTO, TokenDTO>(remote, validation) {
+) : LoginByEmailEffectHandler(remote, validation) {
+
+    override fun processError(error: Exception): Message {
+        TODO("Not yet implemented")
+    }
+
+    override fun processSuccess(): Message {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun processLoginResult(result: TokenDTO) {
-        result.token.let {
-            //todo: save token
-        }
+        TODO("Not yet implemented")
     }
 }
