@@ -1,6 +1,7 @@
 include(
     ":android",
     ":common:core",
+    ":common:validation",
     ":common:entity",
     ":common:domain",
     ":common:source:remote",
