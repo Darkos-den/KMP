@@ -44,7 +44,6 @@ kotlin {
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:auth:auth-api"))
-                implementation(project(":common:feature:signin:signin-reducer"))
             }
         }
 
@@ -56,7 +55,6 @@ kotlin {
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
-                implementation(project(":common:feature:signin:signin-reducer"))
                 implementation(project(":common:feature:auth:auth-api"))
             }
         }

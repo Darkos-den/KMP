@@ -5,13 +5,9 @@ include(
     ":common:domain",
     ":common:source:remote",
 
-    ":common:feature:login:login-api",
-    ":common:feature:login:login-reducer",
-    ":common:feature:login:login-effect-handler",
-
-    ":common:feature:signin:signin-api",
-    ":common:feature:signin:signin-reducer",
-    ":common:feature:signin:signin-effect-handler",
+    ":common:feature:login-email:login-email-api",
+    ":common:feature:login-email:login-email-reducer",
+    ":common:feature:login-email:login-email-effect-handler",
 
     ":common:feature:auth:auth-api",
     ":common:feature:auth:auth-android",

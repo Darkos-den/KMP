@@ -26,6 +26,4 @@ dependencies {
 
     implementation(project(":common:core"))
     implementation(project(":common:entity"))
-    implementation(project(":common:feature:login:login-reducer"))
-    implementation(project(":common:feature:signin:signin-api"))
 }
