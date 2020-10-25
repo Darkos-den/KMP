@@ -1,5 +1,5 @@
 package com.company.projectName.domain.common
 
-interface MessageProcessor {
+expect interface MessageProcessor{
     fun showMessage(message: String)
 }

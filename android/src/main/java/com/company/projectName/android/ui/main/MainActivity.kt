@@ -2,7 +2,6 @@ package com.company.projectName.android.ui.main
 
 import android.os.Bundle
 import com.company.projectName.android.AppMessageProcessor
-import com.company.projectName.android.ui.home.HomeViewModel
 import com.company.projectName.domain.common.MessageProcessor
 import com.darkos.core.presentation.activity.RounterActivity
 import com.darkos.core.presentation.di.bindViewModel

@@ -1,7 +1,7 @@
 package com.company.projectName.android
 
-import com.company.projectName.domain.common.Navigation
-import com.company.projectName.domain.common.Navigator
+import com.company.core.model.navigation.Navigation
+import com.company.core.model.navigation.Navigator
 
 class AppNavigator : Navigator {
 

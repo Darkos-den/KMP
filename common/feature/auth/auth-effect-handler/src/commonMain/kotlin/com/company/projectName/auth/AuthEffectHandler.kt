@@ -9,7 +9,7 @@ import com.darkos.mvu.validation.IValidationHandler
 class AuthEffectHandler(
     remote: LoginByEmailRemote,
     validation: IValidationHandler
-) : LoginByEmailEffectHandler(remote, validation) {
+) : LoginByEmailEffectHandler(remote, validation), IAuthEffectHandler {
 
     override fun processError(error: Exception): Message {
         TODO("Not yet implemented")

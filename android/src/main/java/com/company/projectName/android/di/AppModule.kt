@@ -4,11 +4,10 @@ import android.app.Application
 import com.company.projectName.android.AppMessageProcessor
 import com.company.projectName.android.AppNavigator
 import com.company.projectName.domain.common.MessageProcessor
-import com.company.projectName.domain.common.Navigator
+import com.company.core.model.navigation.Navigator
 import com.company.projectName.domain.common.SecureStorage
 import com.company.projectName.domain.di.DomainModule
 import com.company.projectName.domain.repository.AuthRepository
-import com.company.projectName.domain.repository.LoginRepository
 import com.company.projectName.domain.repository.SampleRepository
 import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import com.company.projectName.entity.source.remote.ISampleRemoteRepository
@@ -17,7 +16,6 @@ import com.darkos.core.presentation.di.PresentationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
 import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 

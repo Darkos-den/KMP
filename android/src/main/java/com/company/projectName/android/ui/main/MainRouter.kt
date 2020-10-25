@@ -3,8 +3,8 @@ package com.company.projectName.android.ui.main
 import com.company.projectName.android.ui.home.HomeFragment
 import com.company.projectName.android.ui.login.LoginFragment
 import com.company.projectName.android.ui.splash.SplashFragment
-import com.company.projectName.domain.common.Navigation
-import com.company.projectName.domain.common.Navigator
+import com.company.core.model.navigation.Navigation
+import com.company.core.model.navigation.Navigator
 import com.darkos.core.presentation.router.ActivityRouter
 import io.dynamax.android.R
 
@@ -20,15 +20,15 @@ class MainRouter(
     }
 
     override fun navigate(navigation: Navigation): Boolean {
-        if (navigation !is Navigation.Main) {
-            return false
-        }
-
-        when (navigation) {
-            is Navigation.Main.Splash -> createInstance<SplashFragment>().replace()
-            is Navigation.Main.Login -> createInstance<LoginFragment>().replace()
-            is Navigation.Main.Home -> createInstance<HomeFragment>().replace()
-        }
+//        if (navigation !is Navigation.Main) {
+//            return false
+//        }
+//
+//        when (navigation) {
+//            is Navigation.Main.Splash -> createInstance<SplashFragment>().replace()
+//            is Navigation.Main.Login -> createInstance<LoginFragment>().replace()
+//            is Navigation.Main.Home -> createInstance<HomeFragment>().replace()
+//        }
 
         return true
     }

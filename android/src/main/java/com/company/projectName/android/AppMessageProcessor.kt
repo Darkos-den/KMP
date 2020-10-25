@@ -8,11 +8,11 @@ class AppMessageProcessor : MessageProcessor {
 
     private var activity: Activity? = null
 
-    fun attach(activity: Activity) {
+    override fun attach(activity: Activity) {
         this.activity = activity
     }
 
-    fun detach() {
+    override fun detach() {
         activity = null
     }
 

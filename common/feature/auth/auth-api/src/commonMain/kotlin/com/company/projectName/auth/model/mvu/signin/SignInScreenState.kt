@@ -1,8 +1,8 @@
-package com.company.projectName.auth.model.mvu
+package com.company.projectName.auth.model.mvu.signin
 
 import com.darkos.mvu.models.MVUState
 
-data class AuthScreenState(
+data class SignInScreenState(
     val email: String,
     val password: String,
     val emailError: String,

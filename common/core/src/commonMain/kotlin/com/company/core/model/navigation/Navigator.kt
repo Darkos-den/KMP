@@ -1,4 +1,4 @@
-package com.company.projectName.domain.common
+package com.company.core.model.navigation
 
 interface Navigator {
     var subNavigators: List<Navigator>
@@ -14,10 +14,4 @@ interface Navigator {
     fun navigate(navigation: Navigation): Boolean
 }
 
-sealed class Navigation {
-    sealed class Main : Navigation() {
-        object Splash : Main()
-        object Login : Main()
-        object Home : Main()
-    }
-}
+abstract class Navigation
