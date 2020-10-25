@@ -19,15 +19,15 @@ internal class NavigationEffectHandler(
             "this effect handler allow only NavigationEffect"
         }
 
-        when (effect) {
-            is NavigationEffect.NavigateToSplash -> Navigation.Main.Splash
-            is NavigationEffect.NavigateToLogin -> Navigation.Main.Login
-            is NavigationEffect.NavigateToHome -> Navigation.Main.Home
-        }.let {
-            withContext(Dispatchers.Main) {
-                navigator.navigate(it)
-            }
-        }
+//        when (effect) {
+//            is NavigationEffect.NavigateToSplash -> Navigation.Main.Splash
+//            is NavigationEffect.NavigateToLogin -> Navigation.Main.Login
+//            is NavigationEffect.NavigateToHome -> Navigation.Main.Home
+//        }.let {
+//            withContext(Dispatchers.Main) {
+//                navigator.navigate(it)
+//            }
+//        }
 
         return Idle()
     }

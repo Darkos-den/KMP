@@ -17,10 +17,19 @@ import org.kodein.di.generic.singleton
 class AuthActivity: RounterActivity() {
 
     override val viewModelModule = Kodein.Module("Auth.VM"){
-        bindViewModel<AuthViewModel>() with provider { AuthViewModel() }
+        bindViewModel<AuthViewModel>() with provider {
+            AuthViewModel(
+                effectHandler = instance(),
+                reducer = instance()
+            )
+        }
     }
     override val routerModule = Kodein.Module("Auth.Router"){
-        bind<ActivityRouter>() with singleton { AuthRouter() }
+        bind<ActivityRouter>() with singleton {
+            AuthRouter(
+                appNavigator = instance()
+            )
+        }
     }
 
     override val router: ActivityRouter by instance()

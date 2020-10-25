@@ -1,8 +1,5 @@
 package com.company.projectName.android.ui.main
 
-import com.company.projectName.android.ui.home.HomeFragment
-import com.company.projectName.android.ui.login.LoginFragment
-import com.company.projectName.android.ui.splash.SplashFragment
 import com.company.core.model.navigation.Navigation
 import com.company.core.model.navigation.Navigator
 import com.darkos.core.presentation.router.ActivityRouter

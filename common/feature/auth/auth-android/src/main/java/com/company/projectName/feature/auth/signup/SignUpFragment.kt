@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Text
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import com.darkos.core.presentation.fragment.base.BaseFragment
 import com.darkos.core.presentation.viewModel.BaseViewModel
@@ -22,14 +24,14 @@ class SignUpFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return ComposeView(requireContext()).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+            setContent {
+                MaterialTheme {
+                    Text(text = "Hello world")
+                }
+            }
         }
     }
 
     override fun viewCreated(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
     }
 }
