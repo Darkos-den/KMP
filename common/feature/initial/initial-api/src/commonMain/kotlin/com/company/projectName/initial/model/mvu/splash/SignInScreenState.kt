@@ -1,4 +1,4 @@
-package com.company.projectName.auth.model.mvu.signin
+package com.company.projectName.initial.model.mvu.splash
 
 import com.darkos.mvu.models.MVUState
 

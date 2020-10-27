@@ -1,19 +1,19 @@
 package com.company.projectName.feature.initial
 
-import com.company.projectName.auth.IAuthEffectHandler
-import com.company.projectName.auth.IAuthReducer
-import com.company.projectName.auth.model.mvu.AuthState
+import com.company.projectName.initial.IInitialEffectHandler
+import com.company.projectName.initial.IInitialReducer
+import com.company.projectName.initial.model.mvu.InitialState
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu_program.Program
 
 class InitialViewModel(
-    effectHandler: IAuthEffectHandler,
-    reducer: IAuthReducer
-) : BaseViewModelImpl(), Component<AuthState> {
+    effectHandler: IInitialEffectHandler,
+    reducer: IInitialReducer
+) : BaseViewModelImpl(), Component<InitialState> {
 
     private val program = Program(
-        initialState = AuthState(),
+        initialState = InitialState(),
         component = this,
         effectHandler = effectHandler,
         reducer = reducer
@@ -26,7 +26,7 @@ class InitialViewModel(
         super.onCleared()
     }
 
-    override fun render(state: AuthState) {
+    override fun render(state: InitialState) {
         //do nothing
     }
 }
