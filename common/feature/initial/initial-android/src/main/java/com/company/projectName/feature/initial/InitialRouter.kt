@@ -11,7 +11,7 @@ class InitialRouter(
     appNavigator: Navigator
 ): ActivityRouter(), Navigator {
 
-    override val containerId = R.id.fragmentContainer
+    override val containerId = R.id.initialFragmentContainer
     override var subNavigators: List<Navigator> = emptyList()
 
     init {

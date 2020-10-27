@@ -12,10 +12,15 @@ import com.company.projectName.domain.repository.SampleRepository
 import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import com.company.projectName.entity.source.remote.ISampleRemoteRepository
 import com.company.projectName.entity.source.secure.ISecureStorage
+import com.company.projectName.initial.IInitialEffectHandler
+import com.company.projectName.initial.IInitialReducer
+import com.company.projectName.initial.InitialEffectHandler
+import com.company.projectName.initial.InitialReducer
 import com.darkos.core.presentation.di.PresentationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
@@ -33,5 +38,12 @@ object AppModule {
         import(NavigationModule.get())
 
         bind<Navigator>() with singleton { AppNavigator() }
+
+        bind<IInitialReducer>() with provider { InitialReducer() }
+        bind<IInitialEffectHandler>() with provider {
+            InitialEffectHandler(
+                navigator = instance()
+            )
+        }
     }
 }

@@ -71,6 +71,11 @@ dependencies {
     implementation(project(":common:entity"))
     implementation(project(":common:source:remote"))
 
-    //android modules
+    //feature modules
+    implementation(project(":common:feature:initial:initial-android"))
+    implementation(project(":common:feature:initial:initial-api"))
+    implementation(project(":common:feature:initial:initial-reducer"))
+    implementation(project(":common:feature:initial:initial-effect-handler"))
+
     implementation(project(":common:feature:auth:auth-android"))
 }

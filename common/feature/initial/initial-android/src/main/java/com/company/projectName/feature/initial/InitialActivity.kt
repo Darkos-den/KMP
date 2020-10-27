@@ -39,12 +39,12 @@ class InitialActivity: RounterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
-        viewModel.trigger()//for initialization viewModel, todo: refactor
     }
 
     override fun onStart() {
         super.onStart()
         messageProcessor.attach(this)
+        viewModel.trigger()//for initialization viewModel, todo: refactor
     }
 
     override fun onStop() {
