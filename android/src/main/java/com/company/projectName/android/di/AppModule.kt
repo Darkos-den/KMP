@@ -12,10 +12,9 @@ import com.company.projectName.domain.repository.SampleRepository
 import com.company.projectName.entity.source.remote.IAuthRemoteRepository
 import com.company.projectName.entity.source.remote.ISampleRemoteRepository
 import com.company.projectName.entity.source.secure.ISecureStorage
-import com.company.projectName.initial.IInitialEffectHandler
-import com.company.projectName.initial.IInitialReducer
-import com.company.projectName.initial.InitialEffectHandler
-import com.company.projectName.initial.InitialReducer
+import com.company.projectName.initial.*
+import com.company.projectName.initial.splash.ISplashEffectHandler
+import com.company.projectName.initial.splash.ISplashReducer
 import com.darkos.core.presentation.di.PresentationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
@@ -39,6 +38,18 @@ object AppModule {
 
         bind<Navigator>() with singleton { AppNavigator() }
 
+        initialFeature()
+        splashFeature()
+    }
+
+    private fun Kodein.Builder.splashFeature() {
+        bind<ISplashReducer>() with provider { SplashReducer() }
+        bind<ISplashEffectHandler>() with provider {
+            SplashEffectHandler()
+        }
+    }
+
+    private fun Kodein.Builder.initialFeature() {
         bind<IInitialReducer>() with provider { InitialReducer() }
         bind<IInitialEffectHandler>() with provider {
             InitialEffectHandler(

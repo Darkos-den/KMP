@@ -5,18 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Text
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import com.darkos.core.presentation.di.bindViewModel
+import com.darkos.core.presentation.di.viewModel
 import com.darkos.core.presentation.fragment.base.BaseFragment
 import com.darkos.core.presentation.viewModel.BaseViewModel
 import org.kodein.di.Kodein
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
 class SplashFragment: BaseFragment() {
 
-    override val viewModelModule: Kodein.Module?
-        get() = super.viewModelModule
-    override val viewModel: BaseViewModel
-        get() = TODO("Not yet implemented")
+    override val viewModelModule = Kodein.Module("Splash.VM") {
+        bindViewModel<SplashViewModel>() with provider {
+            SplashViewModel(
+                effectHandler = instance(),
+                reducer = instance()
+            )
+        }
+    }
+    override val viewModel: SplashViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +37,7 @@ class SplashFragment: BaseFragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MaterialTheme {
-                    Text(text = "Hello world")
+                    CircularProgressIndicator()
                 }
             }
         }

@@ -1,21 +1,22 @@
-package com.company.projectName.android.ui.splash
+package com.company.projectName.feature.initial.splash
 
-import com.company.projectName.domain.feature.splash.SplashState
-import com.company.projectName.domain.feature.splash.splashReducer
+import com.company.projectName.initial.model.mvu.splash.SplashState
+import com.company.projectName.initial.splash.ISplashEffectHandler
+import com.company.projectName.initial.splash.ISplashReducer
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
-import com.darkos.mvu.EffectHandler
 import com.darkos.mvu_program.Program
 
 class SplashViewModel(
-    effectHandler: EffectHandler
-): BaseViewModelImpl(), Component<SplashState> {
+    effectHandler: ISplashEffectHandler,
+    reducer: ISplashReducer
+) : BaseViewModelImpl(), Component<SplashState> {
 
     private val program = Program(
         initialState = SplashState(),
+        component = this,
         effectHandler = effectHandler,
-        reducer = splashReducer,
-        component = this
+        reducer = reducer
     ).also {
         it.start()
     }
