@@ -1,4 +1,4 @@
-package com.darkos.kts.initial
+package com.darkos.kts.feature.initial
 
 import com.darkos.mvu.EffectHandler
 

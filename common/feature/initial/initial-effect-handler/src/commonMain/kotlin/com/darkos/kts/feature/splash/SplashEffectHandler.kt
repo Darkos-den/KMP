@@ -1,8 +1,8 @@
-package com.darkos.kts.initial
+package com.darkos.kts.feature.splash
 
-import com.darkos.kts.initial.model.mvu.splash.SplashEffect
-import com.darkos.kts.initial.model.mvu.splash.SplashMessage
-import com.darkos.kts.initial.splash.ISplashEffectHandler
+import com.darkos.kts.feature.initial.model.mvu.splash.SplashEffect
+import com.darkos.kts.feature.initial.model.mvu.splash.SplashMessage
+import com.darkos.kts.feature.splash.ISplashEffectHandler
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Idle
 import com.darkos.mvu.models.Message

@@ -1,8 +1,8 @@
 package com.darkos.kts.feature.initial
 
-import com.darkos.kts.initial.IInitialEffectHandler
-import com.darkos.kts.initial.IInitialReducer
-import com.darkos.kts.initial.model.mvu.InitialState
+import com.darkos.kts.feature.initial.IInitialEffectHandler
+import com.darkos.kts.feature.initial.IInitialReducer
+import com.darkos.kts.feature.initial.model.mvu.InitialState
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu_program.Program

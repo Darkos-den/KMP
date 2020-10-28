@@ -1,4 +1,4 @@
-package com.darkos.kts.feature.initial.splash
+package com.darkos.kts.feature.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater

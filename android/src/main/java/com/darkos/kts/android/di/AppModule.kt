@@ -12,10 +12,12 @@ import com.darkos.kts.remote.repository.SampleRepository
 import com.darkos.kts.entity.source.remote.IAuthRemoteRepository
 import com.darkos.kts.entity.source.remote.ISampleRemoteRepository
 import com.darkos.kts.entity.source.secure.ISecureStorage
-import com.darkos.kts.initial.*
-import com.darkos.kts.initial.splash.ISplashEffectHandler
-import com.darkos.kts.initial.splash.ISplashReducer
+import com.darkos.kts.feature.splash.ISplashEffectHandler
+import com.darkos.kts.feature.splash.ISplashReducer
 import com.darkos.core.presentation.di.PresentationModule
+import com.darkos.kts.feature.initial.*
+import com.darkos.kts.feature.splash.SplashEffectHandler
+import com.darkos.kts.feature.splash.SplashReducer
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
 import org.kodein.di.generic.bind

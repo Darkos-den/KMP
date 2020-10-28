@@ -1,4 +1,4 @@
-package com.darkos.kts.initial.splash
+package com.darkos.kts.feature.splash
 
 import com.darkos.mvu.EffectHandler
 

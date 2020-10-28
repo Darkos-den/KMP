@@ -1,4 +1,4 @@
-package com.darkos.kts.initial.model.mvu
+package com.darkos.kts.feature.initial.model.mvu
 
 import com.darkos.core.model.navigation.Navigation
 
