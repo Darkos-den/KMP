@@ -6,7 +6,7 @@ val Project.android: BaseExtension
         ?: error("Project '$name' is not an Android module")
 
 fun Project.androidApplicationConfig(
-    appId: String = "com.project.sample",
+    appId: String = "com.darkos.kts",
     appVersionCode: Int = 1,
     appVersionName: String = "0.0.1"
 ) {
