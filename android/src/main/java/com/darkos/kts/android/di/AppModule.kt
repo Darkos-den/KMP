@@ -38,7 +38,7 @@ object AppModule {
         import(DomainModule.get())
         import(NavigationModule.get())
 
-        bind<Navigator>() with singleton { AppNavigator() }
+        bind<Navigator>() with singleton { AppNavigator(application) }
 
         initialFeature()
         splashFeature()
@@ -47,7 +47,10 @@ object AppModule {
     private fun Kodein.Builder.splashFeature() {
         bind<ISplashReducer>() with provider { SplashReducer() }
         bind<ISplashEffectHandler>() with provider {
-            SplashEffectHandler()
+            SplashEffectHandler(
+                secure = instance(),
+                navigator = instance()
+            )
         }
     }
 
