@@ -1,9 +1,9 @@
 package com.darkos.kts.feature.auth
 
 import com.darkos.kts.feature.auth.IAuthEffectHandler
-import com.darkos.kts.signin.LoginByEmailRemote
-import com.darkos.kts.signin.LoginByEmailEffectHandler
-import com.darkos.kts.signin.model.dto.TokenDTO
+import com.darkos.kts.feature.signin.LoginByEmailRemote
+import com.darkos.kts.feature.signin.LoginByEmailEffectHandler
+import com.darkos.kts.feature.signin.model.dto.TokenDTO
 import com.darkos.mvu.models.Message
 import com.darkos.mvu.validation.IValidationHandler
 

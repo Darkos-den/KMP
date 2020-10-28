@@ -1,4 +1,4 @@
-package com.darkos.kts.signin.model.mvu
+package com.darkos.kts.feature.signin.model.mvu
 
 import com.darkos.mvu.login.model.FieldValueChanged
 

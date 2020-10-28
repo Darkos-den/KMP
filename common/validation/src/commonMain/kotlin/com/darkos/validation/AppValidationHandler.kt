@@ -1,6 +1,6 @@
 package com.darkos.validation
 
-import com.darkos.kts.signin.model.Constants
+import com.darkos.kts.feature.signin.model.Constants
 import com.darkos.mvu.validation.ValidationHandler
 import com.darkos.mvu.validation.model.ValidationFieldType
 

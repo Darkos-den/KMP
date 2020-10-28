@@ -1,9 +1,9 @@
-package com.darkos.kts.signin
+package com.darkos.kts.feature.signin
 
-import com.darkos.kts.signin.model.Constants
-import com.darkos.kts.signin.model.dto.LoginDTO
-import com.darkos.kts.signin.model.mvu.LoginByEmailState
-import com.darkos.kts.signin.model.mvu.SignInMessage
+import com.darkos.kts.feature.signin.model.Constants
+import com.darkos.kts.feature.signin.model.dto.LoginDTO
+import com.darkos.kts.feature.signin.model.mvu.LoginByEmailState
+import com.darkos.kts.feature.signin.model.mvu.SignInMessage
 import com.darkos.mvu.login.LoginFeature
 import com.darkos.mvu.login.LoginReducer
 
