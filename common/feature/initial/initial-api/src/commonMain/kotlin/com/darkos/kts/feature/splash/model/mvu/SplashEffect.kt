@@ -1,4 +1,4 @@
-package com.darkos.kts.feature.initial.model.mvu.splash
+package com.darkos.kts.feature.splash.model.mvu
 
 import com.darkos.mvu.models.Effect
 
@@ -9,5 +9,5 @@ sealed class SplashEffect: Effect() {
         object NavigateToLogin : Navigation()
     }
 
-    class Delay(val millis: Long): SplashEffect()
+    object CheckActiveUser: SplashEffect()
 }

@@ -3,7 +3,7 @@ package com.darkos.kts.feature.initial
 import com.darkos.core.model.navigation.Navigation
 import com.darkos.core.model.navigation.Navigator
 import com.darkos.kts.feature.splash.SplashFragment
-import com.darkos.kts.feature.initial.model.mvu.InitialNavigation
+import com.darkos.kts.feature.initial.model.InitialNavigation
 import com.darkos.core.presentation.router.ActivityRouter
 import com.darkos.feature.initial.R
 

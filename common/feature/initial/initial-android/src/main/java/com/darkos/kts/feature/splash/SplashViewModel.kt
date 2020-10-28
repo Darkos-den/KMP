@@ -1,8 +1,6 @@
 package com.darkos.kts.feature.splash
 
-import com.darkos.kts.feature.initial.model.mvu.splash.SplashState
-import com.darkos.kts.feature.splash.ISplashEffectHandler
-import com.darkos.kts.feature.splash.ISplashReducer
+import com.darkos.kts.feature.splash.model.mvu.SplashState
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu_program.Program

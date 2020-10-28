@@ -4,7 +4,9 @@ include(
     ":common:validation",
     ":common:entity",
     ":common:domain",
+
     ":common:source:remote",
+    ":common:source:secure",
 
     ":common:feature:login-email:login-email-api",
     ":common:feature:login-email:login-email-reducer",
