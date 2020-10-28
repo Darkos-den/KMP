@@ -1,4 +1,4 @@
-package com.darkos.kts.auth.model.mvu
+package com.darkos.kts.feature.auth.model.mvu
 
 import com.darkos.mvu.models.Effect
 

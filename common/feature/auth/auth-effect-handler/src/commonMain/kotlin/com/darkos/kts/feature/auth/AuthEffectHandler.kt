@@ -1,5 +1,6 @@
-package com.darkos.kts.auth
+package com.darkos.kts.feature.auth
 
+import com.darkos.kts.feature.auth.IAuthEffectHandler
 import com.darkos.kts.signin.LoginByEmailRemote
 import com.darkos.kts.signin.LoginByEmailEffectHandler
 import com.darkos.kts.signin.model.dto.TokenDTO

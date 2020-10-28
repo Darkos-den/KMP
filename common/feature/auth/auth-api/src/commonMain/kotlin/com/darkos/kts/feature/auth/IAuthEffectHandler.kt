@@ -1,4 +1,4 @@
-package com.darkos.kts.auth
+package com.darkos.kts.feature.auth
 
 import com.darkos.mvu.EffectHandler
 

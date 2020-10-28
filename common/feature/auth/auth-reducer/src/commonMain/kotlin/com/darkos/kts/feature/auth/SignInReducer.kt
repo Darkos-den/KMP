@@ -1,4 +1,4 @@
-package com.darkos.kts.auth
+package com.darkos.kts.feature.auth
 
 //class SignInReducer: Reducer<SignInScreenState> {
 //

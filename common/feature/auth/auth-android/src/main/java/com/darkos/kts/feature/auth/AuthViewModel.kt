@@ -1,8 +1,8 @@
 package com.darkos.kts.feature.auth
 
-import com.darkos.kts.auth.IAuthEffectHandler
-import com.darkos.kts.auth.IAuthReducer
-import com.darkos.kts.auth.model.mvu.AuthState
+import com.darkos.kts.feature.auth.IAuthEffectHandler
+import com.darkos.kts.feature.auth.IAuthReducer
+import com.darkos.kts.feature.auth.model.mvu.AuthState
 import com.darkos.core.presentation.viewModel.BaseViewModelImpl
 import com.darkos.mvu.Component
 import com.darkos.mvu_program.Program

@@ -1,7 +1,8 @@
-package com.darkos.kts.auth
+package com.darkos.kts.feature.auth
 
-import com.darkos.kts.auth.model.mvu.AuthEffect
-import com.darkos.kts.auth.model.mvu.AuthState
+import com.darkos.kts.feature.auth.model.mvu.AuthEffect
+import com.darkos.kts.feature.auth.model.mvu.AuthState
+import com.darkos.kts.feature.auth.IAuthReducer
 import com.darkos.mvu.models.ComponentInitialized
 import com.darkos.mvu.models.Message
 import com.darkos.mvu.models.None

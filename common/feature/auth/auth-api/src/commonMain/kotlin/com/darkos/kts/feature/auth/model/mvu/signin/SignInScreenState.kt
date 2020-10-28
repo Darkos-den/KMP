@@ -1,4 +1,4 @@
-package com.darkos.kts.auth.model.mvu.signin
+package com.darkos.kts.feature.auth.model.mvu.signin
 
 import com.darkos.mvu.models.MVUState
 

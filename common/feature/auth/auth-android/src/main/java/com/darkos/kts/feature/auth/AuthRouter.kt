@@ -2,7 +2,7 @@ package com.darkos.kts.feature.auth
 
 import com.darkos.core.model.navigation.Navigation
 import com.darkos.core.model.navigation.Navigator
-import com.darkos.kts.auth.model.AuthNavigation
+import com.darkos.kts.feature.auth.model.AuthNavigation
 import com.darkos.kts.feature.auth.signin.SignInFragment
 import com.darkos.kts.feature.auth.signup.SignUpFragment
 import com.darkos.core.presentation.router.ActivityRouter

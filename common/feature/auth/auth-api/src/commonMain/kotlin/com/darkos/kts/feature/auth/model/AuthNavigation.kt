@@ -1,4 +1,4 @@
-package com.darkos.kts.auth.model
+package com.darkos.kts.feature.auth.model
 
 import com.darkos.core.model.navigation.Navigation
 
