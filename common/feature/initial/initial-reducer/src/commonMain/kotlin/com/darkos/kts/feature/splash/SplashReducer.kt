@@ -16,10 +16,10 @@ class SplashReducer : ISplashReducer {
             is ComponentInitialized -> {
                 StateCmdData(
                     state = state,
-                    effect = SplashEffect.Delay(3000)
+                    effect = None()
                 )
             }
-            is SplashMessage.DelayFinished -> {
+            is SplashMessage.UserFound -> {
                 StateCmdData(
                     state = state,
                     effect = SplashEffect.Navigation.NavigateToLogin

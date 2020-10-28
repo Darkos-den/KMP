@@ -32,5 +32,5 @@ fun Project.applyMultiPlatformSourceSets(){
 
 fun applyVersions(){
     Versions.ktor = "1.4.0"
-    Versions.AndroidX.compose = "1.0.0-alpha02"
+    Versions.AndroidX.compose = "1.0.0-alpha04"
 }

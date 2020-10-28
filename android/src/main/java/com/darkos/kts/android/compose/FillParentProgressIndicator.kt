@@ -16,7 +16,7 @@ fun FillParentProgressIndicator(){
             .fillMaxWidth()
             .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
-        horizontalGravity = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator()
     }

@@ -45,7 +45,7 @@ fun HomeScreen(
 fun EmptyHomeScreen(reloadClick: ()->Unit) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-        horizontalGravity = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "List is empty")
     }
@@ -81,7 +81,7 @@ fun DataHomeScreen(
 fun InitialHomeScreen() {
     Column(
         modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-        horizontalGravity = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Skeletons mock")
     }

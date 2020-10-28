@@ -15,7 +15,6 @@ import com.darkos.kts.entity.source.secure.ISecureStorage
 import com.darkos.core.presentation.di.PresentationModule
 import com.darkos.kts.feature.initial.*
 import com.darkos.kts.feature.splash.*
-import com.darkos.kts.secure.repository.SplashSecureRepository
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
 import org.kodein.di.generic.bind
@@ -38,7 +37,7 @@ object AppModule {
 
         bind<Navigator>() with singleton { AppNavigator(application) }
 
-        bind<ISplashSecure>() with provider { SplashSecureRepository() }
+//        bind<ISplashSecure>() with provider { SplashSecureRepository() }
 
         initialFeature()
         splashFeature()
