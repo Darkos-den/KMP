@@ -1,7 +1,7 @@
-package com.darkos.kts.domain.repository
+package com.darkos.kts.remote.repository
 
-import com.darkos.kts.domain.model.response.SampleResponse
-import com.darkos.kts.domain.repository.base.BaseRepository
+import com.darkos.kts.remote.model.response.SampleResponse
+import com.darkos.kts.remote.repository.base.BaseRepository
 import com.darkos.kts.entity.models.SampleModel
 import com.darkos.kts.entity.models.common.RemoteResult
 import com.darkos.kts.entity.models.common.mapAsList

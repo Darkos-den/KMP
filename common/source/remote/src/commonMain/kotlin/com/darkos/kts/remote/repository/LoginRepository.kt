@@ -1,6 +1,6 @@
-package com.darkos.kts.domain.repository
+package com.darkos.kts.remote.repository
 
-import com.darkos.kts.domain.repository.base.BaseRepository
+import com.darkos.kts.remote.repository.base.BaseRepository
 import com.darkos.kts.entity.models.common.RemoteResult
 import com.darkos.kts.entity.models.common.map
 import com.darkos.kts.signin.LoginByEmailRemote

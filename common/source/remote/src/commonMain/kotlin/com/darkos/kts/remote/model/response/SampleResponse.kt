@@ -1,4 +1,4 @@
-package com.darkos.kts.domain.model.response
+package com.darkos.kts.remote.model.response
 
 import kotlinx.serialization.Serializable
 

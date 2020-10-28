@@ -7,8 +7,8 @@ import com.darkos.kts.domain.common.MessageProcessor
 import com.darkos.core.model.navigation.Navigator
 import com.darkos.kts.domain.common.SecureStorage
 import com.darkos.kts.domain.di.DomainModule
-import com.darkos.kts.domain.repository.AuthRepository
-import com.darkos.kts.domain.repository.SampleRepository
+import com.darkos.kts.remote.repository.AuthRepository
+import com.darkos.kts.remote.repository.SampleRepository
 import com.darkos.kts.entity.source.remote.IAuthRemoteRepository
 import com.darkos.kts.entity.source.remote.ISampleRemoteRepository
 import com.darkos.kts.entity.source.secure.ISecureStorage

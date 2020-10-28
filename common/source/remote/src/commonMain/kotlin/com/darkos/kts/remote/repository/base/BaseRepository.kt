@@ -1,4 +1,4 @@
-package com.darkos.kts.domain.repository.base
+package com.darkos.kts.remote.repository.base
 
 import com.darkos.kts.entity.models.common.RemoteResult
 import com.darkos.kts.entity.models.exception.NetworkException
