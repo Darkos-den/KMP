@@ -69,7 +69,9 @@ dependencies {
     implementation(project(":common:core"))
     implementation(project(":common:domain"))
     implementation(project(":common:entity"))
+
     implementation(project(":common:source:remote"))
+    implementation(project(":common:source:secure"))
 
     //feature modules
     implementation(project(":common:feature:initial:initial-android"))
@@ -78,4 +80,10 @@ dependencies {
     implementation(project(":common:feature:initial:initial-effect-handler"))
 
     implementation(project(":common:feature:auth:auth-android"))
+    implementation(project(":common:feature:auth:auth-api"))
+    implementation(project(":common:feature:auth:auth-reducer"))
+    implementation(project(":common:feature:auth:auth-effect-handler"))
+
+    implementation("com.darkosinc.mvu:validation-api-jvm:1.0.4")
+    implementation(project(":common:validation"))
 }

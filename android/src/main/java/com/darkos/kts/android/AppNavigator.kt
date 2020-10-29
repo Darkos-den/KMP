@@ -24,6 +24,7 @@ class AppNavigator(
                 }.let {
                     application.startActivity(it)
                 }
+                return true
             }
             else -> {
                 subNavigators.forEach {

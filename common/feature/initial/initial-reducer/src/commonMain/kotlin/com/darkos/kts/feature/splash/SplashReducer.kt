@@ -16,10 +16,16 @@ class SplashReducer : ISplashReducer {
             is ComponentInitialized -> {
                 StateCmdData(
                     state = state,
-                    effect = None()
+                    effect = SplashEffect.CheckActiveUser
                 )
             }
             is SplashMessage.UserFound -> {
+                StateCmdData(
+                    state = state,
+                    effect = SplashEffect.Navigation.NavigateToMain
+                )
+            }
+            is SplashMessage.UserNotFound -> {
                 StateCmdData(
                     state = state,
                     effect = SplashEffect.Navigation.NavigateToLogin

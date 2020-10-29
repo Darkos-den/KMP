@@ -9,7 +9,7 @@ import com.darkos.kts.feature.signin.model.dto.TokenDTO
 import com.darkos.mvu.login.model.LoginResult
 import io.ktor.client.request.*
 
-class LoginRepository : BaseRepository(), LoginByEmailRemote {
+class LoginRemoteRepository : BaseRepository(), LoginByEmailRemote {
 
     override suspend fun login(data: LoginDTO): LoginResult<TokenDTO> {
         return execute {

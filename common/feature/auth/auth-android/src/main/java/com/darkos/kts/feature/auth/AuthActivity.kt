@@ -7,6 +7,7 @@ import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
 import com.darkos.core.presentation.router.ActivityRouter
 import com.darkos.core.presentation.viewModel.BaseViewModel
+import com.darkos.feature.auth.R
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -37,12 +38,13 @@ class AuthActivity: RounterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.trigger()//for initialization viewModel, todo: refactor
+        setContentView(R.layout.activity_auth)
     }
 
     override fun onStart() {
         super.onStart()
         messageProcessor.attach(this)
+        viewModel.trigger()//for initialization viewModel, todo: refactor
     }
 
     override fun onStop() {

@@ -6,14 +6,14 @@ import com.netguru.kissme.Kissme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class SplashRepository : ISplashSecure {
+class SplashSecureRepository : ISplashSecure {
 
     private val storage: Kissme by lazy {
         Kissme(STORAGE_NAME)
     }
 
     override suspend fun isActiveUserFound(): Boolean {
-        return withContext(NetworkDispatcher) {
+        return withContext(Dispatchers.Main) {
             storage.getString(KEY_TOKEN, null) != null
         }
     }
