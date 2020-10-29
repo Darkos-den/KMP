@@ -48,6 +48,7 @@ kotlin {
 
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
+                implementation(project(":common:feature:auth:auth-api"))
             }
         }
 
@@ -60,6 +61,7 @@ kotlin {
 
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
+                implementation(project(":common:feature:auth:auth-api"))
             }
         }
     }

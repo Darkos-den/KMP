@@ -1,6 +1,6 @@
 package com.darkos.kts.feature.initial
 
-import com.darkos.core.model.navigation.Navigator
+import com.darkos.core.navigation.Navigator
 import com.darkos.core.mvu.andThenIdle
 import com.darkos.kts.feature.initial.model.mvu.InitialEffect
 import com.darkos.kts.feature.initial.model.InitialNavigation

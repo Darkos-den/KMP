@@ -13,9 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".android.ui.main.MainActivity" >
 
-        </activity>
         <activity android:name=".feature.initial.InitialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".feature.auth.AuthActivity"/>
+
     </application>
 </manifest>

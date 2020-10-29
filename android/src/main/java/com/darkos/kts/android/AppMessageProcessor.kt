@@ -2,7 +2,7 @@ package com.darkos.kts.android
 
 import android.app.Activity
 import android.widget.Toast
-import com.darkos.kts.domain.common.MessageProcessor
+import com.darkos.core.messageProcessor.MessageProcessor
 
 class AppMessageProcessor : MessageProcessor {
 

@@ -1,4 +1,4 @@
-package com.darkos.core.model.navigation
+package com.darkos.core.navigation
 
 interface Navigator {
     var subNavigators: List<Navigator>
@@ -13,5 +13,3 @@ interface Navigator {
 
     fun navigate(navigation: Navigation): Boolean
 }
-
-abstract class Navigation

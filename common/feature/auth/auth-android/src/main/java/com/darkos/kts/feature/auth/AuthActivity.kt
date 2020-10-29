@@ -1,7 +1,7 @@
 package com.darkos.kts.feature.auth
 
 import android.os.Bundle
-import com.darkos.kts.domain.common.MessageProcessor
+import com.darkos.core.messageProcessor.MessageProcessor
 import com.darkos.core.presentation.activity.RounterActivity
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
@@ -25,7 +25,7 @@ class AuthActivity: RounterActivity() {
         }
     }
     override val routerModule = Kodein.Module("Auth.Router"){
-        bind<ActivityRouter>() with singleton {
+        bind<ActivityRouter>() with singleton {//todo: refactor
             AuthRouter(
                 appNavigator = instance()
             )

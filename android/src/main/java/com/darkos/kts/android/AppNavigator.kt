@@ -2,8 +2,8 @@ package com.darkos.kts.android
 
 import android.app.Application
 import android.content.Intent
-import com.darkos.core.model.navigation.Navigation
-import com.darkos.core.model.navigation.Navigator
+import com.darkos.core.navigation.Navigation
+import com.darkos.core.navigation.Navigator
 import com.darkos.kts.feature.auth.AuthActivity
 import com.darkos.kts.feature.splash.model.SplashNavigation
 

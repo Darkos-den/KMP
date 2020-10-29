@@ -1,4 +1,4 @@
-package com.darkos.kts.domain.common
+package com.darkos.core.messageProcessor
 
 import android.app.Activity
 

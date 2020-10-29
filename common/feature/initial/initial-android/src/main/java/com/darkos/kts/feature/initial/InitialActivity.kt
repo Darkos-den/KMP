@@ -1,7 +1,7 @@
 package com.darkos.kts.feature.initial
 
 import android.os.Bundle
-import com.darkos.kts.domain.common.MessageProcessor
+import com.darkos.core.messageProcessor.MessageProcessor
 import com.darkos.core.presentation.activity.RounterActivity
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
@@ -16,7 +16,7 @@ import org.kodein.di.generic.singleton
 
 class InitialActivity: RounterActivity() {
 
-    override val viewModelModule = Kodein.Module("Auth.VM"){
+    override val viewModelModule = Kodein.Module("Initial.VM"){
         bindViewModel<InitialViewModel>() with provider {
             InitialViewModel(
                 effectHandler = instance(),
@@ -24,8 +24,8 @@ class InitialActivity: RounterActivity() {
             )
         }
     }
-    override val routerModule = Kodein.Module("Auth.Router"){
-        bind<ActivityRouter>() with singleton {
+    override val routerModule = Kodein.Module("Initial.Router"){
+        bind<ActivityRouter>() with singleton {//todo: refactor
             InitialRouter(
                 appNavigator = instance()
             )
