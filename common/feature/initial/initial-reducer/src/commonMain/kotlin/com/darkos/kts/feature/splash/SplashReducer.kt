@@ -11,7 +11,6 @@ import com.darkos.mvu.models.StateCmdData
 class SplashReducer : ISplashReducer {
 
     override fun update(state: SplashState, message: Message): StateCmdData<SplashState> {
-        //todo: implement check account logic
         return when (message) {
             is ComponentInitialized -> {
                 StateCmdData(
