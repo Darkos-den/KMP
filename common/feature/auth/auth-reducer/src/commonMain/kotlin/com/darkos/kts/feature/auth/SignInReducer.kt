@@ -1,61 +1,70 @@
 package com.darkos.kts.feature.auth
 
-//class SignInReducer: Reducer<SignInScreenState> {
-//
-//    private val loginByEmailReducer = LoginByEmailReducer {
-//        enableEmailValidation()
-//    }
-//
-//    private fun mapToAuthState(state: LoginByEmailState): SignInScreenState {
-//        return SignInScreenState(
-//            email = state.email,
-//            password = state.password,
-//            emailError = state.emailError,
-//            passwordError = state.passwordError,
-//            progress = state.progress
-//        )
-//    }
-//
-//    private fun mapToSignInState(state: SignInScreenState): LoginByEmailState {
-//        return LoginByEmailState(
-//            email = state.email,
-//            password = state.password,
-//            emailError = state.emailError,
-//            passwordError = state.passwordError,
-//            progress = state.progress
-//        )
-//    }
-//
-//    override fun update(
-//        state: SignInScreenState,
-//        message: Message
-//    ): StateCmdData<SignInScreenState> {
-//        return when (val translated = translate(message)) {
-//            is SignInMessage -> {
-//                loginByEmailReducer.update(
-//                    state = mapToSignInState(state),
-//                    message = translated`
-//                ).map(this::mapToAuthState)
-//            }
-//            is com.company.projectName.auth.model.mvu.signin.AuthMessage.SignInMessage.SignUpClick -> {
-//                TODO("navigate to sign up")
-//            }
-//            else -> StateCmdData(
-//                state = state,
-//                effect = None()
-//            )
-//        }
-//    }
-//
-//    private fun translate(message: Message): Message {
-//        return when (message) {
-//            is com.company.projectName.auth.model.mvu.signin.AuthMessage.SignInMessage.EmailChanged -> SignInMessage.EmailChanged(
-//                message.value
-//            )
-//            is com.company.projectName.auth.model.mvu.signin.AuthMessage.SignInMessage.PasswordChanged -> SignInMessage.PasswordChanged(
-//                message.value
-//            )
-//            else -> message
-//        }
-//    }
-//}
+import com.darkos.kts.feature.signin.ISignInReducer
+import com.darkos.kts.feature.signin.LoginByEmailReducer
+import com.darkos.kts.feature.signin.model.mvu.LoginByEmailMessage
+import com.darkos.kts.feature.signin.model.mvu.LoginByEmailState
+import com.darkos.kts.feature.signin.model.mvu.SignInMessage
+import com.darkos.kts.feature.signin.model.mvu.SignInState
+import com.darkos.mvu.login.model.mvu.LoginMessage
+import com.darkos.mvu.map
+import com.darkos.mvu.models.Message
+import com.darkos.mvu.models.None
+import com.darkos.mvu.models.StateCmdData
+
+class SignInReducer: ISignInReducer {
+
+    private val loginByEmailReducer = LoginByEmailReducer {
+        enableEmailValidation()
+    }
+
+    private fun mapToAuthState(state: LoginByEmailState): SignInState {
+        return SignInState(
+            email = state.email,
+            password = state.password,
+            emailError = state.emailError,
+            passwordError = state.passwordError,
+            progress = state.progress
+        )
+    }
+
+    private fun mapToSignInState(state: SignInState): LoginByEmailState {
+        return LoginByEmailState(
+            email = state.email,
+            password = state.password,
+            emailError = state.emailError,
+            passwordError = state.passwordError,
+            progress = state.progress
+        )
+    }
+
+    override fun update(
+        state: SignInState,
+        message: Message
+    ): StateCmdData<SignInState> {
+        return when (val translated = translate(message)) {
+            is LoginByEmailMessage -> {
+                loginByEmailReducer.update(
+                    state = mapToSignInState(state),
+                    message = translated
+                ).map(this::mapToAuthState)
+            }
+            else -> StateCmdData(
+                state = state,
+                effect = None()
+            )
+        }
+    }
+
+    private fun translate(message: Message): Message {
+        return when (message) {
+            is SignInMessage.EmailChanged -> LoginByEmailMessage.EmailChanged(
+                message.value
+            )
+            is SignInMessage.PasswordChanged -> LoginByEmailMessage.PasswordChanged(
+                message.value
+            )
+            else -> message
+        }
+    }
+}

@@ -3,7 +3,7 @@ package com.darkos.kts.feature.signin
 import com.darkos.kts.feature.signin.model.Constants
 import com.darkos.kts.feature.signin.model.dto.LoginDTO
 import com.darkos.kts.feature.signin.model.mvu.LoginByEmailState
-import com.darkos.kts.feature.signin.model.mvu.SignInMessage
+import com.darkos.kts.feature.signin.model.mvu.LoginByEmailMessage
 import com.darkos.mvu.login.LoginFeature
 import com.darkos.mvu.login.LoginReducer
 
@@ -33,7 +33,7 @@ class ReducerBuilder {
         WithoutValidation {
             if (!validatePassword) {
                 registerField(
-                    valueChangedMessage = SignInMessage.PasswordChanged::class,
+                    valueChangedMessage = LoginByEmailMessage.PasswordChanged::class,
                     mapTo = { state, field ->
                         state.copy(password = field.value)
                     }
@@ -41,7 +41,7 @@ class ReducerBuilder {
             }
             if (!validateEmail) {
                 registerField(
-                    valueChangedMessage = SignInMessage.EmailChanged::class,
+                    valueChangedMessage = LoginByEmailMessage.EmailChanged::class,
                     mapTo = { state, field ->
                         state.copy(email = field.value)
                     }
@@ -53,7 +53,7 @@ class ReducerBuilder {
                 registerField(
                     fieldId = FIELD_ID_EMAIL,
                     fieldType = LoginReducer.FieldType.Email,
-                    messageClass = SignInMessage.EmailChanged::class,
+                    messageClass = LoginByEmailMessage.EmailChanged::class,
                     map = {
                         it.email.trim()
                     }
@@ -63,7 +63,7 @@ class ReducerBuilder {
                 registerField(
                     fieldId = FIELD_ID_PASSWORD,
                     fieldType = LoginReducer.FieldType.Custom(Constants.FIELD_TYPE_PASSWORD),
-                    messageClass = SignInMessage.PasswordChanged::class,
+                    messageClass = LoginByEmailMessage.PasswordChanged::class,
                     map = {
                         it.password.trim()
                     }

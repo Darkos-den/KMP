@@ -1,4 +1,4 @@
-package com.darkos.kts.feature.auth.model.mvu.signin
+package com.darkos.kts.feature.signin.model.mvu
 
 import com.darkos.mvu.models.Message
 
