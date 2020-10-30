@@ -40,7 +40,8 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
                 implementation("com.darkosinc.mvu:core:1.0.0")
-                api("com.darkosinc.mvu:login-reducer:1.0.0")
+                api("com.darkosinc.mvu:login-reducer:1.0.2")
+                api("com.darkosinc.mvu:validation-reducer:1.0.3")
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))
@@ -53,7 +54,8 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
-                api("com.darkosinc.mvu:login-reducer-jvm:1.0.0")
+                api("com.darkosinc.mvu:login-reducer-jvm:1.0.2")
+                api("com.darkosinc.mvu:validation-reducer-jvm:1.0.3")
 
                 implementation(project(":common:core"))
                 implementation(project(":common:entity"))

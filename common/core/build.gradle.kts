@@ -22,7 +22,9 @@ val commonDependencyList = listOf(
 
 val androidDependencyList = listOf(
     implementation(Libs.Coroutines.ANDROID),
-    implementation(Libs.Serialization.CORE)
+    implementation(Libs.Serialization.CORE),
+    implementation(Libs.AndroidX.Activity.KTX),
+    implementation(Libs.AndroidX.AppCompat.CORE)
 )
 
 kotlin {
@@ -42,6 +44,9 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
+
+                implementation("com.github.Darkos-den.core2:presentation:1.0.10")
+                implementation("com.github.Darkos-den.core2:mvu-program:1.0.10")
             }
         }
     }

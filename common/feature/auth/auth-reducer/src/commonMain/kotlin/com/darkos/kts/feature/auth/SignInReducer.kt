@@ -1,5 +1,6 @@
 package com.darkos.kts.feature.auth
 
+import com.darkos.core.logger.log
 import com.darkos.kts.feature.signin.ISignInReducer
 import com.darkos.kts.feature.signin.LoginByEmailReducer
 import com.darkos.kts.feature.signin.model.mvu.LoginByEmailMessage
@@ -15,7 +16,7 @@ import com.darkos.mvu.models.StateCmdData
 class SignInReducer: ISignInReducer {
 
     private val loginByEmailReducer = LoginByEmailReducer {
-        enableEmailValidation()
+//        enableEmailValidation()
     }
 
     private fun mapToAuthState(state: LoginByEmailState): SignInState {
