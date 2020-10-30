@@ -25,10 +25,8 @@ class InitialActivity: RounterActivity() {
         }
     }
     override val routerModule = Kodein.Module("Initial.Router"){
-        bind<ActivityRouter>() with singleton {//todo: refactor
-            InitialRouter(
-                appNavigator = instance()
-            )
+        bind<ActivityRouter>() with provider {
+            instance<InitialRouter>()
         }
     }
 

@@ -10,8 +10,10 @@ import kotlinx.coroutines.withContext
 
 class SecureRepository : BaseSecureStorage(), ISplashSecure, ISignInSecure {
 
-    override fun isActiveUserFound(): Boolean {
-        return storage.getString(KEY_TOKEN, null) != null
+    override suspend fun isActiveUserFound(): Boolean {
+        return withContext(Dispatchers.Main){
+            storage.getString(KEY_TOKEN, null) != null
+        }
     }
 
     override fun saveToken(token: String) {

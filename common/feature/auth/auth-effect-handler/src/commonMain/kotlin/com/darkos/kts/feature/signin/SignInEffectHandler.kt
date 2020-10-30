@@ -14,7 +14,7 @@ class SignInEffectHandler(
     private val navigator: Navigator,
     private val secure: ISignInSecure,
     private val messageProcessor: MessageProcessor
-) : LoginByEmailEffectHandler(remote, validation), IAuthEffectHandler {
+) : LoginByEmailEffectHandler(remote, validation), ISignInEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
         return when (effect) {

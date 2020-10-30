@@ -25,10 +25,8 @@ class AuthActivity: RounterActivity() {
         }
     }
     override val routerModule = Kodein.Module("Auth.Router"){
-        bind<ActivityRouter>() with singleton {//todo: refactor
-            AuthRouter(
-                appNavigator = instance()
-            )
+        bind<ActivityRouter>() with provider {
+            instance<AuthRouter>()
         }
     }
 
