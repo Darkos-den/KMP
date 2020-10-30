@@ -10,5 +10,5 @@ class InitialViewModel(
     effectHandler, reducer
 ) {
 
-    override val initial = InitialState()
+    override fun initial() = InitialState()
 }

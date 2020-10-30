@@ -1,6 +1,5 @@
 package com.darkos.kts.feature.auth
 
-import com.darkos.core.logger.log
 import com.darkos.kts.feature.signin.ISignInReducer
 import com.darkos.kts.feature.signin.LoginByEmailReducer
 import com.darkos.kts.feature.signin.model.mvu.LoginByEmailMessage
@@ -13,7 +12,7 @@ import com.darkos.mvu.models.Message
 import com.darkos.mvu.models.None
 import com.darkos.mvu.models.StateCmdData
 
-class SignInReducer: ISignInReducer {
+class SignInReducer : ISignInReducer {
 
     private val loginByEmailReducer = LoginByEmailReducer {
 //        enableEmailValidation()
@@ -65,6 +64,7 @@ class SignInReducer: ISignInReducer {
             is SignInMessage.PasswordChanged -> LoginByEmailMessage.PasswordChanged(
                 message.value
             )
+            is SignInMessage.SignInClick -> LoginMessage.LoginClick
             else -> message
         }
     }

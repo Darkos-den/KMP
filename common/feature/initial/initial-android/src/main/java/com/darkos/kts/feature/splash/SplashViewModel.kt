@@ -10,5 +10,5 @@ class SplashViewModel(
     effectHandler, reducer
 ) {
 
-    override val initial = SplashState()
+    override fun initial() = SplashState()
 }

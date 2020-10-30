@@ -13,7 +13,7 @@ class SignInViewModel(
     effectHandler, reducer
 ) {
 
-    override val initial = SignInState(
+    override fun initial() = SignInState(
         email = "",
         passwordError = "",
         password = "",
@@ -23,5 +23,13 @@ class SignInViewModel(
 
     fun onEmailChanged(text: String) {
         program.accept(SignInMessage.EmailChanged(text))
+    }
+
+    fun onPasswordChanged(text: String) {
+        program.accept(SignInMessage.PasswordChanged(text))
+    }
+
+    fun onSignInClick() {
+        program.accept(SignInMessage.SignInClick)
     }
 }

@@ -5,17 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
 import com.darkos.core.presentation.fragment.base.BaseFragment
+import com.darkos.kts.feature.signin.UiData
 import com.darkos.kts.feature.signin.model.mvu.SignInState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,11 +49,16 @@ class SignInFragment : BaseFragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                val state by viewModel.state.collectAsState(context = Dispatchers.Main.immediate)
+                val state by viewModel.state.collectAsState(
+                    context = Dispatchers.Main.immediate,
+                    initial = viewModel.initial()
+                )
 
                 rootView(
                     state = state,
-                    onEmailChanged = viewModel::onEmailChanged
+                    onEmailChanged = viewModel::onEmailChanged,
+                    onPasswordChanged = viewModel::onPasswordChanged,
+                    onSignInClick = viewModel::onSignInClick
                 )
             }
         }
@@ -56,21 +67,44 @@ class SignInFragment : BaseFragment() {
     @Composable
     private fun rootView(
         state: SignInState,
-        onEmailChanged: (String) -> Unit
+        onEmailChanged: (String) -> Unit,
+        onPasswordChanged: (String) -> Unit,
+        onSignInClick: () -> Unit
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "text")
+                        Text(text = UiData.signInToolbarText)
                     }
                 )
             }
         ) {
-            TextField(
-                value = state.email,
-                onValueChange = onEmailChanged
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 24.dp)
+                    .padding(horizontal = 24.dp)
+            ) {
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.email,
+                    onValueChange = onEmailChanged
+                )
+                Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.password,
+                    onValueChange = onPasswordChanged,
+                    visualTransformation = PasswordVisualTransformation()
+                )
+                Spacer(modifier = Modifier.fillMaxWidth().height(48.dp))
+                Button(
+                    onClick = onSignInClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = UiData.signInButtonText)
+                }
+            }
         }
     }
 
@@ -85,7 +119,9 @@ class SignInFragment : BaseFragment() {
                 passwordError = "",
                 progress = false
             ),
-            onEmailChanged = {}
+            onEmailChanged = {},
+            onPasswordChanged = {},
+            onSignInClick = {}
         )
     }
 

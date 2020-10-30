@@ -5,7 +5,7 @@ import com.darkos.mvu.models.MVUState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface FlowComponent<T : MVUState> : Component<T> {
-    val initial: T
+    fun initial(): T
     val state: MutableStateFlow<T>
 
     override fun render(state: T) {

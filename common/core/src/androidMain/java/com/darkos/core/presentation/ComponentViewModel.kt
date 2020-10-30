@@ -15,12 +15,12 @@ abstract class ComponentViewModel<T : MVUState, EH : EffectHandler, R : Reducer<
     reducer: R
 ) : BaseViewModelImpl(), FlowComponent<T> {
 
-    abstract override val initial: T
-    override val state = MutableStateFlow(initial)
+    abstract override fun initial(): T
+    override val state by lazy { MutableStateFlow(initial()) }
 
     protected val program: Program<T> by lazy {
         Program(
-            initialState = initial,
+            initialState = initial(),
             component = this,
             effectHandler = effectHandler,
             reducer = reducer
