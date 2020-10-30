@@ -6,7 +6,6 @@ import com.darkos.core.navigation.Navigator
 import com.darkos.core.presentation.di.PresentationModule
 import com.darkos.kts.android.AppMessageProcessor
 import com.darkos.kts.android.AppNavigator
-import com.darkos.kts.domain.di.DomainModule
 import com.darkos.kts.entity.source.remote.ISampleRemoteRepository
 import com.darkos.kts.feature.auth.*
 import com.darkos.kts.feature.initial.IInitialEffectHandler
@@ -34,7 +33,6 @@ object AppModule {
         bind<ISampleRemoteRepository>() with provider { SampleRepository() }
 
         import(PresentationModule.get())
-        import(DomainModule.get())
         import(NavigationModule.get())
         import(ValidationModule)
 

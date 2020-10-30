@@ -1,3 +1,3 @@
-package com.darkos.kts.domain.model.exception
+package com.darkos.core.model
 
 class NotSupportedMessageException : IllegalArgumentException()

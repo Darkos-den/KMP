@@ -67,7 +67,6 @@ dependencies {
     implementation("com.github.aakira:napier-android:1.3.0")
 
     implementation(project(":common:core"))
-    implementation(project(":common:domain"))
     implementation(project(":common:entity"))
 
     implementation(project(":common:source:remote"))
