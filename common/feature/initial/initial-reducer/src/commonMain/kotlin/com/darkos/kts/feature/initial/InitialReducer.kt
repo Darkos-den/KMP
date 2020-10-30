@@ -1,6 +1,5 @@
 package com.darkos.kts.feature.initial
 
-import com.darkos.kts.feature.initial.IInitialReducer
 import com.darkos.kts.feature.initial.model.mvu.InitialEffect
 import com.darkos.kts.feature.initial.model.mvu.InitialState
 import com.darkos.mvu.models.ComponentInitialized
