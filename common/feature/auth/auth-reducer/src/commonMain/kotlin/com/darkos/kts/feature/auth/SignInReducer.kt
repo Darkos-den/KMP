@@ -15,7 +15,7 @@ import com.darkos.mvu.models.StateCmdData
 class SignInReducer : ISignInReducer {
 
     private val loginByEmailReducer = LoginByEmailReducer {
-//        enableEmailValidation()
+        enableEmailValidation()
     }
 
     private fun mapToAuthState(state: LoginByEmailState): SignInState {

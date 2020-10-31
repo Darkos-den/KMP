@@ -72,16 +72,22 @@ class ReducerBuilder {
 
             RegisterValidationMapper { state, fields ->
                 state.copy(
+                    email = fields.firstOrNull {
+                        it.id == FIELD_ID_EMAIL
+                    }?.value ?: state.email,
+                    password = fields.firstOrNull {
+                        it.id == FIELD_ID_PASSWORD
+                    }?.value ?: state.password,
                     emailError = fields.firstOrNull {
                         it.id == FIELD_ID_EMAIL
                     }?.takeIf { it.valid.not() }?.let {
                         "Wrong email"
-                    } ?: "",
+                    } ?: state.emailError,
                     passwordError = fields.firstOrNull {
                         it.id == FIELD_ID_PASSWORD
                     }?.takeIf { it.valid.not() }?.let {
                         "Wrong password"
-                    } ?: ""
+                    } ?: state.passwordError
                 )
             }
         }

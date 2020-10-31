@@ -14,7 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.ExperimentalFocus
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focusRequester
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
@@ -64,6 +69,7 @@ class SignInFragment : BaseFragment() {
         }
     }
 
+    @OptIn(ExperimentalFocus::class)
     @Composable
     private fun rootView(
         state: SignInState,
@@ -80,24 +86,44 @@ class SignInFragment : BaseFragment() {
                 )
             }
         ) {
+            val focusRequesters = List(2) { FocusRequester() }
+
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 24.dp)
                     .padding(horizontal = 24.dp)
             ) {
                 TextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .focusRequester(focusRequesters[0]),
                     value = state.email,
-                    onValueChange = onEmailChanged
+                    onValueChange = onEmailChanged,
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                    onImeActionPerformed = { _, _ ->
+                        focusRequesters[1].requestFocus()
+                    }
                 )
-                Spacer(modifier = Modifier.fillMaxWidth().height(16.dp))
+                Spacer(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(16.dp)
+                )
                 TextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .focusRequester(focusRequesters[1]),
                     value = state.password,
                     onValueChange = onPasswordChanged,
-                    visualTransformation = PasswordVisualTransformation()
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done,
+                    onImeActionPerformed = { _, controller ->
+                        controller?.hideSoftwareKeyboard()
+                    }
                 )
-                Spacer(modifier = Modifier.fillMaxWidth().height(48.dp))
+                Spacer(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(48.dp)
+                )
                 Button(
                     onClick = onSignInClick,
                     modifier = Modifier.fillMaxWidth()
