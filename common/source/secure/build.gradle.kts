@@ -43,7 +43,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
 
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
                 implementation(project(":common:feature:auth:auth-api"))
             }
@@ -56,7 +55,6 @@ kotlin {
 
                 implementation("androidx.security:security-crypto:1.1.0-alpha02")
 
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
                 implementation(project(":common:feature:auth:auth-api"))
             }

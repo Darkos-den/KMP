@@ -1,7 +1,7 @@
 package com.darkos.kts.remote.repository.base
 
-import com.darkos.kts.entity.models.common.RemoteResult
-import com.darkos.kts.entity.models.exception.NetworkException
+import com.darkos.kts.remote.model.common.RemoteResult
+import com.darkos.kts.remote.model.exception.NetworkException
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*

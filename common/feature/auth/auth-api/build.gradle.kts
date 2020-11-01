@@ -42,7 +42,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:core:1.0.0")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 api(project(":common:feature:login-email:login-email-api"))
             }
         }
@@ -53,7 +52,6 @@ kotlin {
                 applyDependencies(androidDependencyList)
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
 
-                implementation(project(":common:entity"))
                 api(project(":common:feature:login-email:login-email-api"))
             }
         }

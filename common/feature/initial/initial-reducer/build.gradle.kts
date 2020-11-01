@@ -42,7 +42,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:core:1.0.0")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
             }
         }
@@ -54,7 +53,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:core-jvm:1.0.0")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
             }
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import com.darkos.core.navigation.Navigation
 import com.darkos.core.navigation.Navigator
 import com.darkos.kts.feature.auth.AuthActivity
+import com.darkos.kts.feature.signin.model.SignInNavigation
 import com.darkos.kts.feature.splash.model.SplashNavigation
 
 class AppNavigator(
@@ -15,6 +16,7 @@ class AppNavigator(
 
     override fun navigate(navigation: Navigation): Boolean {
         when (navigation) {
+            is SignInNavigation.NavigateToMain,
             is SplashNavigation.NavigateToMain -> {
                 TODO()
             }

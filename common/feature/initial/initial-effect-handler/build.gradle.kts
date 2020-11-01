@@ -43,7 +43,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:validation-api:1.0.4")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
             }
         }
@@ -56,7 +55,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:validation-api-jvm:1.0.4")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
             }
         }

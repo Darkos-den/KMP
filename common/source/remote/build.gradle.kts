@@ -50,7 +50,6 @@ kotlin {
 
                 implementation("com.github.aakira:napier:1.3.0")
 
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:login-email:login-email-api"))
             }
         }
@@ -62,7 +61,6 @@ kotlin {
 
                 implementation("com.github.aakira:napier-android:1.3.0")
 
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:login-email:login-email-api"))
             }
         }

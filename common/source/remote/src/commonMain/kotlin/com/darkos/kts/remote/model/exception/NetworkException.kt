@@ -1,4 +1,4 @@
-package com.darkos.kts.entity.models.exception
+package com.darkos.kts.remote.model.exception
 
 sealed class NetworkException(message: String) : Exception(message) {
     object ConnectionError : NetworkException("Connection error")

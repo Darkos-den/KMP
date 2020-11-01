@@ -18,12 +18,7 @@ class SplashEffectHandler(
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
             is SplashEffect.CheckActiveUser -> {
-                delay(2000)
-                if (secure.isActiveUserFound().also { delay(2000) }) {
-                    SplashMessage.UserFound
-                } else {
-                    SplashMessage.UserNotFound
-                }
+                processCheckUser()
             }
             is SplashEffect.Navigation.NavigateToLogin -> {
                 navigator.navigate(SplashNavigation.NavigateToLogin)
@@ -35,5 +30,18 @@ class SplashEffectHandler(
             }
             else -> Idle()
         }
+    }
+
+    private suspend fun processCheckUser(): SplashMessage {
+        delay(SPLASH_DELAY)
+        return if (secure.isActiveUserFound()) {
+            SplashMessage.UserFound
+        } else {
+            SplashMessage.UserNotFound
+        }
+    }
+
+    companion object {
+        private const val SPLASH_DELAY: Long = 1000
     }
 }

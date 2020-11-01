@@ -1,4 +1,4 @@
-package com.darkos.kts.entity.models.common
+package com.darkos.kts.remote.model.common
 
 sealed class RemoteResult<T : Any> {
     class Success<T : Any>(

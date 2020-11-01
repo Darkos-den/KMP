@@ -1,11 +1,11 @@
 package com.darkos.kts.remote.repository
 
-import com.darkos.kts.remote.repository.base.BaseRepository
-import com.darkos.kts.entity.models.common.RemoteResult
-import com.darkos.kts.entity.models.common.map
 import com.darkos.kts.feature.signin.LoginByEmailRemote
 import com.darkos.kts.feature.signin.model.dto.LoginDTO
 import com.darkos.kts.feature.signin.model.dto.TokenDTO
+import com.darkos.kts.remote.model.common.RemoteResult
+import com.darkos.kts.remote.model.common.map
+import com.darkos.kts.remote.repository.base.BaseRepository
 import com.darkos.mvu.login.model.LoginResult
 import io.ktor.client.request.*
 

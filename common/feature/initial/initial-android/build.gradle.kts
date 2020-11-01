@@ -43,6 +43,5 @@ dependencies {
     implementation("com.github.Darkos-den.core2:mvu-program:1.0.10")
 
     implementation(project(":common:core"))
-    implementation(project(":common:entity"))
     implementation(project(":common:feature:initial:initial-api"))
 }

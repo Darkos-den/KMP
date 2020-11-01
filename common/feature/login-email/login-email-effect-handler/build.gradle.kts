@@ -44,7 +44,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:validation-api:1.0.4")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:login-email:login-email-api"))
             }
         }
@@ -58,7 +57,6 @@ kotlin {
                 implementation("com.darkosinc.mvu:validation-api-jvm:1.0.4")
 
                 implementation(project(":common:core"))
-                implementation(project(":common:entity"))
                 implementation(project(":common:feature:login-email:login-email-api"))
             }
         }
