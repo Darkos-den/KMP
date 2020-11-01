@@ -22,7 +22,9 @@ class AppNavigator(
             }
             is SplashNavigation.NavigateToLogin -> {
                 Intent(application, AuthActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }.let {
                     application.startActivity(it)
                 }
