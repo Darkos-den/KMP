@@ -12,7 +12,6 @@ import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
 
 class AuthActivity: RounterActivity() {
 
@@ -46,7 +45,7 @@ class AuthActivity: RounterActivity() {
     }
 
     override fun onStop() {
-        messageProcessor.detach()
+        messageProcessor.detach(this)
         super.onStop()
     }
 

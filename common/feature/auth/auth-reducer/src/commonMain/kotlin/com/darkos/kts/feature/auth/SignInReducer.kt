@@ -11,11 +11,13 @@ import com.darkos.mvu.map
 import com.darkos.mvu.models.Message
 import com.darkos.mvu.models.None
 import com.darkos.mvu.models.StateCmdData
+import com.darkos.mvu.validation.model.mvu.ValidationMessage
 
 class SignInReducer : ISignInReducer {
 
     private val loginByEmailReducer = LoginByEmailReducer {
         enableEmailValidation()
+        enablePasswordValidation()
     }
 
     private fun mapToAuthState(state: LoginByEmailState): SignInState {
@@ -43,6 +45,8 @@ class SignInReducer : ISignInReducer {
         message: Message
     ): StateCmdData<SignInState> {
         return when (val translated = translate(message)) {
+            is LoginMessage,
+            is ValidationMessage,
             is LoginByEmailMessage -> {
                 loginByEmailReducer.update(
                     state = mapToSignInState(state),

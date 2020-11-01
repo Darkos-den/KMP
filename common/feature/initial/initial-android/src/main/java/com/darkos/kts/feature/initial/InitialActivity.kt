@@ -45,7 +45,7 @@ class InitialActivity: RounterActivity() {
     }
 
     override fun onStop() {
-        messageProcessor.detach()
+        messageProcessor.detach(this)
         super.onStop()
     }
 

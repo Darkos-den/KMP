@@ -6,7 +6,6 @@ import com.darkos.core.navigation.Navigator
 import com.darkos.core.presentation.di.PresentationModule
 import com.darkos.kts.android.AppMessageProcessor
 import com.darkos.kts.android.AppNavigator
-import com.darkos.kts.entity.source.remote.ISampleRemoteRepository
 import com.darkos.kts.feature.auth.*
 import com.darkos.kts.feature.initial.IInitialEffectHandler
 import com.darkos.kts.feature.initial.IInitialReducer
@@ -15,8 +14,8 @@ import com.darkos.kts.feature.initial.InitialReducer
 import com.darkos.kts.feature.signin.*
 import com.darkos.kts.feature.splash.*
 import com.darkos.kts.remote.repository.LoginRemoteRepository
-import com.darkos.kts.remote.repository.SampleRepository
 import com.darkos.kts.secure.repository.SecureRepository
+import com.darkos.kts.secure.repository.base.SecureStorage
 import com.darkos.validation.di.ValidationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
@@ -30,7 +29,12 @@ object AppModule {
         androidCoreModule(application)
 
         bind<MessageProcessor>() with singleton { AppMessageProcessor() }
-        bind<ISampleRemoteRepository>() with provider { SampleRepository() }
+
+        bind() from singleton {
+            SecureStorage().apply {
+                init(application)
+            }
+        }
 
         import(PresentationModule.get())
         import(NavigationModule.get())
@@ -56,7 +60,7 @@ object AppModule {
             )
         }
         bind<LoginByEmailRemote>() with provider { LoginRemoteRepository() }
-        bind<ISignInSecure>() with provider { SecureRepository() }
+        bind<ISignInSecure>() with provider { SecureRepository(instance()) }
     }
 
     private fun Kodein.Builder.authFeature() {
@@ -76,7 +80,7 @@ object AppModule {
                 navigator = instance()
             )
         }
-        bind<ISplashSecure>() with provider { SecureRepository() }
+        bind<ISplashSecure>() with provider { SecureRepository(instance()) }
     }
 
     private fun Kodein.Builder.initialFeature() {

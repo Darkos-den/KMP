@@ -42,9 +42,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 applyDependencies(commonDependencyList)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
-
-                implementation("com.netguru.kissme:common:0.2.5")
 
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))
@@ -57,7 +54,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 applyDependencies(androidDependencyList)
 
-                implementation("com.netguru.kissme:android:0.2.5")
+                implementation("androidx.security:security-crypto:1.1.0-alpha02")
 
                 implementation(project(":common:entity"))
                 implementation(project(":common:feature:initial:initial-api"))

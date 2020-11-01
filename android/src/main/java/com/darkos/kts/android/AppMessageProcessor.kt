@@ -12,13 +12,17 @@ class AppMessageProcessor : MessageProcessor {
         this.activity = activity
     }
 
-    override fun detach() {
-        activity = null
+    override fun detach(activity: Activity) {
+        if (this.activity == activity) {
+            this.activity = null
+        }
     }
 
     override fun showMessage(message: String) {
         activity?.let {
-            Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
+            it.runOnUiThread {
+                Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

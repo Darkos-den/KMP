@@ -2,21 +2,20 @@ package com.darkos.kts.secure.repository
 
 import com.darkos.kts.feature.signin.ISignInSecure
 import com.darkos.kts.feature.splash.ISplashSecure
-import com.darkos.kts.secure.common.NetworkDispatcher
-import com.darkos.kts.secure.repository.base.BaseSecureStorage
-import com.netguru.kissme.Kissme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.darkos.kts.secure.repository.base.BaseSecureRepository
+import com.darkos.kts.secure.repository.base.SecureStorage
+import kotlinx.coroutines.delay
 
-class SecureRepository : BaseSecureStorage(), ISplashSecure, ISignInSecure {
+class SecureRepository(
+    storage: SecureStorage
+) : BaseSecureRepository(storage), ISplashSecure, ISignInSecure {
 
     override suspend fun isActiveUserFound(): Boolean {
-        return withContext(Dispatchers.Main){
-            storage.getString(KEY_TOKEN, null) != null
-        }
+        delay(1000)
+        return storage.getString(KEY_TOKEN, null) != null
     }
 
-    override fun saveToken(token: String) {
+    override suspend fun saveToken(token: String) {
         storage.putString(KEY_TOKEN, token)
     }
 }

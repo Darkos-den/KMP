@@ -82,12 +82,12 @@ class ReducerBuilder {
                         it.id == FIELD_ID_EMAIL
                     }?.takeIf { it.valid.not() }?.let {
                         "Wrong email"
-                    } ?: state.emailError,
+                    } ?: "",
                     passwordError = fields.firstOrNull {
                         it.id == FIELD_ID_PASSWORD
                     }?.takeIf { it.valid.not() }?.let {
                         "Wrong password"
-                    } ?: state.passwordError
+                    } ?: ""
                 )
             }
         }

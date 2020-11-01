@@ -1,8 +1,9 @@
 package com.darkos.kts.feature.signin
 
 import com.darkos.core.messageProcessor.MessageProcessor
+import com.darkos.core.mvu.andThenIdle
 import com.darkos.core.navigation.Navigator
-import com.darkos.kts.feature.auth.IAuthEffectHandler
+import com.darkos.kts.feature.signin.model.SignInNavigation
 import com.darkos.kts.feature.signin.model.dto.TokenDTO
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message
@@ -25,14 +26,16 @@ class SignInEffectHandler(
     }
 
     override fun processError(error: Exception): Message {
-        TODO("Not yet implemented")
+        return messageProcessor.showMessage(error.message.orEmpty())
+            .andThenIdle()
     }
 
     override fun processSuccess(): Message {
-        TODO("Not yet implemented")
+        return navigator.navigate(SignInNavigation.NavigateToMain)
+            .andThenIdle()
     }
 
     override suspend fun processLoginResult(result: TokenDTO) {
-        TODO("Not yet implemented")
+        secure.saveToken(result.token)
     }
 }

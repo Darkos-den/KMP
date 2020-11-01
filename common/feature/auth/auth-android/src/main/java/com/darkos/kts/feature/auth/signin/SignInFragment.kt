@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -99,6 +100,11 @@ class SignInFragment : BaseFragment() {
                     value = state.email,
                     onValueChange = onEmailChanged,
                     keyboardType = KeyboardType.Email,
+                    isErrorValue = state.emailError.isNotEmpty(),
+                    label = {
+                        Text(text = UiData.emailLabel)
+                    },
+                    errorColor = Color.Red,
                     imeAction = ImeAction.Next,
                     onImeActionPerformed = { _, _ ->
                         focusRequesters[1].requestFocus()
@@ -113,6 +119,11 @@ class SignInFragment : BaseFragment() {
                         .focusRequester(focusRequesters[1]),
                     value = state.password,
                     onValueChange = onPasswordChanged,
+                    isErrorValue = state.passwordError.isNotEmpty(),
+                    label = {
+                        Text(text = UiData.passwordLabel)
+                    },
+                    errorColor = Color.Red,
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
