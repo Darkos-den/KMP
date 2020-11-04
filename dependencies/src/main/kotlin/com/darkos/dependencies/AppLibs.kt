@@ -43,4 +43,51 @@ object AppLibs {
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
     }
+
+    object Core {
+        private const val version = "1.0.10"
+
+        const val presentation = "com.github.Darkos-den.core2:presentation:$version"
+        const val program = "com.github.Darkos-den.core2:mvu-program:$version"
+    }
+
+    object MVU {
+        private const val core = "1.0.0"
+        private const val validation = "1.0.4"
+
+        const val coreJvm = "com.darkosinc.mvu:core-jvm:$core"
+
+        const val validationApi = "com.darkosinc.mvu:validation-api:$validation"
+        const val validationApiJvm = "com.darkosinc.mvu:validation-api-jvm:$validation"
+    }
+
+    object Modules {
+        const val core = ":common:core"
+        const val validation = ":common:validation"
+
+        object Source {
+            const val remote = ":common:source:remote"
+            const val secure = ":common:source:secure"
+        }
+
+        object LoginEmail {
+            const val api = ":common:feature:login-email:login-email-api"
+            const val reducer = ":common:feature:login-email:login-email-reducer"
+            const val effectHandler = ":common:feature:login-email:login-email-effect-handler"
+        }
+
+        object Initial {
+            const val api = ":common:feature:initial:initial-api"
+            const val android = ":common:feature:initial:initial-android"
+            const val reducer = ":common:feature:initial:initial-reducer"
+            const val effectHandler = ":common:feature:initial:initial-effect-handler"
+        }
+
+        object Auth {
+            const val api = ":common:feature:auth:auth-api"
+            const val android = ":common:feature:auth:auth-android"
+            const val reducer = ":common:feature:auth:auth-reducer"
+            const val effectHandler = ":common:feature:auth:auth-effect-handler"
+        }
+    }
 }

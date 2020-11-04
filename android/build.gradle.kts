@@ -55,26 +55,26 @@ dependencies {
     implementation(AppLibs.Kodein.jvm)
     implementation(AppLibs.Kodein.android)
 
-    implementation("com.github.Darkos-den.core2:presentation:1.0.10")
-    implementation("com.darkosinc.mvu:core-jvm:1.0.0")
-    implementation("com.github.Darkos-den.core2:mvu-program:1.0.10")
+    implementation(AppLibs.Core.presentation)
+    implementation(AppLibs.Core.program)
+    implementation(AppLibs.MVU.coreJvm)
+    implementation(AppLibs.MVU.validationApiJvm)
 
-    implementation(project(":common:core"))
+    implementation(project(AppLibs.Modules.validation))
 
-    implementation(project(":common:source:remote"))
-    implementation(project(":common:source:secure"))
+    implementation(project(AppLibs.Modules.core))
+
+    implementation(project(AppLibs.Modules.Source.remote))
+    implementation(project(AppLibs.Modules.Source.secure))
 
     //feature modules
-    implementation(project(":common:feature:initial:initial-android"))
-    implementation(project(":common:feature:initial:initial-api"))
-    implementation(project(":common:feature:initial:initial-reducer"))
-    implementation(project(":common:feature:initial:initial-effect-handler"))
+    implementation(project(AppLibs.Modules.Initial.android))
+    implementation(project(AppLibs.Modules.Initial.api))
+    implementation(project(AppLibs.Modules.Initial.reducer))
+    implementation(project(AppLibs.Modules.Initial.effectHandler))
 
-    implementation(project(":common:feature:auth:auth-android"))
-    implementation(project(":common:feature:auth:auth-api"))
-    implementation(project(":common:feature:auth:auth-reducer"))
-    implementation(project(":common:feature:auth:auth-effect-handler"))
-
-    implementation("com.darkosinc.mvu:validation-api-jvm:1.0.4")
-    implementation(project(":common:validation"))
+    implementation(project(AppLibs.Modules.Auth.android))
+    implementation(project(AppLibs.Modules.Auth.api))
+    implementation(project(AppLibs.Modules.Auth.reducer))
+    implementation(project(AppLibs.Modules.Auth.effectHandler))
 }
