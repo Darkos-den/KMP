@@ -1,9 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 buildscript {
-    val kotlinVersion by extra("1.4.0")
-    applyVersions()
     repositories {
         jcenter()
         google()
@@ -11,9 +6,12 @@ buildscript {
     }
 
     dependencies {
-        classpath(Libs.Kotlin.GRADLE.full)
-        classpath(Libs.AndroidGradle.GRADLE.full)
-        classpath(Libs.Detekt.GRADLE.full)
+        val kotlinVersion by extra("1.4.0")
+        val gradleVersion by extra("4.2.0-alpha15")
+
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.android.tools.build:gradle:$gradleVersion")
+//        classpath(Libs.Detekt.GRADLE.full)//todo
         classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
     }
 }

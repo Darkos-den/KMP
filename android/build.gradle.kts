@@ -1,32 +1,31 @@
-import com.darkos.depend.applyDependencies
-import com.darkos.depend.implementation
+import com.darkos.config.ModuleType
+import com.darkos.config.applyVersionInfo
+import com.darkos.dependencies.AppLibs
 
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("app-config-android")
+    id("dependencies")
+    id("android-config")
 }
 
-val dependencyList = listOf(
-    implementation(Libs.Kotlin.STDLIB),
-    implementation(Libs.Kotlin.REFLECT),
-    implementation(Libs.AndroidX.Activity.KTX),
-    implementation(Libs.AndroidX.AppCompat.CORE),
-    *Libs.AndroidX.Compose.all,
-    implementation(Libs.Coroutines.ANDROID),
-    *Libs.Kodein.defaultAndroid
-)
+configureAndroid {
+    moduleType = ModuleType.APPLICATION
 
-androidApplicationConfig()
+    enableCompose(true)
+}
 
 android {
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
-    }
+    val major = 0
+    val minor = 0
+    val path = 1
 
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-    }
+    val code = 1
+
+    applyVersionInfo(
+        appVersionCode = code,
+        appVersionName = "$major$minor$path"
+    )
 
     packagingOptions {
         pickFirst("META-INF/kotlinx-serialization-runtime.kotlin_module")
@@ -43,28 +42,22 @@ android {
     }
 
     buildFeatures {
-        compose = true
         viewBinding = true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion = "1.4.0"
-        kotlinCompilerExtensionVersion = "1.0.0-alpha04"
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = freeCompilerArgs + "-Xallow-jvm-ir-dependencies" + "-Xskip-prerelease-check"
     }
 }
 
 dependencies {
-    applyDependencies(dependencyList)
+    implementation(AppLibs.Kotlin.stdlib)
+    implementation(AppLibs.Kotlin.reflect)
+    implementation(AppLibs.AndroidX.activityKtx)
+    implementation(AppLibs.AndroidX.appCompatCore)
+    implementation(AppLibs.Coroutines.android)
+    implementation(AppLibs.Kodein.jvm)
+    implementation(AppLibs.Kodein.android)
+
     implementation("com.github.Darkos-den.core2:presentation:1.0.10")
     implementation("com.darkosinc.mvu:core-jvm:1.0.0")
     implementation("com.github.Darkos-den.core2:mvu-program:1.0.10")
-
-    implementation("com.github.aakira:napier-android:1.3.0")
 
     implementation(project(":common:core"))
 
