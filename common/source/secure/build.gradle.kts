@@ -1,26 +1,10 @@
-import com.darkos.depend.applyDependencies
-import com.darkos.depend.implementation
-import com.darkos.depend.stringDepend
-
-val commonDependencyList = listOf(
-    stringDepend {
-        "implementation" to "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8"
-    },
-    implementation(Libs.Serialization.CORE),
-    implementation(Libs.Serialization.PROTOBUF),
-    implementation(Libs.Kodein.ERASED)
-)
-
-val androidDependencyList = listOf(
-    implementation(Libs.Coroutines.ANDROID),
-    implementation(Libs.Serialization.CORE)
-)
-
-//val iosDeps = listOf(
-//    implementation(Libs.Coroutines.NATIVE),
-//    implementation(Libs.Serialization.NATIVE)
-////    *Libs.Ktor.defaultIos
-//)
+import com.darkos.config.android.ModuleType
+import com.darkos.dependencies.AppLibs.AndroidX
+import com.darkos.dependencies.AppLibs.Coroutines
+import com.darkos.dependencies.AppLibs.Kodein
+import com.darkos.dependencies.AppLibs.MVU
+import com.darkos.dependencies.AppLibs.Modules
+import com.darkos.dependencies.AppLibs.Serialization
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -29,34 +13,41 @@ plugins {
     id("kotlin-android-extensions")
 
     id("com.android.library")
-    id("app-config-android")
+    id("dependencies")
+    id("android-config")
+    id("multiplatform-config")
 }
 
-applyMultiPlatformSourceSets()
+configureAndroid {
+    moduleType = ModuleType.LIBRARY
+}
+
+configureMultiplatform {
+    mvuCoreVersion = MVU.core
+}
 
 kotlin {
-    android("android")
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common"))
-                applyDependencies(commonDependencyList)
+                implementation(Coroutines.common)
+                implementation(Serialization.core)
+                implementation(Serialization.protobuf)
+                implementation(Kodein.erased)
 
-                implementation(project(":common:feature:initial:initial-api"))
-                implementation(project(":common:feature:auth:auth-api"))
+                implementation(project(Modules.Initial.api))
+                implementation(project(Modules.Auth.api))
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                applyDependencies(androidDependencyList)
+                implementation(Coroutines.android)
+                implementation(Serialization.core)
+                implementation(AndroidX.crypto)
 
-                implementation("androidx.security:security-crypto:1.1.0-alpha02")
-
-                implementation(project(":common:feature:initial:initial-api"))
-                implementation(project(":common:feature:auth:auth-api"))
+                implementation(project(Modules.Initial.api))
+                implementation(project(Modules.Auth.api))
             }
         }
     }

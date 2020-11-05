@@ -1,23 +1,9 @@
-import com.darkos.depend.applyDependencies
-import com.darkos.depend.implementation
-
-val commonDependencyList = listOf(
-    implementation(Libs.Coroutines.COMMON),
-    implementation(Libs.Serialization.CORE),
-    implementation(Libs.Serialization.PROTOBUF),
-    implementation(Libs.Kodein.ERASED)
-)
-
-val androidDependencyList = listOf(
-    implementation(Libs.Coroutines.ANDROID),
-    implementation(Libs.Serialization.CORE)
-)
-
-//val iosDeps = listOf(
-//    implementation(Libs.Coroutines.NATIVE),
-//    implementation(Libs.Serialization.NATIVE)
-////    *Libs.Ktor.defaultIos
-//)
+import com.darkos.config.android.ModuleType
+import com.darkos.dependencies.AppLibs.Coroutines
+import com.darkos.dependencies.AppLibs.Kodein
+import com.darkos.dependencies.AppLibs.MVU
+import com.darkos.dependencies.AppLibs.Modules
+import com.darkos.dependencies.AppLibs.Serialization
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -26,38 +12,44 @@ plugins {
     id("kotlin-android-extensions")
 
     id("com.android.library")
-    id("app-config-android")
+    id("dependencies")
+    id("android-config")
+    id("multiplatform-config")
 }
 
-applyMultiPlatformSourceSets()
+configureAndroid {
+    moduleType = ModuleType.LIBRARY
+}
+
+configureMultiplatform {
+    mvuCoreVersion = MVU.core
+}
 
 kotlin {
-    android("android")
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common"))
-                applyDependencies(commonDependencyList)
-                implementation("com.darkosinc.mvu:core:1.0.0")
-                api("com.darkosinc.mvu:login-reducer:1.0.3")
-                api("com.darkosinc.mvu:validation-reducer:1.0.3")
+                api(MVU.loginReducer)
+                api(MVU.validationReducer)
+                implementation(Coroutines.common)
+                implementation(Serialization.core)
+                implementation(Serialization.protobuf)
+                implementation(Kodein.erased)
 
-                implementation(project(":common:core"))
-                implementation(project(":common:feature:login-email:login-email-api"))
+                implementation(project(Modules.core))
+                implementation(project(Modules.LoginEmail.api))
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                applyDependencies(androidDependencyList)
-                implementation("com.darkosinc.mvu:core-jvm:1.0.0")
-                api("com.darkosinc.mvu:login-reducer-jvm:1.0.3")
-                api("com.darkosinc.mvu:validation-reducer-jvm:1.0.3")
+                api(MVU.loginReducerJvm)
+                api(MVU.validationReducerJvm)
+                implementation(Coroutines.android)
+                implementation(Serialization.core)
 
-                implementation(project(":common:core"))
-                implementation(project(":common:feature:login-email:login-email-api"))
+                implementation(project(Modules.core))
+                implementation(project(Modules.LoginEmail.api))
             }
         }
     }

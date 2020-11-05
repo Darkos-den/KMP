@@ -1,6 +1,5 @@
 package com.darkos.kts.android.di
 
-import com.darkos.core.presentation.router.ActivityRouter
 import com.darkos.kts.feature.auth.AuthRouter
 import com.darkos.kts.feature.initial.InitialRouter
 import org.kodein.di.Kodein

@@ -1,6 +1,10 @@
-import com.darkos.config.ModuleType
-import com.darkos.config.applyVersionInfo
+import com.darkos.config.android.ModuleType
+import com.darkos.config.android.applyVersionInfo
 import com.darkos.dependencies.AppLibs
+import com.darkos.dependencies.AppLibs.Modules
+import com.darkos.dependencies.AppLibs.Modules.Auth
+import com.darkos.dependencies.AppLibs.Modules.Initial
+import com.darkos.dependencies.AppLibs.Modules.Source
 
 plugins {
     id("com.android.application")
@@ -12,6 +16,7 @@ plugins {
 configureAndroid {
     moduleType = ModuleType.APPLICATION
 
+    useDefaultDependencies()
     enableCompose(true)
 }
 
@@ -47,7 +52,6 @@ android {
 }
 
 dependencies {
-    implementation(AppLibs.Kotlin.stdlib)
     implementation(AppLibs.Kotlin.reflect)
     implementation(AppLibs.AndroidX.activityKtx)
     implementation(AppLibs.AndroidX.appCompatCore)
@@ -55,26 +59,21 @@ dependencies {
     implementation(AppLibs.Kodein.jvm)
     implementation(AppLibs.Kodein.android)
 
-    implementation(AppLibs.Core.presentation)
-    implementation(AppLibs.Core.program)
-    implementation(AppLibs.MVU.coreJvm)
     implementation(AppLibs.MVU.validationApiJvm)
 
-    implementation(project(AppLibs.Modules.validation))
+    implementation(project(Modules.validation))
+    implementation(project(Modules.core))
 
-    implementation(project(AppLibs.Modules.core))
+    implementation(project(Source.remote))
+    implementation(project(Source.secure))
 
-    implementation(project(AppLibs.Modules.Source.remote))
-    implementation(project(AppLibs.Modules.Source.secure))
+    implementation(project(Initial.android))
+    implementation(project(Initial.api))
+    implementation(project(Initial.reducer))
+    implementation(project(Initial.effectHandler))
 
-    //feature modules
-    implementation(project(AppLibs.Modules.Initial.android))
-    implementation(project(AppLibs.Modules.Initial.api))
-    implementation(project(AppLibs.Modules.Initial.reducer))
-    implementation(project(AppLibs.Modules.Initial.effectHandler))
-
-    implementation(project(AppLibs.Modules.Auth.android))
-    implementation(project(AppLibs.Modules.Auth.api))
-    implementation(project(AppLibs.Modules.Auth.reducer))
-    implementation(project(AppLibs.Modules.Auth.effectHandler))
+    implementation(project(Auth.android))
+    implementation(project(Auth.api))
+    implementation(project(Auth.reducer))
+    implementation(project(Auth.effectHandler))
 }

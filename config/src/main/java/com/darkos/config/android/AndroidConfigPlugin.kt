@@ -1,4 +1,4 @@
-package com.darkos.config
+package com.darkos.config.android
 
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.JavaVersion
@@ -39,10 +39,19 @@ class AndroidConfigPlugin : Plugin<Project> {
 
     internal fun setupAsLibrary(target: Project) {
         target.apply(plugin = "com.android.library")
-        target.apply(plugin = "kotlin-android")
 
         target.extensions.configure<BaseExtension>("android") {
             applyDefaultAndroidConfiguration()
+        }
+    }
+
+    internal fun applyDefaultDependencies(target: Project) {
+        target.dependencies {
+            //todo: versions
+            this.add("implementation", "org.jetbrains.kotlin:kotlin-stdlib:1.4.0")
+            this.add("implementation", "com.darkosinc.mvu:core-jvm:1.0.0")
+            this.add("implementation", "com.github.Darkos-den.core2:presentation:1.0.10")
+            this.add("implementation", "com.github.Darkos-den.core2:mvu-program:1.0.10")
         }
     }
 
@@ -85,6 +94,7 @@ class AndroidConfigPlugin : Plugin<Project> {
     }
 
     companion object {
+        //todo
         private const val kotlinVersion = "1.4.0"
         private const val extensionVersion = "1.0.0-alpha04"
     }

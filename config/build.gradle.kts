@@ -21,7 +21,11 @@ gradlePlugin {
     plugins {
         register("android-config") {
             id = "android-config"
-            implementationClass = "com.darkos.config.AndroidConfigPlugin"
+            implementationClass = "com.darkos.config.android.AndroidConfigPlugin"
+        }
+        register("multiplatform-config") {
+            id = "multiplatform-config"
+            implementationClass = "com.darkos.config.multiplatform.MultiplatformConfigPlugin"
         }
     }
 }

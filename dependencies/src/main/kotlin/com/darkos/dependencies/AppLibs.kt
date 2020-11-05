@@ -10,8 +10,9 @@ object AppLibs {
     }
 
     object AndroidX {
-        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha15"
+        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta01"
         const val appCompatCore = "androidx.appcompat:appcompat:1.1.0"
+        const val crypto = "androidx.security:security-crypto:1.1.0-alpha02"
 
         object Compose {
             private const val version = "1.0.0-alpha05"
@@ -39,7 +40,7 @@ object AppLibs {
     object Coroutines {
         private const val version = "1.4.0"
 
-        const val common = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
+        const val common = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
     }
@@ -51,14 +52,56 @@ object AppLibs {
         const val program = "com.github.Darkos-den.core2:mvu-program:$version"
     }
 
+    object Ktor {
+        private const val version = "1.4.0"
+
+        const val core = "io.ktor:ktor-client-core:$version"
+        const val serialization = "io.ktor:ktor-client-serialization:$version"
+        const val serializationJvm = "io.ktor:ktor-client-serialization-jvm:$version"
+        const val json = "io.ktor:ktor-client-json:$version"
+        const val jsonJvm = "io.ktor:ktor-client-json-jvm:$version"
+        const val logging = "io.ktor:ktor-client-logging:$version"
+        const val loggingJvm = "io.ktor:ktor-client-logging-jvm:$version"
+        const val okHttp = "io.ktor:ktor-client-okhttp:$version"
+        const val android = "io.ktor:ktor-client-android:$version"
+    }
+
     object MVU {
-        private const val core = "1.0.0"
+        const val core = "1.0.0"
         private const val validation = "1.0.4"
+        private const val loginHandler = "1.0.0"
+        private const val validationReducerVersion = "1.0.3"
+        private const val loginReducerVersion = "1.0.3"
+        private const val validationEffectHandlerVersion = "1.0.3"
+        private const val loginApiVersion = "1.0.1"
 
         const val coreJvm = "com.darkosinc.mvu:core-jvm:$core"
 
+        const val validationHandler = "com.darkosinc.mvu:validation:$validationEffectHandlerVersion"
+        const val validationHandlerJvm =
+            "com.darkosinc.mvu:validation-jvm:$validationEffectHandlerVersion"
         const val validationApi = "com.darkosinc.mvu:validation-api:$validation"
         const val validationApiJvm = "com.darkosinc.mvu:validation-api-jvm:$validation"
+        const val loginApi = "com.darkosinc.mvu:login-api:$loginApiVersion"
+        const val loginApiJvm = "com.darkosinc.mvu:login-api-jvm:$loginApiVersion"
+        const val loginEffectHandler = "com.darkosinc.mvu:login-effect-handler:$loginHandler"
+        const val loginEffectHandlerJvm = "com.darkosinc.mvu:login-effect-handler-jvm:$loginHandler"
+        const val loginReducer = "com.darkosinc.mvu:login-reducer:$loginReducerVersion"
+        const val loginReducerJvm = "com.darkosinc.mvu:login-reducer-jvm:$loginReducerVersion"
+        const val validationReducer =
+            "com.darkosinc.mvu:validation-reducer:$validationReducerVersion"
+        const val validationReducerJvm =
+            "com.darkosinc.mvu:validation-reducer-jvm:$validationReducerVersion"
+    }
+
+    object Serialization {
+        private const val version = "1.0.0-RC"
+
+        const val common = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$version"
+        const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
+        const val core = "org.jetbrains.kotlinx:kotlinx-serialization-core:$version"
+        const val protobuf = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$version"
+        const val native = "org.jetbrains.kotlinx:kotlinx-serialization-native:$version"
     }
 
     object Modules {

@@ -2,11 +2,11 @@ package com.darkos.kts.feature.auth
 
 import com.darkos.core.navigation.Navigation
 import com.darkos.core.navigation.Navigator
+import com.darkos.core.presentation.router.ActivityRouter
+import com.darkos.feature.auth.R
 import com.darkos.kts.feature.auth.model.AuthNavigation
 import com.darkos.kts.feature.auth.signin.SignInFragment
 import com.darkos.kts.feature.auth.signup.SignUpFragment
-import com.darkos.core.presentation.router.ActivityRouter
-import com.darkos.feature.auth.R
 
 class AuthRouter(
     appNavigator: Navigator

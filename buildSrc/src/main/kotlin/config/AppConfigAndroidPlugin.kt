@@ -4,7 +4,6 @@ import com.android.build.gradle.BaseExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.dependencies
 
 class AppConfigAndroidPlugin : Plugin<Project> {
 

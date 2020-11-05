@@ -1,31 +1,10 @@
-import com.darkos.depend.applyDependencies
-import com.darkos.depend.implementation
-
-val commonDependencyList = listOf(
-    implementation(Libs.Ktor.CORE),
-    implementation(Libs.Ktor.LOGGING),
-    implementation(Libs.Ktor.JSON),
-    implementation(Libs.Ktor.SERIALIZATION),
-    implementation(Libs.Coroutines.COMMON),
-    implementation(Libs.Serialization.CORE),
-    implementation(Libs.Serialization.PROTOBUF),
-    implementation(Libs.Kodein.ERASED)
-)
-
-val androidDependencyList = listOf(
-    implementation(Libs.Ktor.ANDROID),
-    implementation(Libs.Ktor.LOGGING_JVM),
-    implementation(Libs.Ktor.JSON_JVM),
-    implementation(Libs.Ktor.SERIALIZATION_JVM),
-    implementation(Libs.Coroutines.ANDROID),
-    implementation(Libs.Serialization.CORE)
-)
-
-//val iosDeps = listOf(
-//    implementation(Libs.Coroutines.NATIVE),
-//    implementation(Libs.Serialization.NATIVE)
-////    *Libs.Ktor.defaultIos
-//)
+import com.darkos.config.android.ModuleType
+import com.darkos.dependencies.AppLibs.Coroutines
+import com.darkos.dependencies.AppLibs.Kodein
+import com.darkos.dependencies.AppLibs.Ktor
+import com.darkos.dependencies.AppLibs.MVU
+import com.darkos.dependencies.AppLibs.Modules
+import com.darkos.dependencies.AppLibs.Serialization
 
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
@@ -34,30 +13,46 @@ plugins {
     id("kotlin-android-extensions")
 
     id("com.android.library")
-    id("app-config-android")
+    id("dependencies")
+    id("android-config")
+    id("multiplatform-config")
 }
 
-applyMultiPlatformSourceSets()
+configureAndroid {
+    moduleType = ModuleType.LIBRARY
+}
+
+configureMultiplatform {
+    mvuCoreVersion = MVU.core
+}
 
 kotlin {
-    android("android")
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common"))
-                applyDependencies(commonDependencyList)
+                implementation(Ktor.core)
+                implementation(Ktor.logging)
+                implementation(Ktor.json)
+                implementation(Ktor.serialization)
+                implementation(Coroutines.common)
+                implementation(Serialization.core)
+                implementation(Serialization.protobuf)
+                implementation(Kodein.erased)
 
-                implementation(project(":common:feature:login-email:login-email-api"))
+                implementation(project(Modules.LoginEmail.api))
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                applyDependencies(androidDependencyList)
+                implementation(Ktor.android)
+                implementation(Ktor.loggingJvm)
+                implementation(Ktor.jsonJvm)
+                implementation(Ktor.serialization)
+                implementation(Coroutines.android)
+                implementation(Serialization.core)
 
-                implementation(project(":common:feature:login-email:login-email-api"))
+                implementation(project(Modules.LoginEmail.api))
             }
         }
     }
