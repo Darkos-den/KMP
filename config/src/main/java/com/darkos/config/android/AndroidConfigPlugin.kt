@@ -45,13 +45,30 @@ class AndroidConfigPlugin : Plugin<Project> {
         }
     }
 
+    internal fun enableLeakCanary(target: Project) {
+        target.dependencies {
+            //todo: versions
+            this.add("debugImplementation", "com.squareup.leakcanary:leakcanary-android:2.5")
+        }
+    }
+
     internal fun applyDefaultDependencies(target: Project) {
         target.dependencies {
             //todo: versions
+            this.add("implementation", "org.jetbrains.kotlin:kotlin-reflect:1.4.0")
+            this.add("implementation", "androidx.activity:activity-ktx:1.2.0-beta01")
+            this.add("implementation", "androidx.appcompat:appcompat:1.1.0")
+            this.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0")
+            this.add("implementation", "org.kodein.di:kodein-di-generic-jvm:6.5.5")
+            this.add("implementation", "org.kodein.di:kodein-di-framework-android-x:6.5.5")
+
             this.add("implementation", "org.jetbrains.kotlin:kotlin-stdlib:1.4.0")
             this.add("implementation", "com.darkosinc.mvu:core-jvm:1.0.0")
             this.add("implementation", "com.github.Darkos-den.core2:presentation:1.0.10")
             this.add("implementation", "com.github.Darkos-den.core2:mvu-program:1.0.10")
+
+            this.add("implementation", "androidx.navigation:navigation-fragment-ktx:2.3.1")
+            this.add("implementation", "androidx.navigation:navigation-ui-ktx:2.3.1")
         }
     }
 

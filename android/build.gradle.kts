@@ -52,22 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(AppLibs.Kotlin.reflect)
-    implementation(AppLibs.AndroidX.activityKtx)
-    implementation(AppLibs.AndroidX.appCompatCore)
-    implementation(AppLibs.Coroutines.android)
-    implementation(AppLibs.Kodein.jvm)
-    implementation(AppLibs.Kodein.android)
-
     implementation(AppLibs.MVU.validationApiJvm)
-
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.1")
-
-    if (1 > 1) {
-
-    }
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
 
     implementation(project(Modules.validation))
     implementation(project(Modules.core))

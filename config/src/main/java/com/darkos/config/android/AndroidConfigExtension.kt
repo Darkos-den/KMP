@@ -27,6 +27,10 @@ open class AndroidConfigExtension @Inject constructor(
         plugin?.applyDefaultDependencies(project)
     }
 
+    fun enableLeakCanary() {
+        plugin?.enableLeakCanary(project)
+    }
+
     private fun onModuleTypeChanged(value: ModuleType) {
         plugin?.let {
             when (value) {
