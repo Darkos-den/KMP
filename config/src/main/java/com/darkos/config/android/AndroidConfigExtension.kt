@@ -15,20 +15,45 @@ open class AndroidConfigExtension @Inject constructor(
     private val plugin: AndroidConfigPlugin?
         get() = project.plugins.findPlugin(AndroidConfigPlugin::class.java)
 
-    fun enableCompose(useDefaultDependency: Boolean = false) {
-        plugin?.enableCompose(project)
+    fun enableCompose(
+        kotlinVersion: String,
+        extensionVersion: String,
+        useDefaultDependency: Boolean = false,
+        version: String = "1.0.0-alpha05"
+    ) {
+        plugin?.enableCompose(project, kotlinVersion, extensionVersion)
 
         if (useDefaultDependency) {
-            plugin?.applyComposeDependency(project)
+            plugin?.applyComposeDependency(project, version)
         }
     }
 
-    fun useDefaultDependencies() {
-        plugin?.applyDefaultDependencies(project)
+    fun useDefaultDependencies(
+        activityKtx: String,
+        appcompat: String,
+        coroutines: String,
+        kodein: String,
+        kotlin: String,
+        mvuCore: String,
+        mvuProgram: String,
+        navigation: String
+    ) {
+        Versions(
+            activityKtx = activityKtx,
+            appcompat = appcompat,
+            coroutines = coroutines,
+            kodein = kodein,
+            kotlin = kotlin,
+            mvuCore = mvuCore,
+            mvuProgram = mvuProgram,
+            navigation = navigation
+        ).let {
+            plugin?.applyDefaultDependencies(project, it)
+        }
     }
 
-    fun enableLeakCanary() {
-        plugin?.enableLeakCanary(project)
+    fun enableLeakCanary(version: String) {
+        plugin?.enableLeakCanary(project, version)
     }
 
     private fun onModuleTypeChanged(value: ModuleType) {

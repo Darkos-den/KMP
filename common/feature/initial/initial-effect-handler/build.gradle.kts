@@ -22,14 +22,14 @@ configureAndroid {
 }
 
 configureMultiplatform {
-    mvuCoreVersion = MVU.core
+    mvuCoreVersion = MVU.Version.core
 }
 
 kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(MVU.validationApi)
+                implementation(MVU.Validation.api)
                 implementation(Coroutines.common)
                 implementation(Serialization.core)
                 implementation(Serialization.protobuf)
@@ -42,7 +42,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(MVU.validationApiJvm)
+                implementation(MVU.Validation.apiJvm)
                 implementation(Coroutines.android)
                 implementation(Serialization.core)
 

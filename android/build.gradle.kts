@@ -16,8 +16,22 @@ plugins {
 configureAndroid {
     moduleType = ModuleType.APPLICATION
 
-    useDefaultDependencies()
-    enableCompose(true)
+    useDefaultDependencies(
+        activityKtx = AppLibs.AndroidX.Versions.activityKtx,
+        appcompat = AppLibs.AndroidX.Versions.appCompat,
+        mvuCore = AppLibs.MVU.Version.core,
+        coroutines = AppLibs.Coroutines.version,
+        kodein = AppLibs.Kodein.version,
+        kotlin = AppLibs.Kotlin.version,
+        mvuProgram = AppLibs.Core.version,
+        navigation = AppLibs.AndroidX.navigation
+    )
+    enableCompose(
+        kotlinVersion = AppLibs.Kotlin.version,
+        extensionVersion = AppLibs.Kotlin.extensionVersion,
+        useDefaultDependency = true,
+        version = AppLibs.AndroidX.Compose.version
+    )
 }
 
 android {
@@ -52,7 +66,7 @@ android {
 }
 
 dependencies {
-    implementation(AppLibs.MVU.validationApiJvm)
+    implementation(AppLibs.MVU.Validation.api)
 
     implementation(project(Modules.validation))
     implementation(project(Modules.core))

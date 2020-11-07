@@ -21,7 +21,7 @@ configureAndroid {
 }
 
 configureMultiplatform {
-    mvuCoreVersion = MVU.core
+    mvuCoreVersion = MVU.Version.core
 }
 
 kotlin {
@@ -33,8 +33,8 @@ kotlin {
                 implementation(Serialization.protobuf)
                 implementation(Kodein.erased)
 
-                implementation(MVU.validationApi)
-                implementation(MVU.validationHandler)
+                implementation(MVU.Validation.api)
+                implementation(MVU.Validation.handler)
                 implementation(project(Modules.LoginEmail.api))
             }
         }
@@ -44,8 +44,8 @@ kotlin {
                 implementation(Coroutines.android)
                 implementation(Serialization.core)
 
-                implementation(MVU.validationApiJvm)
-                implementation(MVU.validationHandlerJvm)
+                implementation(MVU.Validation.apiJvm)
+                implementation(MVU.Validation.handlerJvm)
                 implementation(project(Modules.LoginEmail.api))
             }
         }

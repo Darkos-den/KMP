@@ -45,34 +45,52 @@ class AndroidConfigPlugin : Plugin<Project> {
         }
     }
 
-    internal fun enableLeakCanary(target: Project) {
+    internal fun enableLeakCanary(target: Project, version: String) {
         target.dependencies {
-            //todo: versions
-            this.add("debugImplementation", "com.squareup.leakcanary:leakcanary-android:2.5")
+            this.add("debugImplementation", "com.squareup.leakcanary:leakcanary-android:$version")
         }
     }
 
-    internal fun applyDefaultDependencies(target: Project) {
+    internal fun applyDefaultDependencies(target: Project, versions: Versions) {
         target.dependencies {
-            //todo: versions
-            this.add("implementation", "org.jetbrains.kotlin:kotlin-reflect:1.4.0")
-            this.add("implementation", "androidx.activity:activity-ktx:1.2.0-beta01")
-            this.add("implementation", "androidx.appcompat:appcompat:1.1.0")
-            this.add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0")
-            this.add("implementation", "org.kodein.di:kodein-di-generic-jvm:6.5.5")
-            this.add("implementation", "org.kodein.di:kodein-di-framework-android-x:6.5.5")
+            val Libs = object {
+                val reflect = "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
+                val activityKtx = "androidx.activity:activity-ktx:${versions.activityKtx}"
+                val appcompat = "androidx.appcompat:appcompat:${versions.appcompat}"
+                val coroutines =
+                    "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+                val kodeinJvm = "org.kodein.di:kodein-di-generic-jvm:${versions.kodein}"
+                val kodeinAndroid = "org.kodein.di:kodein-di-framework-android-x:${versions.kodein}"
+                val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+                val mvuCore = "com.darkosinc.mvu:core-jvm:${versions.mvuCore}"
+                val corePresentation =
+                    "com.github.Darkos-den.core2:presentation:${versions.mvuProgram}"
+                val coreProgram = "com.github.Darkos-den.core2:mvu-program:${versions.mvuProgram}"
+                val navigationFragment =
+                    "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
+                val navigationUi = "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+            }
 
-            this.add("implementation", "org.jetbrains.kotlin:kotlin-stdlib:1.4.0")
-            this.add("implementation", "com.darkosinc.mvu:core-jvm:1.0.0")
-            this.add("implementation", "com.github.Darkos-den.core2:presentation:1.0.10")
-            this.add("implementation", "com.github.Darkos-den.core2:mvu-program:1.0.10")
-
-            this.add("implementation", "androidx.navigation:navigation-fragment-ktx:2.3.1")
-            this.add("implementation", "androidx.navigation:navigation-ui-ktx:2.3.1")
+            this.add("implementation", Libs.reflect)
+            this.add("implementation", Libs.activityKtx)
+            this.add("implementation", Libs.appcompat)
+            this.add("implementation", Libs.coroutines)
+            this.add("implementation", Libs.kodeinJvm)
+            this.add("implementation", Libs.kodeinAndroid)
+            this.add("implementation", Libs.stdlib)
+            this.add("implementation", Libs.mvuCore)
+            this.add("implementation", Libs.corePresentation)
+            this.add("implementation", Libs.coreProgram)
+            this.add("implementation", Libs.navigationFragment)
+            this.add("implementation", Libs.navigationUi)
         }
     }
 
-    internal fun enableCompose(target: Project) {
+    internal fun enableCompose(
+        target: Project,
+        kotlinVersion: String,
+        extensionVersion: String
+    ) {
         target.extensions.configure<BaseExtension>("android") {
             buildFeatures.apply {
                 compose = true
@@ -84,10 +102,8 @@ class AndroidConfigPlugin : Plugin<Project> {
         }
     }
 
-    internal fun applyComposeDependency(target: Project) {
+    internal fun applyComposeDependency(target: Project, version: String) {
         val Compose = object {
-            private val version = "1.0.0-alpha05"
-
             val ui = "androidx.compose.ui:ui:$version"
             val animation = "androidx.compose.animation:animation:$version"
             val foundation = "androidx.compose.foundation:foundation:$version"
@@ -108,12 +124,6 @@ class AndroidConfigPlugin : Plugin<Project> {
             this.add("implementation", Compose.runtime)
             this.add("implementation", Compose.tooling)
         }
-    }
-
-    companion object {
-        //todo
-        private const val kotlinVersion = "1.4.0"
-        private const val extensionVersion = "1.0.0-alpha04"
     }
 }
 

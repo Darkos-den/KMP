@@ -2,20 +2,29 @@ package com.darkos.dependencies
 
 object AppLibs {
 
+    const val leakcanaryVersion = "2.5"
+
     object Kotlin {
-        private const val version = "1.4.0"
+        const val version = "1.4.0"
+        const val extensionVersion = "1.0.0-alpha04"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
     }
 
     object AndroidX {
-        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta01"
-        const val appCompatCore = "androidx.appcompat:appcompat:1.1.0"
+        object Versions {
+            const val activityKtx = "1.2.0-beta01"
+            const val appCompat = "1.1.0"
+        }
+
+        const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
+        const val appCompatCore = "androidx.appcompat:appcompat:${Versions.appCompat}"
         const val crypto = "androidx.security:security-crypto:1.1.0-alpha02"
+        const val navigation = "2.3.1"
 
         object Compose {
-            private const val version = "1.0.0-alpha05"
+            const val version = "1.0.0-alpha05"
 
             const val ui = "androidx.compose.ui:ui:$version"
             const val animation = "androidx.compose.animation:animation:$version"
@@ -30,7 +39,7 @@ object AppLibs {
     }
 
     object Kodein {
-        private const val version = "6.5.5"
+        const val version = "6.5.5"
 
         const val jvm = "org.kodein.di:kodein-di-generic-jvm:$version"
         const val android = "org.kodein.di:kodein-di-framework-android-x:$version"
@@ -38,7 +47,7 @@ object AppLibs {
     }
 
     object Coroutines {
-        private const val version = "1.4.0"
+        const val version = "1.4.0"
 
         const val common = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
@@ -46,7 +55,7 @@ object AppLibs {
     }
 
     object Core {
-        private const val version = "1.0.10"
+        const val version = "1.0.10"
 
         const val presentation = "com.github.Darkos-den.core2:presentation:$version"
         const val program = "com.github.Darkos-den.core2:mvu-program:$version"
@@ -67,31 +76,39 @@ object AppLibs {
     }
 
     object MVU {
-        const val core = "1.0.0"
-        private const val validation = "1.0.4"
-        private const val loginHandler = "1.0.1"
-        private const val validationReducerVersion = "1.0.3"
-        private const val loginReducerVersion = "1.0.3"
-        private const val validationEffectHandlerVersion = "1.0.3"
-        private const val loginApiVersion = "1.0.1"
+        object Version {
+            const val core = "1.0.0"
 
-        const val coreJvm = "com.darkosinc.mvu:core-jvm:$core"
+            const val validationApi = "1.0.4"
+            const val validationReducer = "1.0.3"
+            const val validationHandler = "1.0.3"
 
-        const val validationHandler = "com.darkosinc.mvu:validation:$validationEffectHandlerVersion"
-        const val validationHandlerJvm =
-            "com.darkosinc.mvu:validation-jvm:$validationEffectHandlerVersion"
-        const val validationApi = "com.darkosinc.mvu:validation-api:$validation"
-        const val validationApiJvm = "com.darkosinc.mvu:validation-api-jvm:$validation"
-        const val loginApi = "com.darkosinc.mvu:login-api:$loginApiVersion"
-        const val loginApiJvm = "com.darkosinc.mvu:login-api-jvm:$loginApiVersion"
-        const val loginEffectHandler = "com.darkosinc.mvu:login-effect-handler:$loginHandler"
-        const val loginEffectHandlerJvm = "com.darkosinc.mvu:login-effect-handler-jvm:$loginHandler"
-        const val loginReducer = "com.darkosinc.mvu:login-reducer:$loginReducerVersion"
-        const val loginReducerJvm = "com.darkosinc.mvu:login-reducer-jvm:$loginReducerVersion"
-        const val validationReducer =
-            "com.darkosinc.mvu:validation-reducer:$validationReducerVersion"
-        const val validationReducerJvm =
-            "com.darkosinc.mvu:validation-reducer-jvm:$validationReducerVersion"
+            const val loginHandler = "1.0.1"
+            const val loginReducer = "1.0.3"
+            const val loginApi = "1.0.1"
+        }
+
+        object Validation {
+            const val handler = "com.darkosinc.mvu:validation:${Version.validationHandler}"
+            const val handlerJvm = "com.darkosinc.mvu:validation-jvm:${Version.validationHandler}"
+            const val api = "com.darkosinc.mvu:validation-api:${Version.validationApi}"
+            const val apiJvm = "com.darkosinc.mvu:validation-api-jvm:${Version.validationApi}"
+            const val reducer = "com.darkosinc.mvu:validation-reducer:${Version.validationReducer}"
+            const val reducerJvm =
+                "com.darkosinc.mvu:validation-reducer-jvm:${Version.validationReducer}"
+        }
+
+        object Login {
+            const val api = "com.darkosinc.mvu:login-api:${Version.loginApi}"
+            const val apiJvm = "com.darkosinc.mvu:login-api-jvm:${Version.loginApi}"
+            const val handler = "com.darkosinc.mvu:login-effect-handler:${Version.loginHandler}"
+            const val handlerJvm =
+                "com.darkosinc.mvu:login-effect-handler-jvm:${Version.loginHandler}"
+            const val reducer = "com.darkosinc.mvu:login-reducer:${Version.loginReducer}"
+            const val reducerJvm = "com.darkosinc.mvu:login-reducer-jvm:${Version.loginReducer}"
+        }
+
+        const val coreJvm = "com.darkosinc.mvu:core-jvm:${Version.core}"
     }
 
     object Serialization {
