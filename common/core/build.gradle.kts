@@ -43,6 +43,9 @@ kotlin {
                 implementation(AndroidX.activityKtx)
                 implementation(AndroidX.appCompatCore)
 
+                implementation("androidx.navigation:navigation-fragment-ktx:2.3.1")
+                implementation("androidx.navigation:navigation-ui-ktx:2.3.1")
+
                 implementation(Core.presentation)
                 implementation(Core.program)
             }

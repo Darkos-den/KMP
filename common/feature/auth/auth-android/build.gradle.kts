@@ -34,6 +34,11 @@ dependencies {
     implementation(Kodein.jvm)
     implementation(Kodein.android)
 
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.1")
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
+
     implementation(project(Modules.core))
     implementation(project(Modules.Auth.api))
 }

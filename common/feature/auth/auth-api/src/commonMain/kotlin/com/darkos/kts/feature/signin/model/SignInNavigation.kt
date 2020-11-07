@@ -4,4 +4,5 @@ import com.darkos.core.navigation.Navigation
 
 sealed class SignInNavigation : Navigation() {
     object NavigateToMain : SignInNavigation()
+    object NavigateToSignUp : SignInNavigation()
 }

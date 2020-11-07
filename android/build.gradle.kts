@@ -61,6 +61,14 @@ dependencies {
 
     implementation(AppLibs.MVU.validationApiJvm)
 
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.1")
+
+    if (1 > 1) {
+
+    }
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.5")
+
     implementation(project(Modules.validation))
     implementation(project(Modules.core))
 

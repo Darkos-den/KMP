@@ -2,10 +2,10 @@ package com.darkos.kts.android.di
 
 import android.app.Application
 import com.darkos.core.messageProcessor.MessageProcessor
-import com.darkos.core.navigation.Navigator
+import com.darkos.core.navigation.BaseNavigator
 import com.darkos.core.presentation.di.PresentationModule
 import com.darkos.kts.android.AppMessageProcessor
-import com.darkos.kts.android.AppNavigator
+import com.darkos.kts.android.ui.AppNavigator
 import com.darkos.kts.feature.auth.*
 import com.darkos.kts.feature.initial.IInitialEffectHandler
 import com.darkos.kts.feature.initial.IInitialReducer
@@ -40,7 +40,7 @@ object AppModule {
         import(NavigationModule.get())
         import(ValidationModule)
 
-        bind<Navigator>() with singleton { AppNavigator(application) }
+        bind<BaseNavigator>() with singleton { AppNavigator() }
 
         initialFeature()
         splashFeature()

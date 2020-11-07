@@ -1,6 +1,7 @@
 package com.darkos.kts.feature.auth.signin
 
 import com.darkos.core.presentation.ComponentViewModel
+import com.darkos.kts.feature.auth.AuthRouter
 import com.darkos.kts.feature.signin.ISignInEffectHandler
 import com.darkos.kts.feature.signin.ISignInReducer
 import com.darkos.kts.feature.signin.model.mvu.SignInMessage
@@ -8,7 +9,8 @@ import com.darkos.kts.feature.signin.model.mvu.SignInState
 
 class SignInViewModel(
     effectHandler: ISignInEffectHandler,
-    reducer: ISignInReducer
+    reducer: ISignInReducer,
+    private val router: AuthRouter
 ) : ComponentViewModel<SignInState, ISignInEffectHandler, ISignInReducer>(
     effectHandler, reducer
 ) {

@@ -27,6 +27,7 @@ import androidx.ui.tooling.preview.Preview
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
 import com.darkos.core.presentation.fragment.base.BaseFragment
+import com.darkos.kts.feature.auth.AuthRouter
 import com.darkos.kts.feature.signin.UiData
 import com.darkos.kts.feature.signin.model.mvu.SignInState
 import kotlinx.coroutines.Dispatchers
@@ -37,11 +38,12 @@ import org.kodein.di.generic.provider
 
 class SignInFragment : BaseFragment() {
 
-    override val viewModelModule = Kodein.Module("Splash.VM") {
+    override val viewModelModule = Kodein.Module("SignIn.VM") {
         bindViewModel<SignInViewModel>() with provider {
             SignInViewModel(
                 effectHandler = instance(),
-                reducer = instance()
+                reducer = instance(),
+                router = instance(tag = AuthRouter.TAG)
             )
         }
     }

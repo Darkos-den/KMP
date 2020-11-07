@@ -69,7 +69,7 @@ object AppLibs {
     object MVU {
         const val core = "1.0.0"
         private const val validation = "1.0.4"
-        private const val loginHandler = "1.0.0"
+        private const val loginHandler = "1.0.1"
         private const val validationReducerVersion = "1.0.3"
         private const val loginReducerVersion = "1.0.3"
         private const val validationEffectHandlerVersion = "1.0.3"
