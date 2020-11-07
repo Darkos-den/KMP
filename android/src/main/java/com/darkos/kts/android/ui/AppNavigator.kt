@@ -17,6 +17,7 @@ class AppNavigator : BaseNavigator() {
             }
             is SplashNavigation.NavigateToLogin -> {
                 controller.navigate(R.id.action_splashFragment_to_nav_auth)
+                return true
             }
             else -> {
                 childs.forEach {
@@ -27,7 +28,6 @@ class AppNavigator : BaseNavigator() {
             }
         }
 
-        return true
-//        throw IllegalArgumentException("navigation not supported")
+        throw IllegalArgumentException("navigation not supported")
     }
 }
