@@ -39,6 +39,15 @@ kotlin {
             }
         }
 
+        val commonTest by getting {
+            dependencies {
+                dependencies {
+                    implementation(kotlin("test-common"))
+                    implementation(kotlin("test-annotations-common"))
+                }
+            }
+        }
+
         val androidMain by getting {
             dependencies {
                 implementation(Coroutines.android)
@@ -46,6 +55,13 @@ kotlin {
 
                 implementation(project(Modules.core))
                 implementation(project(Modules.Initial.api))
+            }
+        }
+
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.1")
             }
         }
     }

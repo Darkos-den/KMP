@@ -39,6 +39,7 @@ kotlin {
                 implementation(Serialization.protobuf)
                 implementation(Kodein.erased)
 
+                implementation(project(Modules.core))
                 implementation(project(Modules.LoginEmail.api))
             }
         }
@@ -52,6 +53,7 @@ kotlin {
                 implementation(Coroutines.android)
                 implementation(Serialization.core)
 
+                implementation(project(Modules.core))
                 implementation(project(Modules.LoginEmail.api))
             }
         }

@@ -1,7 +1,7 @@
 package com.darkos.kts.android.ui
 
 import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.findNavController
 import com.darkos.core.navigation.Navigator
 import com.darkos.core.presentation.activity.BaseActivity
 import com.darkos.kts.R
@@ -19,12 +19,7 @@ class AppActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.takeIf {
-            it is NavHostFragment
-        }?.let {
-            it as NavHostFragment
-            it.navController
-        }?.let {
+        findNavController(R.id.nav_host_fragment).let {
             (navigator as AppNavigator).attachNavController(it)
         }
     }

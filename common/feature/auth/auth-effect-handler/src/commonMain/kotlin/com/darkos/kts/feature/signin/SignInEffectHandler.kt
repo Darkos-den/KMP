@@ -1,6 +1,8 @@
 package com.darkos.kts.feature.signin
 
 import com.darkos.core.messageProcessor.MessageProcessor
+import com.darkos.core.model.CoreUiData
+import com.darkos.core.model.exception.NetworkException
 import com.darkos.core.mvu.andThenIdle
 import com.darkos.core.navigation.Navigator
 import com.darkos.kts.feature.signin.model.SignInNavigation
@@ -31,8 +33,14 @@ class SignInEffectHandler(
     }
 
     override suspend fun processError(error: Exception): Message {
-        return messageProcessor.showMessage(error.message.orEmpty())
-            .andThenIdle()
+        return when (error) {
+            is NetworkException.ConnectionError -> {
+                messageProcessor.showMessage(CoreUiData.internetErrorMessage)
+            }
+            else -> {
+                messageProcessor.showMessage(error.message.orEmpty())
+            }
+        }.andThenIdle()
     }
 
     override suspend fun processSuccess(): Message {

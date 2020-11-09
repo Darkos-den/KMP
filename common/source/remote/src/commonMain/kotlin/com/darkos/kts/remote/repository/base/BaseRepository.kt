@@ -1,7 +1,7 @@
 package com.darkos.kts.remote.repository.base
 
+import com.darkos.core.model.exception.NetworkException
 import com.darkos.kts.remote.model.common.RemoteResult
-import com.darkos.kts.remote.model.exception.NetworkException
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -58,8 +58,7 @@ abstract class BaseRepository {
 
     private fun handleNetworkError(e: Exception): NetworkException? {
         return e.toString().takeIf {
-            it.contains("java.net.UnknownHostException")
-                    || it.contains("java.net.ConnectionException")
+            it.contains("UnknownHostException") || it.contains("ConnectionException")
         }?.let {
             NetworkException.ConnectionError
         }
