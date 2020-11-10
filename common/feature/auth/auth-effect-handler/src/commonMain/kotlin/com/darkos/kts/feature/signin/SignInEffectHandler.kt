@@ -4,12 +4,12 @@ import com.darkos.core.messageProcessor.MessageProcessor
 import com.darkos.core.model.CoreUiData
 import com.darkos.core.model.exception.NetworkException
 import com.darkos.core.mvu.andThenIdle
-import com.darkos.core.navigation.Navigator
 import com.darkos.kts.feature.signin.model.SignInNavigation
 import com.darkos.kts.feature.signin.model.dto.TokenDTO
 import com.darkos.kts.feature.signin.model.mvu.SignInEffect
 import com.darkos.mvu.models.Effect
 import com.darkos.mvu.models.Message
+import com.darkos.mvu.navigator.Navigator
 import com.darkos.mvu.validation.IValidationHandler
 
 class SignInEffectHandler(

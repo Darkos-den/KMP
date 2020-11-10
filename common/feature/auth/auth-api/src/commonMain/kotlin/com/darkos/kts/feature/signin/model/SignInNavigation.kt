@@ -1,6 +1,6 @@
 package com.darkos.kts.feature.signin.model
 
-import com.darkos.core.navigation.Navigation
+import com.darkos.mvu.navigator.Navigation
 
 sealed class SignInNavigation : Navigation() {
     object NavigateToMain : SignInNavigation()

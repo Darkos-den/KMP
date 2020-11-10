@@ -68,6 +68,8 @@ android {
 dependencies {
     implementation(AppLibs.MVU.Validation.api)
 
+    implementation("com.darkosinc.mvu:navigator-androidRelease:1.0.1")
+
     implementation(project(Modules.validation))
     implementation(project(Modules.core))
 

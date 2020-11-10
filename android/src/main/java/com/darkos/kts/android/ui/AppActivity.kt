@@ -2,9 +2,9 @@ package com.darkos.kts.android.ui
 
 import android.os.Bundle
 import androidx.navigation.findNavController
-import com.darkos.core.navigation.Navigator
 import com.darkos.core.presentation.activity.BaseActivity
 import com.darkos.kts.R
+import com.darkos.mvu.navigator.Navigator
 import org.kodein.di.generic.instance
 
 class AppActivity : BaseActivity() {

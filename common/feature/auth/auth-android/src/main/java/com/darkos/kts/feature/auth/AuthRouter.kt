@@ -1,19 +1,16 @@
 package com.darkos.kts.feature.auth
 
 import androidx.navigation.NavController
-import com.darkos.core.navigation.BaseNavigator
-import com.darkos.core.navigation.Navigation
 import com.darkos.feature.auth.R
 import com.darkos.kts.feature.auth.model.AuthNavigation
 import com.darkos.kts.feature.signin.model.SignInNavigation
+import com.darkos.mvu.navigator.NavGraphNavigator
+import com.darkos.mvu.navigator.Navigation
+import com.darkos.mvu.navigator.Navigator
 
 class AuthRouter(
-    appNavigator: BaseNavigator
-) : BaseNavigator() {
-
-    init {
-        appNavigator.attach(this)
-    }
+    appNavigator: Navigator
+) : NavGraphNavigator() {
 
     override suspend fun navigate(controller: NavController, navigation: Navigation): Boolean {
         when (navigation) {

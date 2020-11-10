@@ -2,7 +2,6 @@ package com.darkos.kts.android.di
 
 import android.app.Application
 import com.darkos.core.messageProcessor.MessageProcessor
-import com.darkos.core.navigation.BaseNavigator
 import com.darkos.core.presentation.di.PresentationModule
 import com.darkos.kts.android.AppMessageProcessor
 import com.darkos.kts.android.ui.AppNavigator
@@ -16,6 +15,7 @@ import com.darkos.kts.feature.splash.*
 import com.darkos.kts.remote.repository.LoginRemoteRepository
 import com.darkos.kts.secure.repository.SecureRepository
 import com.darkos.kts.secure.repository.base.SecureStorage
+import com.darkos.mvu.navigator.NavGraphNavigator
 import com.darkos.validation.di.ValidationModule
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidCoreModule
@@ -40,7 +40,7 @@ object AppModule {
         import(NavigationModule.get())
         import(ValidationModule)
 
-        bind<BaseNavigator>() with singleton { AppNavigator() }
+        bind<NavGraphNavigator>() with singleton { AppNavigator() }
 
         initialFeature()
         splashFeature()

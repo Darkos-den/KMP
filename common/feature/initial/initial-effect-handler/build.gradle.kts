@@ -35,6 +35,8 @@ kotlin {
                 implementation(Serialization.protobuf)
                 implementation(Kodein.erased)
 
+                implementation("com.darkosinc.mvu:navigator:1.0.1")
+
                 implementation(project(Modules.core))
                 implementation(project(Modules.Initial.api))
             }
@@ -45,6 +47,8 @@ kotlin {
                 implementation(MVU.Validation.apiJvm)
                 implementation(Coroutines.android)
                 implementation(Serialization.core)
+
+                implementation("com.darkosinc.mvu:navigator-androidRelease:1.0.1")
 
                 implementation(project(Modules.core))
                 implementation(project(Modules.Auth.api))

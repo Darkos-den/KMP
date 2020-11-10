@@ -40,4 +40,5 @@ android {
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.Auth.api))
+    implementation("com.darkosinc.mvu:navigator-androidRelease:1.0.1")
 }

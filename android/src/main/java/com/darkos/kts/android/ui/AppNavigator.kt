@@ -1,13 +1,13 @@
 package com.darkos.kts.android.ui
 
 import androidx.navigation.NavController
-import com.darkos.core.navigation.BaseNavigator
-import com.darkos.core.navigation.Navigation
 import com.darkos.kts.R
 import com.darkos.kts.feature.signin.model.SignInNavigation
 import com.darkos.kts.feature.splash.model.SplashNavigation
+import com.darkos.mvu.navigator.NavGraphNavigator
+import com.darkos.mvu.navigator.Navigation
 
-class AppNavigator : BaseNavigator() {
+class AppNavigator : NavGraphNavigator() {
 
     override suspend fun navigate(controller: NavController, navigation: Navigation): Boolean {
         when (navigation) {
