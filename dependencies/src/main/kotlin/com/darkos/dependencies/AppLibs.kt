@@ -55,7 +55,7 @@ object AppLibs {
     }
 
     object Core {
-        const val version = "1.0.10"
+        const val version = "1.0.12"
 
         const val presentation = "com.github.Darkos-den.core2:presentation:$version"
         const val program = "com.github.Darkos-den.core2:mvu-program:$version"
@@ -77,7 +77,7 @@ object AppLibs {
 
     object MVU {
         object Version {
-            const val core = "1.0.0"
+            const val core = "1.0.1"
 
             const val validationApi = "1.0.4"
             const val validationReducer = "1.0.3"

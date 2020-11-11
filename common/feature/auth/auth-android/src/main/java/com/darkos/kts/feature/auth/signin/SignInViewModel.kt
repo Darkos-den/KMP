@@ -34,4 +34,8 @@ class SignInViewModel(
     fun onSignInClick() {
         program.accept(SignInMessage.SignInClick)
     }
+
+    fun onSignUpClick() {
+        program.accept(SignInMessage.SignUpClick)
+    }
 }

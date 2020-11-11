@@ -12,6 +12,7 @@
             android:id="@+id/action_splashFragment_to_nav_auth"
             app:destination="@id/nav_auth"
             app:enterAnim="@anim/fragment_fade_enter"
+            app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>

@@ -17,7 +17,7 @@ class AuthReducer : IAuthReducer {
                     effect = AuthEffect.Navigation.NavigateToSignIn
                 )
             }
-            else -> StateCmdData(state, None())
+            else -> StateCmdData(state, None)
         }
     }
 }

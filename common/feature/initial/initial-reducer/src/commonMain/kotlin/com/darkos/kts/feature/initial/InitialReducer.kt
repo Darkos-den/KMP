@@ -19,7 +19,7 @@ class InitialReducer: IInitialReducer {
             }
             else -> StateCmdData(
                 state = state,
-                effect = None()
+                effect = None
             )
         }
     }

@@ -18,7 +18,7 @@ class InitialEffectHandler(
                 navigator.navigate(InitialNavigation.NavigateToSplash)
                     .andThenIdle()
             }
-            else -> Idle()
+            else -> Idle
         }
     }
 }

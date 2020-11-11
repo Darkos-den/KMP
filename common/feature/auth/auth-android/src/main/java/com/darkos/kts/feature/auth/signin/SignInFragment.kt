@@ -13,6 +13,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusRequester
@@ -35,6 +36,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
+import java.lang.ref.WeakReference
 
 class SignInFragment : BaseFragment() {
 
@@ -55,19 +57,22 @@ class SignInFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val fragment = WeakReference(this)//todo: check memory leak
         return ComposeView(requireContext()).apply {
             setContent {
-                val state by viewModel.state.collectAsState(
-                    context = Dispatchers.Main.immediate,
-                    initial = viewModel.initial()
-                )
-
-                rootView(
-                    state = state,
-                    onEmailChanged = viewModel::onEmailChanged,
-                    onPasswordChanged = viewModel::onPasswordChanged,
-                    onSignInClick = viewModel::onSignInClick
-                )
+                fragment.get()?.viewModel?.state?.let {
+                    val state by it.collectAsState(
+                        context = Dispatchers.Main.immediate,
+                        initial = viewModel.initial()
+                    )
+                    fragment.get()?.rootView(
+                        state = state,
+                        onEmailChanged = viewModel::onEmailChanged,
+                        onPasswordChanged = viewModel::onPasswordChanged,
+                        onSignInClick = viewModel::onSignInClick,
+                        onSignUpClick = viewModel::onSignUpClick
+                    )
+                }
             }
         }
     }
@@ -78,7 +83,8 @@ class SignInFragment : BaseFragment() {
         state: SignInState,
         onEmailChanged: (String) -> Unit,
         onPasswordChanged: (String) -> Unit,
-        onSignInClick: () -> Unit
+        onSignInClick: () -> Unit,
+        onSignUpClick: () -> Unit
     ) {
         Scaffold(
             topBar = {
@@ -143,6 +149,24 @@ class SignInFragment : BaseFragment() {
                 ) {
                     Text(text = UiData.signInButtonText)
                 }
+                Spacer(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(24.dp)
+                )
+                Text(
+                    text = "OR",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                Spacer(
+                    modifier = Modifier.fillMaxWidth()
+                        .height(24.dp)
+                )
+                Button(
+                    onClick = onSignUpClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = UiData.signUpButtonText)
+                }
             }
         }
     }
@@ -160,7 +184,8 @@ class SignInFragment : BaseFragment() {
             ),
             onEmailChanged = {},
             onPasswordChanged = {},
-            onSignInClick = {}
+            onSignInClick = {},
+            onSignUpClick = {}
         )
     }
 

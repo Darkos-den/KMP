@@ -37,15 +37,11 @@ class SignInReducer : ISignInReducer {
         )
     }
 
-    override fun update(
+    override fun update(//todo: check memory leak in `Program`
         state: SignInState,
         message: Message
     ): StateCmdData<SignInState> {
         return when (val translated = translate(message)) {
-            is LoginMessage.LoginClick -> StateCmdData(//todo: remove stub
-                state = state,
-                SignInEffect.Navigation.NavigateToSignUp
-            )
             is LoginMessage,
             is ValidationMessage,
             is LoginByEmailMessage -> {
@@ -54,9 +50,13 @@ class SignInReducer : ISignInReducer {
                     message = translated
                 ).map(this::mapToAuthState)
             }
+            is SignInMessage.SignUpClick -> StateCmdData(
+                state = state,
+                effect = SignInEffect.Navigation.NavigateToSignUp
+            )
             else -> StateCmdData(
                 state = state,
-                effect = None()
+                effect = None
             )
         }
     }

@@ -28,7 +28,7 @@ class SplashEffectHandler(
                 navigator.navigate(SplashNavigation.NavigateToMain)
                     .andThenIdle()
             }
-            else -> Idle()
+            else -> Idle
         }
     }
 

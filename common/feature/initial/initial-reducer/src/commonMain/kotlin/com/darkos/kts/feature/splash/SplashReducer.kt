@@ -32,7 +32,7 @@ class SplashReducer : ISplashReducer {
             }
             else -> StateCmdData(
                 state = state,
-                effect = None()
+                effect = None
             )
         }
     }
