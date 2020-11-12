@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference
 
 class SplashFragment : BaseFragment() {
 
-    override val viewModelModule = Kodein.Module("Splash.VM") {
+    override val viewModelModule: Kodein.Module = Kodein.Module("Splash.VM") {
         bindViewModel<SplashViewModel>() with provider {
             SplashViewModel(
                 effectHandler = instance(),
@@ -33,6 +33,7 @@ class SplashFragment : BaseFragment() {
             )
         }
     }
+
     override val viewModel: SplashViewModel by viewModel()
 
     override fun onCreateView(

@@ -6,7 +6,7 @@ object AppLibs {
 
     object Kotlin {
         const val version = "1.4.0"
-        const val extensionVersion = "1.0.0-alpha04"
+        const val extensionVersion = "1.0.0-alpha07"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
@@ -24,7 +24,7 @@ object AppLibs {
         const val navigation = "2.3.1"
 
         object Compose {
-            const val version = "1.0.0-alpha05"
+            const val version = "1.0.0-alpha07"
 
             const val ui = "androidx.compose.ui:ui:$version"
             const val animation = "androidx.compose.animation:animation:$version"

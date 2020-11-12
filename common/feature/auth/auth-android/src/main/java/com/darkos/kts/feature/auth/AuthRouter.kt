@@ -6,11 +6,14 @@ import com.darkos.kts.feature.auth.model.AuthNavigation
 import com.darkos.kts.feature.signin.model.SignInNavigation
 import com.darkos.mvu.navigator.NavGraphNavigator
 import com.darkos.mvu.navigator.Navigation
-import com.darkos.mvu.navigator.Navigator
 
 class AuthRouter(
-    appNavigator: Navigator
+    appNavigator: NavGraphNavigator
 ) : NavGraphNavigator() {
+
+    init {
+        appNavigator.attach(this)
+    }
 
     override suspend fun navigate(controller: NavController, navigation: Navigation): Boolean {
         when (navigation) {

@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -102,19 +99,22 @@ class SignInFragment : BaseFragment() {
                     .padding(top = 24.dp)
                     .padding(horizontal = 24.dp)
             ) {
+
                 TextField(
-                    modifier = Modifier.fillMaxWidth()
-                        .focusRequester(focusRequesters[0]),
                     value = state.email,
                     onValueChange = onEmailChanged,
-                    keyboardType = KeyboardType.Email,
-                    isErrorValue = state.emailError.isNotEmpty(),
                     label = {
                         Text(text = UiData.emailLabel)
                     },
+                    modifier = Modifier.fillMaxWidth()
+                        .focusRequester(focusRequesters[0]),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    isErrorValue = state.emailError.isNotEmpty(),
                     errorColor = Color.Red,
-                    imeAction = ImeAction.Next,
-                    onImeActionPerformed = { _, _ ->
+                    onImeActionPerformed = { x, y ->
                         focusRequesters[1].requestFocus()
                     }
                 )
@@ -123,21 +123,23 @@ class SignInFragment : BaseFragment() {
                         .height(16.dp)
                 )
                 TextField(
-                    modifier = Modifier.fillMaxWidth()
-                        .focusRequester(focusRequesters[1]),
                     value = state.password,
                     onValueChange = onPasswordChanged,
-                    isErrorValue = state.passwordError.isNotEmpty(),
                     label = {
                         Text(text = UiData.passwordLabel)
                     },
+                    modifier = Modifier.fillMaxWidth()
+                        .focusRequester(focusRequesters[1]),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    isErrorValue = state.passwordError.isNotEmpty(),
                     errorColor = Color.Red,
-                    visualTransformation = PasswordVisualTransformation(),
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done,
                     onImeActionPerformed = { _, controller ->
                         controller?.hideSoftwareKeyboard()
-                    }
+                    },
+                    visualTransformation = PasswordVisualTransformation()
                 )
                 Spacer(
                     modifier = Modifier.fillMaxWidth()

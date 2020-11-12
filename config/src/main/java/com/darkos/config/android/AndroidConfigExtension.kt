@@ -19,7 +19,7 @@ open class AndroidConfigExtension @Inject constructor(
         kotlinVersion: String,
         extensionVersion: String,
         useDefaultDependency: Boolean = false,
-        version: String = "1.0.0-alpha05"
+        version: String = "1.0.0-alpha07"//todo: remove default value
     ) {
         plugin?.enableCompose(project, kotlinVersion, extensionVersion)
 
