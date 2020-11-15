@@ -79,6 +79,8 @@ object AppLibs {
         object Version {
             const val core = "1.1.0"
 
+            const val navigator = "1.1.0"
+
             const val validationApi = "1.1.0"
             const val validationReducer = "1.1.0"
             const val validationHandler = "1.1.0"
@@ -109,6 +111,10 @@ object AppLibs {
         }
 
         const val coreJvm = "com.darkosinc.mvu:core-jvm:${Version.core}"
+
+        const val navigator = "com.darkosinc.mvu:navigator:${Version.navigator}"
+        const val navigatorAndroid =
+            "com.darkosinc.mvu:navigator-androidRelease:${Version.navigator}"
     }
 
     object Serialization {

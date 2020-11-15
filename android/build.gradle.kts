@@ -59,6 +59,8 @@ android {
         pickFirst("META-INF/mvu.kotlin_module")
         pickFirst("META-INF/validation.kotlin_module")
         pickFirst("META-INF/login-api.kotlin_module")
+        pickFirst("META-INF/login-effect-handler.kotlin_module")
+        pickFirst("META-INF/login-reducer.kotlin_module")
     }
 
     buildFeatures {
@@ -69,7 +71,7 @@ android {
 dependencies {
     implementation(AppLibs.MVU.Validation.api)
 
-    implementation("com.darkosinc.mvu:navigator-androidRelease:1.0.1")
+    implementation(AppLibs.MVU.navigatorAndroid)
 
     implementation(project(Modules.validation))
     implementation(project(Modules.core))
