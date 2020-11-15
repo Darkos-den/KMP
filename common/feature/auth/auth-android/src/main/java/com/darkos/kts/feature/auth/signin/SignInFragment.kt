@@ -33,7 +33,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
-import java.lang.ref.WeakReference
 
 class SignInFragment : BaseFragment() {
 
@@ -54,15 +53,14 @@ class SignInFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragment = WeakReference(this)//todo: check memory leak
         return ComposeView(requireContext()).apply {
             setContent {
-                fragment.get()?.viewModel?.state?.let {
+                viewModel.state.let {
                     val state by it.collectAsState(
                         context = Dispatchers.Main.immediate,
                         initial = viewModel.initial()
                     )
-                    fragment.get()?.rootView(
+                    rootView(
                         state = state,
                         onEmailChanged = viewModel::onEmailChanged,
                         onPasswordChanged = viewModel::onPasswordChanged,

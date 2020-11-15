@@ -3,8 +3,8 @@ package com.darkos.kts.feature.auth
 import com.darkos.kts.feature.signin.ISignInReducer
 import com.darkos.kts.feature.signin.LoginByEmailReducer
 import com.darkos.kts.feature.signin.model.mvu.*
+import com.darkos.mvu.common.map
 import com.darkos.mvu.login.model.mvu.LoginMessage
-import com.darkos.mvu.map
 import com.darkos.mvu.models.Message
 import com.darkos.mvu.models.None
 import com.darkos.mvu.models.StateCmdData

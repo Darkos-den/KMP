@@ -58,6 +58,7 @@ android {
         pickFirst("META-INF/ktor-http-cio.kotlin_module")
         pickFirst("META-INF/mvu.kotlin_module")
         pickFirst("META-INF/validation.kotlin_module")
+        pickFirst("META-INF/login-api.kotlin_module")
     }
 
     buildFeatures {
