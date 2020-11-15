@@ -14,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.ui.tooling.preview.Preview
 import com.darkos.core.presentation.di.bindViewModel
 import com.darkos.core.presentation.di.viewModel
@@ -21,7 +22,6 @@ import com.darkos.core.presentation.fragment.base.BaseFragment
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
-import java.lang.ref.WeakReference
 
 class SplashFragment : BaseFragment() {
 
@@ -41,8 +41,11 @@ class SplashFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragment = WeakReference(this)
-        return View(requireContext())
+        return ComposeView(requireContext()).apply {
+            setContent {
+                rootView()
+            }
+        }
     }
 
     @Preview
