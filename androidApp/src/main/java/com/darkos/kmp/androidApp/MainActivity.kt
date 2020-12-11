@@ -31,14 +31,11 @@ class MainActivity : AppCompatActivity() {
                 initial = viewModel.createInitialState()
             )
 
-            var text by remember { mutableStateOf(state.str) }
-
             Column {
                 Text(
                     text = calculateValue(state)
                 )
-                TextField(value = text, onValueChange = {
-                    text = it
+                TextField(value = state.str, onValueChange = {
                     viewModel.onTextChanged(it)
                 })
                 Button(onClick = {
