@@ -5,13 +5,14 @@ import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
 import com.darkos.kmp.feature.timer.api.ITimerReducer
 import com.darkos.kmp.feature.timer.api.model.TimerMessage
 import com.darkos.kmp.feature.timer.api.model.TimerState
-import com.darkos.mvu.MVUComponent
-import kotlinx.coroutines.flow.StateFlow
+import com.darkos.mvu.component.MVUComponent
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 class TimerComponent(
     effectHandler: ITimerEffectHandler,
     reducer: ITimerReducer
-): MVUComponent<TimerState>(
+) : MVUComponent<TimerState>(
     effectHandler = effectHandler,
     reducer = reducer
 ), ITimerComponent {
@@ -25,7 +26,7 @@ class TimerComponent(
         )
     }
 
-    override fun onTimerValueChanged(value: Int){
+    override fun onTimerValueChanged(value: Int) {
         accept(TimerMessage.ValueChanged(value))
     }
 
@@ -33,15 +34,11 @@ class TimerComponent(
         accept(TimerMessage.TextChanged(txt))
     }
 
-    override fun onStartClick(){
+    override fun onStartClick() {
         accept(TimerMessage.StartClick)
     }
 
-    override fun onStopClick(){
+    override fun onStopClick() {
         accept(TimerMessage.StopClick)
-    }
-
-    override fun applyStateListener(block: (TimerState) -> Unit) {
-        processState = block
     }
 }

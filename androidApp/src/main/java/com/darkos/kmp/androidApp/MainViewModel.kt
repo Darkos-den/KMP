@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.darkos.kmp.feature.timer.TimerDI
 import com.darkos.kmp.feature.timer.api.ITimerComponent
 import com.darkos.kmp.feature.timer.api.model.TimerState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 class MainViewModel(
     private val component: ITimerComponent = TimerDI().getComponent()
-): ViewModel(), ITimerComponent by component {
+) : ViewModel(), ITimerComponent by component {
 
     val state = MutableLiveData<TimerState>()
 
@@ -21,5 +19,10 @@ class MainViewModel(
             state.value = it
         }
         component.start()
+    }
+
+    override fun onCleared() {
+        component.clear()
+        super.onCleared()
     }
 }

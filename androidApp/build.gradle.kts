@@ -55,7 +55,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
 
     implementation("com.darkosinc.MVU:core:0.1.0")
-    implementation("com.darkosinc.MVU:program:0.1.3")
+    implementation("com.darkosinc.MVU:program:0.2.2")
 
     implementation("androidx.compose.ui:ui:1.0.0-alpha08")
     // Tooling support (Previews, etc.)

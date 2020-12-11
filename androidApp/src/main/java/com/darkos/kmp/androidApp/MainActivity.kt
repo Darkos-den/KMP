@@ -6,19 +6,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
 import com.darkos.kmp.feature.timer.api.model.TimerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
+@InternalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
     private val viewModel = MainViewModel()
@@ -30,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             val state: TimerState by viewModel.state.observeAsState(
                 initial = viewModel.createInitialState()
             )
+
+            onDispose {
+                viewModel.clearStateListener()
+            }
 
             Column {
                 Text(
