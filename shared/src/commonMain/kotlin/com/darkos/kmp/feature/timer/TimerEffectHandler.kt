@@ -4,6 +4,7 @@ import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
 import com.darkos.kmp.feature.timer.api.model.TimerEffect
 import com.darkos.kmp.feature.timer.api.model.TimerMessage
 import com.darkos.mvu.model.Effect
+import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
 import com.darkos.mvu.model.flow.FlowEffect
 import kotlinx.coroutines.delay
@@ -18,6 +19,9 @@ class TimerEffectHandler: ITimerEffectHandler{
     }
 
     override suspend fun call(effect: Effect): Message {
+        if(effect is TimerEffect.Trigger.Stop){
+            return Idle
+        }
         throw effect.notValid()
     }
 
@@ -29,6 +33,8 @@ class TimerEffectHandler: ITimerEffectHandler{
                         delay(1000)
                         emit(TimerMessage.ValueChanged(effect.value - i))
                     }
+                    delay(1000)
+                    emit(TimerMessage.Finish)
                 }
             }
             else -> {

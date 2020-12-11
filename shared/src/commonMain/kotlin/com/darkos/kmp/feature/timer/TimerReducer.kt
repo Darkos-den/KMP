@@ -26,6 +26,12 @@ class TimerReducer: ITimerReducer {
                     effect = TimerEffect.Trigger.Stop
                 )
             }
+            is TimerMessage.Finish -> {
+                state.copy(progress = false).none()
+            }
+            is TimerMessage.TextChanged -> {
+                state.copy(str = message.value).none()
+            }
             is TimerMessage.ValueChanged -> {
                 if(state.progress){
                     state.copy(value = message.newValue)

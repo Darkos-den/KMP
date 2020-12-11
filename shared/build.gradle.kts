@@ -28,7 +28,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
                 implementation("com.darkosinc.MVU:core:0.1.0")
-                implementation("com.darkosinc.MVU:program:0.0.5")
+                implementation("com.darkosinc.MVU:program:0.1.0")
             }
         }
         val commonTest by getting {

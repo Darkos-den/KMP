@@ -5,5 +5,6 @@ import com.darkos.mvu.model.MVUState
 data class TimerState(
     val count: Int,
     val value: Int,
-    val progress: Boolean
+    val progress: Boolean,
+    val str: String
 ): MVUState()

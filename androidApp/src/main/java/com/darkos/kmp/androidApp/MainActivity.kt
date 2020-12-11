@@ -2,52 +2,67 @@ package com.darkos.kmp.androidApp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import com.darkos.kmp.shared.Greeting
-import android.widget.TextView
-import androidx.lifecycle.lifecycleScope
-import com.darkos.kmp.androidApp.databinding.ActivityMainBinding
-import com.darkos.kmp.feature.timer.TimerComponent
-import com.darkos.kmp.feature.timer.TimerDI
-import com.darkos.kmp.feature.timer.api.ITimerComponent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.setContent
 import com.darkos.kmp.feature.timer.api.model.TimerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private val component: ITimerComponent by lazy {
-        TimerDI().getComponent()
-    }
-
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    private val viewModel = MainViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
 
-        component.state
-            .onEach(this::drawState)
-            .launchIn(lifecycleScope)
-    }
+        setContent {
+            val state: TimerState by viewModel.state.observeAsState(
+                initial = viewModel.createInitialState()
+            )
 
-    private fun drawState(state: TimerState){
-        if(state.progress){
-            binding.button.setOnClickListener {
-                component.onStopClick()
-            }
-        }else{
-            binding.button.setOnClickListener {
-                component.onStopClick()
+            var text by remember { mutableStateOf(state.str) }
+
+            Column {
+                Text(
+                    text = calculateValue(state)
+                )
+                TextField(value = text, onValueChange = {
+                    text = it
+                    viewModel.onTextChanged(it)
+                })
+                Button(onClick = {
+                    if(state.progress){
+                        viewModel.onStopClick()
+                    }else{
+                        viewModel.onStartClick()
+                    }
+                }) {
+                    Text(text = calculateButtonText(state))
+                }
             }
         }
+    }
 
-        binding.text.setText(state.value)
+    private fun calculateValue(state: TimerState): String{
+        return if(state.progress) {
+            state.value
+        } else {
+            state.count
+        }.toString()
+    }
+
+    private fun calculateButtonText(state: TimerState): String{
+        return if(state.progress) "stop" else "start"
     }
 }

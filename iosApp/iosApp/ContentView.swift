@@ -1,13 +1,14 @@
 import SwiftUI
 import shared
 
-func greet() -> String {
-    return Greeting().greeting()
-}
-
 struct ContentView: View {
+    var component = TimerDI().getComponent()
+    
     var body: some View {
-        Text(greet())
+        
+        component.onEach
+        
+        Text("stub")
     }
 }
 
