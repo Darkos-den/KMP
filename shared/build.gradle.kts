@@ -1,19 +1,12 @@
+import com.darkos.dependencies.AppLibs
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("dependencies")
 }
-group = "com.darkos.kmp"
-version = "1.0-SNAPSHOT"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-    maven(url = "https://dl.bintray.com/darkosinc/MVU")
-}
 kotlin {
     android()
 //    ios {
@@ -26,9 +19,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-                implementation("com.darkosinc.MVU:core:0.1.0")
-                implementation("com.darkosinc.MVU:program:0.2.2")
+                implementation(AppLibs.Coroutines.core)
+                implementation(AppLibs.MVU.core)
+                implementation(AppLibs.MVU.program)
             }
         }
         val commonTest by getting {
@@ -37,17 +30,8 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation("com.google.android.material:material:1.2.1")
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.12")
-            }
-        }
+        val androidMain by getting
+        val androidTest by getting
 //        val iosMain by getting
 //        val iosTest by getting
     }

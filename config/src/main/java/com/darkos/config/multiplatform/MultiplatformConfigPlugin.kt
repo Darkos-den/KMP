@@ -1,6 +1,6 @@
 package com.darkos.config.multiplatform
 
-import com.android.build.gradle.BaseExtension
+//import com.android.build.gradle.BaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -10,22 +10,22 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 class MultiplatformConfigPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        target.extensions.create(
-            "configureMultiplatform",
-            MultiplatformConfigExtension::class.java,
-            target
-        )
+//        target.extensions.create(
+//            "configureMultiplatform",
+//            MultiplatformConfigExtension::class.java,
+//            target
+//        )
 
         target.apply(plugin = "org.jetbrains.kotlin.multiplatform")
         target.apply(plugin = "com.android.library")
 
-        target.extensions.configure<BaseExtension>("android") {
-            sourceSets {
-                getByName("main").apply {
-                    setRoot("src/androidMain")
-                }
-            }
-        }
+//        target.extensions.configure<BaseExtension>("android") {
+//            sourceSets {
+//                getByName("main").apply {
+//                    setRoot("src/androidMain")
+//                }
+//            }
+//        }
 
         target.extensions.configure<KotlinMultiplatformExtension>("kotlin") {
             targets.add(android("android"))

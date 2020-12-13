@@ -1,18 +1,11 @@
+import com.darkos.dependencies.AppLibs
+
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-kapt")
+    id("dependencies")
 }
-group = "com.darkos.kmp"
-version = "1.0-SNAPSHOT"
 
-repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-    maven(url = "https://dl.bintray.com/darkosinc/MVU")
-}
 android {
     compileSdkVersion(30)
     defaultConfig {
@@ -46,27 +39,32 @@ android {
         kotlinCompilerExtensionVersion = "1.0.0-alpha08"
     }
 }
+
 dependencies {
     implementation(project(":shared"))
-    implementation("com.google.android.material:material:1.2.0")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
 
-    implementation("com.darkosinc.MVU:core:0.1.0")
-    implementation("com.darkosinc.MVU:program:0.2.2")
+    applyAndroidDependencies()
 
-    implementation("androidx.compose.ui:ui:1.0.0-alpha08")
-    // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:1.0.0-alpha08")
-    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation("androidx.compose.foundation:foundation:1.0.0-alpha08")
-    // Material Design
-    implementation("androidx.compose.material:material:1.0.0-alpha08")
-    // Material design icons
-    implementation("androidx.compose.material:material-icons-core:1.0.0-alpha08")
-    implementation("androidx.compose.material:material-icons-extended:1.0.0-alpha08")
-    // Integration with observables
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-alpha08")
+    implementation(AppLibs.MVU.core)
+    implementation(AppLibs.MVU.program)
+
+    applyCompose()
+}
+
+fun DependencyHandlerScope.applyCompose() {
+    implementation(AppLibs.AndroidX.Compose.ui)
+    implementation(AppLibs.AndroidX.Compose.tooling)
+    implementation(AppLibs.AndroidX.Compose.foundation)
+    implementation(AppLibs.AndroidX.Compose.material)
+    implementation(AppLibs.AndroidX.Compose.materialIconsCore)
+    implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
+    implementation(AppLibs.AndroidX.Compose.livedata)
+}
+
+fun DependencyHandlerScope.applyAndroidDependencies(){
+    implementation(AppLibs.material)
+    implementation(AppLibs.AndroidX.appCompat)
+    implementation(AppLibs.AndroidX.constraintLayout)
+    implementation(AppLibs.Coroutines.core)
+    implementation(AppLibs.AndroidX.lifecycle)
 }

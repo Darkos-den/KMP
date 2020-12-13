@@ -1,6 +1,7 @@
 package com.darkos.config.android
 
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.findPlugin
 import javax.inject.Inject
 
 open class AndroidConfigExtension @Inject constructor(
@@ -13,13 +14,13 @@ open class AndroidConfigExtension @Inject constructor(
         }
 
     private val plugin: AndroidConfigPlugin?
-        get() = project.plugins.findPlugin(AndroidConfigPlugin::class.java)
+        get() = project.plugins.findPlugin(AndroidConfigPlugin::class)
 
     fun enableCompose(
         kotlinVersion: String,
         extensionVersion: String,
-        useDefaultDependency: Boolean = false,
-        version: String = "1.0.0-alpha07"//todo: remove default value
+        version: String,
+        useDefaultDependency: Boolean = false
     ) {
         plugin?.enableCompose(project, kotlinVersion, extensionVersion)
 

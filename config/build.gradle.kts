@@ -9,12 +9,15 @@ repositories {
 }
 
 dependencies {
-    val kotlinVersion by extra("1.4.0")
-    val gradleVersion by extra("4.2.0-alpha16")
+    val kotlinVersion by extra("1.4.20")
+    val gradleVersion by extra("7.0.0-alpha02")
 
-    implementation("com.android.tools.build:gradle:$gradleVersion")
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin-api:$kotlinVersion")
+//    implementation("com.android.tools.build:gradle:$gradleVersion")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+
+    implementation(gradleApi())
+    implementation(localGroovy())
+//    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin-api:$kotlinVersion")
 }
 
 gradlePlugin {

@@ -4,9 +4,11 @@ object AppLibs {
 
     const val leakcanaryVersion = "2.5"
 
+    const val material = "com.google.android.material:material:1.2.1"
+
     object Kotlin {
-        const val version = "1.4.0"
-        const val extensionVersion = "1.0.0-alpha07"
+        const val version = "1.4.20"
+        const val extensionVersion = "1.0.0-alpha08"
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
@@ -15,26 +17,29 @@ object AppLibs {
     object AndroidX {
         object Versions {
             const val activityKtx = "1.2.0-beta01"
-            const val appCompat = "1.1.0"
+            const val appCompat = "1.2.0"
         }
 
         const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
-        const val appCompatCore = "androidx.appcompat:appcompat:${Versions.appCompat}"
+        const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+        const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val crypto = "androidx.security:security-crypto:1.1.0-alpha02"
         const val navigation = "2.3.1"
 
         object Compose {
-            const val version = "1.0.0-alpha07"
+            const val version = Kotlin.extensionVersion
 
             const val ui = "androidx.compose.ui:ui:$version"
-            const val animation = "androidx.compose.animation:animation:$version"
+            const val tooling = "androidx.compose.ui:ui-tooling:$version"
             const val foundation = "androidx.compose.foundation:foundation:$version"
+            const val animation = "androidx.compose.animation:animation:$version"
             const val material = "androidx.compose.material:material:$version"
             const val materialIconsCore = "androidx.compose.material:material-icons-core:$version"
             const val materialIconsExtended =
                 "androidx.compose.material:material-icons-extended:$version"
             const val runtime = "androidx.compose.runtime:runtime:$version"
-            const val tooling = "androidx.ui:ui-tooling:$version"
+            const val livedata = "androidx.compose.runtime:runtime-livedata:$version"
         }
     }
 
@@ -47,8 +52,9 @@ object AppLibs {
     }
 
     object Coroutines {
-        const val version = "1.4.0"
+        const val version = "1.4.2"
 
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val common = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
@@ -77,7 +83,8 @@ object AppLibs {
 
     object MVU {
         object Version {
-            const val core = "1.1.0"
+            const val core = "0.1.0"
+            const val program = "0.2.2"
 
             const val navigator = "1.1.0"
 
@@ -110,7 +117,8 @@ object AppLibs {
             const val reducerJvm = "com.darkosinc.mvu:login-reducer-jvm:${Version.loginReducer}"
         }
 
-        const val coreJvm = "com.darkosinc.mvu:core-jvm:${Version.core}"
+        const val core = "com.darkosinc.MVU:core:${Version.core}"
+        const val program = "com.darkosinc.MVU:program:${Version.program}"
 
         const val navigator = "com.darkosinc.mvu:navigator:${Version.navigator}"
         const val navigatorAndroid =

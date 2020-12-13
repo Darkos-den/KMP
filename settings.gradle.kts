@@ -8,6 +8,8 @@ pluginManagement {
 }
 rootProject.name = "kmp"
 
+includeBuild("dependencies")
+
 enableFeaturePreview("GRADLE_METADATA")
 
 include(":androidApp")

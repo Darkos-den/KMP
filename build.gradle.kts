@@ -16,3 +16,14 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+
+        maven(url = "https://dl.bintray.com/darkosinc/MVU")
+        maven(url = "https://dl.bintray.com/kodein-framework/Kodein-DI")
+    }
+}

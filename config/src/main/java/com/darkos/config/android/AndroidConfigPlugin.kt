@@ -1,11 +1,12 @@
 package com.darkos.config.android
 
 import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.DefaultConfig
+import org.gradle.api.Action
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidConfigPlugin : Plugin<Project> {
@@ -17,32 +18,88 @@ class AndroidConfigPlugin : Plugin<Project> {
     }
 
     override fun apply(target: Project) {
-        target.extensions.create("configureAndroid", AndroidConfigExtension::class.java, target)
+        target.extensions.create("configureAndroid", AndroidConfigExtension::class, target)
 
-        target.tasks.withType(KotlinCompile::class.java) {
+        target.tasks.withType(KotlinCompile::class) {
             kotlinOptions {
                 jvmTarget = "1.8"
-                freeCompilerArgs =
-                    freeCompilerArgs + "-Xallow-jvm-ir-dependencies" + "-Xskip-prerelease-check"
+                useIR = true
+                freeCompilerArgs = freeCompilerArgs + "-Xskip-prerelease-check"
             }
         }
+
+        target.extensions.configure(BaseExtension::class) {
+            defaultConfig {
+                compileSdkVersion(14)
+            }
+        }
+
+//        target.extensions.configure(BaseExtension::class) {
+//            defaultConfig {
+//                val x = this as BaseFlavor
+//                x.minSdkVersion(14)
+//            }
+//        }
+
+//        target.extensions.configure<BaseExtension>("android") {
+//            compileSdkVersion(AndroidConfigPlugin.SdkVersion.compile)
+//            defaultConfig {
+//                minSdkVersion(AndroidConfigPlugin.SdkVersion.min)
+//                targetSdkVersion(AndroidConfigPlugin.SdkVersion.target)
+//                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//                multiDexEnabled = true
+//            }
+//            buildTypes {
+//                getByName("release") {
+//                    isMinifyEnabled = true
+//                    proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+//                }
+//                getByName("debug") {
+//                    isMinifyEnabled = false
+//                }
+//            }
+//            compileOptions {
+//                sourceCompatibility = JavaVersion.VERSION_1_8
+//                targetCompatibility = JavaVersion.VERSION_1_8
+//            }
+//        }
     }
 
     internal fun setupAsApplication(target: Project) {
         target.apply(plugin = "com.android.application")
-        target.apply(plugin = "kotlin-android")
 
-        target.extensions.configure<BaseExtension>("android") {
-            applyDefaultAndroidConfiguration()
+        target.extensions.configure<BaseExtension>("") {
+            defaultConfig(Action {
+                (this as com.android.build.api.dsl.DefaultConfig).minSdk = 14
+            })
         }
     }
 
     internal fun setupAsLibrary(target: Project) {
         target.apply(plugin = "com.android.library")
 
-        target.extensions.configure<BaseExtension>("android") {
-            applyDefaultAndroidConfiguration()
-        }
+//        target.extensions.configure<LibraryExtension>("android") {
+//            compileSdkVersion(SdkVersion.compile)
+//            defaultConfig {
+//                minSdkVersion(SdkVersion.min)
+//                targetSdkVersion(SdkVersion.target)
+//                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//                multiDexEnabled = true
+//            }
+//            buildTypes {
+//                getByName("release") {
+//                    isMinifyEnabled = true
+//                    proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+//                }
+//                getByName("debug") {
+//                    isMinifyEnabled = false
+//                }
+//            }
+//            compileOptions {
+//                sourceCompatibility = JavaVersion.VERSION_1_8
+//                targetCompatibility = JavaVersion.VERSION_1_8
+//            }
+//        }
     }
 
     internal fun enableLeakCanary(target: Project, version: String) {
@@ -91,38 +148,36 @@ class AndroidConfigPlugin : Plugin<Project> {
         kotlinVersion: String,
         extensionVersion: String
     ) {
-        target.extensions.configure<BaseExtension>("android") {
-            buildFeatures.apply {
-                compose = true
-            }
-            composeOptions {
-                kotlinCompilerVersion = kotlinVersion
-                kotlinCompilerExtensionVersion = extensionVersion
-            }
-        }
+//        target.extensions.configure<BaseExtension>("android") {
+//            buildFeatures.apply {
+//                compose = true
+//            }
+//            composeOptions {
+//                kotlinCompilerVersion = kotlinVersion
+//                kotlinCompilerExtensionVersion = extensionVersion
+//            }
+//        }
     }
 
     internal fun applyComposeDependency(target: Project, version: String) {
         val Compose = object {
             val ui = "androidx.compose.ui:ui:$version"
-            val animation = "androidx.compose.animation:animation:$version"
+            val tooling = "androidx.compose.ui:ui-tooling:$version"
             val foundation = "androidx.compose.foundation:foundation:$version"
             val material = "androidx.compose.material:material:$version"
             val materialIconsCore = "androidx.compose.material:material-icons-core:$version"
             val materialIconsExtended = "androidx.compose.material:material-icons-extended:$version"
-            val runtime = "androidx.compose.runtime:runtime:$version"
-            val tooling = "androidx.ui:ui-tooling:$version"
+            val livedata = "androidx.compose.runtime:runtime-livedata:$version"
         }
 
         target.dependencies {
             this.add("implementation", Compose.ui)
-            this.add("implementation", Compose.animation)
+            this.add("implementation", Compose.tooling)
             this.add("implementation", Compose.foundation)
             this.add("implementation", Compose.material)
             this.add("implementation", Compose.materialIconsCore)
             this.add("implementation", Compose.materialIconsExtended)
-            this.add("implementation", Compose.runtime)
-            this.add("implementation", Compose.tooling)
+            this.add("implementation", Compose.livedata)
         }
     }
 }
@@ -130,7 +185,9 @@ class AndroidConfigPlugin : Plugin<Project> {
 fun BaseExtension.applyDefaultAndroidConfiguration() {
     compileSdkVersion(AndroidConfigPlugin.SdkVersion.compile)
     defaultConfig {
-        minSdkVersion(AndroidConfigPlugin.SdkVersion.min)
+        com.android.build.gradle.internal.dsl.DefaultConfig
+        com.android.build.api.dsl.DefaultConfig
+
         targetSdkVersion(AndroidConfigPlugin.SdkVersion.target)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -150,14 +207,14 @@ fun BaseExtension.applyDefaultAndroidConfiguration() {
     }
 }
 
-fun BaseExtension.applyVersionInfo(
-    appId: String = "com.darkos.kts",
-    appVersionCode: Int = 1,
-    appVersionName: String = "0.0.1"
-) {
-    defaultConfig {
-        applicationId = appId
-        versionCode = appVersionCode
-        versionName = appVersionName
-    }
-}
+//fun BaseExtension.applyVersionInfo(
+//    appId: String = "com.darkos.kts",
+//    appVersionCode: Int = 1,
+//    appVersionName: String = "0.0.1"
+//) {
+//    defaultConfig {
+//        applicationId = appId
+//        versionCode = appVersionCode
+//        versionName = appVersionName
+//    }
+//}
