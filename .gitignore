@@ -16,3 +16,10 @@ local.properties
 /shared/build
 /androidApp/build
 /.idea
+/dependencies/build
+/shared/feature/timer/handler/build
+/shared/feature/timer/reducer/build
+/shared/feature/timer/api/build
+/shared/feature/timer/component/build
+/shared/feature/timer/di/build
+/config/build

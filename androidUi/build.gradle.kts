@@ -1,7 +1,7 @@
 import com.darkos.dependencies.AppLibs
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("dependencies")
 }
@@ -9,7 +9,6 @@ plugins {
 android {
     compileSdkVersion(30)
     defaultConfig {
-        applicationId = "com.darkos.kmp.androidApp"
         minSdkVersion(24)
         targetSdkVersion(30)
         versionCode = 1
@@ -20,6 +19,10 @@ android {
             isMinifyEnabled = false
         }
     }
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -28,6 +31,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion = "1.4.20"
+        kotlinCompilerExtensionVersion = "1.0.0-alpha08"
     }
 }
 
@@ -42,9 +50,7 @@ dependencies {
     implementation("org.kodein.di:kodein-di:7.1.0")//todo
     implementation("org.kodein.di:kodein-di-framework-android-x:7.1.0")//todo
 
-    implementation(project(":shared:feature:timer:di"))
-
-    implementation(project(":androidUi"))
+    implementation(project(":shared:feature:timer:api"))
 }
 
 fun DependencyHandlerScope.applyCompose() {
