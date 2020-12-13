@@ -16,14 +16,29 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import org.kodein.di.*
+import org.kodein.di.android.di
+import org.kodein.di.android.retainedSubDI
 
 @InternalCoroutinesApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DIAware {
 
-    private val viewModel = MainViewModel()
+    override val di: DI by retainedSubDI(di()) {
+        bind() from provider {
+            MainViewModel(
+                component = instance()
+            )
+        }
+    }
+
+    override val diTrigger = DITrigger()
+
+    private val viewModel: MainViewModel by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        diTrigger.trigger()
 
         setContent {
             val state: TimerState by viewModel.state.observeAsState(
