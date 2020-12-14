@@ -84,7 +84,7 @@ object AppLibs {
     object MVU {
         object Version {
             const val core = "0.1.0"
-            const val program = "0.2.2"
+            const val program = "0.2.3"
 
             const val navigator = "1.1.0"
 
