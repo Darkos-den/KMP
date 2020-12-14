@@ -13,7 +13,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "shared"
+                baseName = "timer.api"
             }
         }
     }
