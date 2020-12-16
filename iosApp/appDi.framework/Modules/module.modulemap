@@ -1,0 +1,6 @@
+framework module appDi {
+    umbrella header "appDi.h"
+
+    export *
+    module * { export * }
+}

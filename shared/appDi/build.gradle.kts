@@ -10,19 +10,23 @@ plugins {
 
 kotlin {
     android()
-    ios()
+    ios {
+        binaries {
+            framework {
+                baseName = "appDi"
+            }
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(AppLibs.Coroutines.core)
-                implementation(AppLibs.MVU.core)
+                api(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(":shared:feature:timer:api"))
-                implementation(project(":shared:feature:timer:reducer"))
-                implementation(project(":shared:feature:timer:handler"))
-                implementation(project(":shared:feature:timer:component"))
+                api(project(":shared:feature:timer:api"))
+                api(project(":shared:feature:timer:di"))
 
                 implementation("org.kodein.di:kodein-di:7.1.0")//todo
             }
@@ -61,3 +65,16 @@ android {
         jvmTarget = "1.8"
     }
 }
+val packForXcode by tasks.creating(Sync::class) {
+    group = "build"
+    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    inputs.property("mode", mode)
+    dependsOn(framework.linkTask)
+    val targetDir = File(buildDir, "xcode-frameworks")
+    from({ framework.outputDirectory })
+    into(targetDir)
+}
+tasks.getByName("build").dependsOn(packForXcode)

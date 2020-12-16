@@ -15,6 +15,8 @@ enableFeaturePreview("GRADLE_METADATA")
 include(":androidApp")
 include(":androidUi")
 
+include(":shared:appDi")
+
 include(
     ":shared:feature:timer:api",
     ":shared:feature:timer:reducer",

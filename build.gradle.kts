@@ -25,5 +25,6 @@ allprojects {
 
         maven(url = "https://dl.bintray.com/darkosinc/MVU")
         maven(url = "https://dl.bintray.com/kodein-framework/Kodein-DI")
+        maven(url = "https://dl.bintray.com/badoo/maven")
     }
 }

@@ -30,7 +30,15 @@ class TimerReducer: ITimerReducer {
                 state.copy(progress = false).none()
             }
             is TimerMessage.TextChanged -> {
-                state.copy(str = message.value).none()
+                message.value.toIntOrNull()?.let {
+                    state.copy(str = message.value, count = it).none()
+                }?: run {
+                    if(message.value.isEmpty()) {
+                        state.copy(str = message.value, count = 1)
+                    }else {
+                        state
+                    }.none()
+                }
             }
             is TimerMessage.ValueChanged -> {
                 if(state.progress){
@@ -40,7 +48,7 @@ class TimerReducer: ITimerReducer {
                 }.none()
             }
             is ComponentInitialized -> {
-                state.copy(count = 15).none()
+                state.none()
             }
             else -> state.none()
         }

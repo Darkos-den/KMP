@@ -9,13 +9,7 @@ plugins {
 
 kotlin {
     android()
-    ios {
-        binaries {
-            framework {
-                baseName = "timer.handler"
-            }
-        }
-    }
+    ios()
     sourceSets {
         val commonMain by getting {
             dependencies {

@@ -13,7 +13,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "timer.api"
+                baseName = "featureTimer"
             }
         }
     }
@@ -21,7 +21,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(AppLibs.Coroutines.core)
-                implementation(AppLibs.MVU.core)
+                api(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
             }
         }
@@ -59,6 +59,11 @@ android {
         jvmTarget = "1.8"
     }
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+}
+
 val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"

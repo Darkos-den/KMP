@@ -19,10 +19,10 @@ class TimerComponent(
 
     override fun createInitialState(): TimerState {
         return TimerState(
-            count = 0,
+            count = 15,
             value = 0,
             progress = false,
-            str = ""
+            str = "15"
         )
     }
 

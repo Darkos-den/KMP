@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -12,6 +13,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import com.darkos.kmp.feature.timer.api.model.TimerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,12 +60,22 @@ class MainActivity : AppCompatActivity(), DIAware {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = calculateValue(state)
-                )
-                TextField(value = state.str, onValueChange = {
-                    viewModel.onTextChanged(it)
-                })
+                if(state.progress){
+                    Text(
+                        text = state.value.toString()
+                    )
+                }else {
+                    TextField(
+                        value = state.str,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        ),
+                        onValueChange = {
+                            viewModel.onTextChanged(it)
+                        }
+                    )
+                }
+
                 Button(onClick = {
                     if(state.progress){
                         viewModel.onStopClick()
@@ -74,14 +87,6 @@ class MainActivity : AppCompatActivity(), DIAware {
                 }
             }
         }
-    }
-
-    private fun calculateValue(state: TimerState): String{
-        return if(state.progress) {
-            state.value
-        } else {
-            state.count
-        }.toString()
     }
 
     private fun calculateButtonText(state: TimerState): String{
