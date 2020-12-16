@@ -11,15 +11,15 @@ import appDi
 
 class TimerViewModel: ObservableObject {
     
-    let component = CommonInjector().getComponent()
-    @Published var state: ApiTimerState
+    let component = CommonInjector().timerDiFacade().getComponent()
+    @Published var state: TimerState
     
     init() {
-        state = component.createInitialState() as! ApiTimerState
+        state = component.createInitialState() as! TimerState
         
         component.applyStateListener { (state: CoreMVUState) in
-            print("new state: \((state as! ApiTimerState).value)")
-            self.state = state as! ApiTimerState
+            print("new state: \((state as! TimerState).value)")
+            self.state = state as! TimerState
         }
         component.start()
     }

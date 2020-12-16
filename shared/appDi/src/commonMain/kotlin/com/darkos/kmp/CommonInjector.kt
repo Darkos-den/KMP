@@ -15,13 +15,7 @@ class CommonInjector {
         import(createAppModule())
     }
 
-    fun getComponent(): ITimerComponent {
-        return diContainer.direct.instance() as ITimerComponent
-    }
-
-    fun check(): String = "1234"
-
-    fun tmp(): TimerState = TimerState(0, 0, false, "")
+    fun timerDiFacade() = TimerDiFacade(diContainer.direct)
 
     fun createAppModule() = DI.Module("app") {
         importAll(

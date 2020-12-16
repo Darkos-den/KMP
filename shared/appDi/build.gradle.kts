@@ -14,6 +14,8 @@ kotlin {
         binaries {
             framework {
                 baseName = "appDi"
+                export(project(":shared:feature:timer:api"))
+                export(project(":shared:feature:timer:di"))
             }
         }
     }
@@ -22,7 +24,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(AppLibs.Coroutines.core)
-                api(AppLibs.MVU.core)
+                implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
                 api(project(":shared:feature:timer:api"))
