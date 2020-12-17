@@ -2,13 +2,9 @@ import SwiftUI
 import appDi
 
 class VM: ObservableObject {
-    private var processor: appDi.AlertProcessor
+    private let processor = CommonInjector.init().getAlertProcessor()
     
     @Published var isShow = false
-    
-    init(injector: CommonInjector) {
-        processor = injector.getAlertProcessor()
-    }
     
     func run(){
         self.processor.onAlertShowRequest { (msg: String) in
@@ -33,14 +29,12 @@ struct AlertView: View {
 
 struct ContentView: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
-    var processor: appDi.AlertProcessor
-    var injector: CommonInjector
+    let processor = CommonInjector.init().getAlertProcessor()
+    
     @ObservedObject var vm: VM
     
-    init(injector: CommonInjector) {
-        self.injector = injector
-        processor = injector.getAlertProcessor()
-        vm = VM(injector: injector)
+    init() {
+        vm = VM()
         vm.run()
     }
     

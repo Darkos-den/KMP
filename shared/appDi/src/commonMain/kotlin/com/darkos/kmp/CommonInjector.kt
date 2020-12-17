@@ -7,9 +7,10 @@ import com.darkos.kmp.feature.timer.api.model.TimerState
 import org.kodein.di.*
 import kotlin.native.concurrent.ThreadLocal
 
-class CommonInjector {
+@ThreadLocal
+object CommonInjector {
 
-    private val diContainer = DI.lazy {
+    private val diContainer by DI.lazy {
         import(createAppModule())
         bind() from singleton {
             AlertProcessor()
