@@ -23,4 +23,9 @@ class TimerViewModel: ObservableObject {
         }
         component.start()
     }
+    
+    public func stop() {
+        print("stop")
+        component.clear()
+    }
 }
