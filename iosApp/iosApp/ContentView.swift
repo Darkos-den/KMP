@@ -6,12 +6,20 @@ class VM: ObservableObject {
     
     @Published var isShow = false
     
-    func run(){
+    init(){
         self.processor.onAlertShowRequest { (msg: String) in
             
             print("show")
             self.isShow = true
         }
+    }
+}
+
+struct MessageProcessor: View {
+    @ObservedObject var vm: VM
+    
+    var body: some View {
+        AlertView(isShow: $vm.isShow)
     }
 }
 
@@ -30,13 +38,7 @@ struct AlertView: View {
 struct ContentView: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
     let processor = CommonInjector.init().getAlertProcessor()
-    
-    @ObservedObject var vm: VM
-    
-    init() {
-        vm = VM()
-        vm.run()
-    }
+    @ObservedObject var vm = VM()
     
     var body: some View {
         let tmpState = viewModel.state
@@ -49,10 +51,8 @@ struct ContentView: View {
             buttonValue = "start"
         }
         
-
-        
         return VStack() {
-            AlertView(isShow: $vm.isShow)
+            MessageProcessor(vm: vm)
             
             if(tmpState.progress){
                 Text(textValue)
