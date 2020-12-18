@@ -1,6 +1,6 @@
 package com.darkos.kmp.feature.timer
 
-import com.darkos.kmp.feature.timer.api.AlertProcessor
+import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
 import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
 import com.darkos.kmp.feature.timer.api.model.TimerEffect
 import com.darkos.kmp.feature.timer.api.model.TimerMessage

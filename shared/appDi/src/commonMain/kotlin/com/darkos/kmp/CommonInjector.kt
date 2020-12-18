@@ -2,8 +2,6 @@ package com.darkos.kmp
 
 import com.darkos.kmp.feature.timer.TimerDI
 import com.darkos.kmp.feature.timer.TimerDiFacade
-import com.darkos.kmp.feature.timer.api.ITimerComponent
-import com.darkos.kmp.feature.timer.api.model.TimerState
 import org.kodein.di.*
 import kotlin.native.concurrent.ThreadLocal
 
@@ -14,7 +12,7 @@ object CommonInjector {
         bind() from singleton {
             AlertProcessor()
         }
-        bind<com.darkos.kmp.feature.timer.api.AlertProcessor>() with provider {
+        bind<com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor>() with provider {
             instance<AlertProcessor>()
         }
         import(createAppModule())

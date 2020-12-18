@@ -1,6 +1,6 @@
 package com.darkos.kmp
 
-import com.darkos.kmp.feature.timer.api.AlertProcessor
+import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
 
 class AlertProcessor: AlertProcessor {
 

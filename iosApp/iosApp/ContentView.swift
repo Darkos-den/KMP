@@ -42,8 +42,7 @@ struct AlertView: View {
 
 struct ContentView: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
-    let processor = CommonInjector.init().getAlertProcessor()
-    @ObservedObject var prc = MessageProcessor()
+    @ObservedObject var processor = MessageProcessor()
     
     var body: some View {
         let tmpState = viewModel.state
@@ -57,7 +56,7 @@ struct ContentView: View {
         }
         
         return VStack() {
-            prc.createView()
+            processor.createView()
             
             if(tmpState.progress){
                 Text(textValue)
@@ -71,14 +70,11 @@ struct ContentView: View {
         
             Button(buttonValue){
                 if(tmpState.progress){
-                  self.viewModel.component.onStopClick()
+                    self.viewModel.component.onStopClick()
                 }else{
-                     self.viewModel.component.onStartClick()
+                    self.viewModel.component.onStartClick()
                 }
             }
-            
-            
-            
         }.onDisappear {
             self.viewModel.stop()
         }
