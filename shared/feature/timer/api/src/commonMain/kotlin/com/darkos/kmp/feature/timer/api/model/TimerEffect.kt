@@ -6,6 +6,8 @@ import com.darkos.mvu.model.flow.FlowEffect
 
 sealed class TimerEffect: Effect() {
 
+    object ShowSuccessMessage: TimerEffect()
+
     sealed class Trigger: TimerEffect(), ScopedEffect{
         override val scope = "timer_trigger"
 

@@ -1,6 +1,8 @@
 package com.darkos.kmp
 
-class AlertProcessor {
+import com.darkos.kmp.feature.timer.api.AlertProcessor
+
+class AlertProcessor: AlertProcessor {
 
     private var alertShow: ((String)->Unit)? = null
 
@@ -10,5 +12,9 @@ class AlertProcessor {
 
     fun showAlert(message: String){
         alertShow?.invoke(message)
+    }
+
+    override fun showMessage(message: String) {
+        showAlert(message)
     }
 }

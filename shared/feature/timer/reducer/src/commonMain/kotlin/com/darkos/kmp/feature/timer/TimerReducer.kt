@@ -7,27 +7,27 @@ import com.darkos.kmp.feature.timer.api.model.TimerState
 import com.darkos.mvu.Reducer
 import com.darkos.mvu.common.none
 import com.darkos.mvu.model.ComponentInitialized
+import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Message
 import com.darkos.mvu.model.StateCmdData
 
 class TimerReducer: ITimerReducer {
 
+    infix fun TimerState.andCmd(cmd: Effect) = StateCmdData(state = this, effect = cmd)//todo: move to core lib
+
     override fun update(state: TimerState, message: Message): StateCmdData<TimerState> {
         return when(message) {
             is TimerMessage.StartClick -> {
-                StateCmdData(
-                    state = state.copy(progress = true, value = state.count),
-                    effect = TimerEffect.Trigger.Start(state.count)
-                )
+                state.copy(
+                    progress = true,
+                    value = state.count
+                ) andCmd TimerEffect.Trigger.Start(state.count)
             }
             is TimerMessage.StopClick -> {
-                StateCmdData(
-                    state = state.copy(progress = false),
-                    effect = TimerEffect.Trigger.Stop
-                )
+                state.copy(progress = false) andCmd TimerEffect.Trigger.Stop
             }
             is TimerMessage.Finish -> {
-                state.copy(progress = false).none()
+                state.copy(progress = false) andCmd TimerEffect.ShowSuccessMessage
             }
             is TimerMessage.TextChanged -> {
                 message.value.toIntOrNull()?.let {

@@ -1,5 +1,6 @@
 package com.darkos.kmp.feature.timer
 
+import com.darkos.kmp.feature.timer.api.AlertProcessor
 import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
 import com.darkos.kmp.feature.timer.api.model.TimerEffect
 import com.darkos.kmp.feature.timer.api.model.TimerMessage
@@ -11,17 +12,23 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class TimerEffectHandler: ITimerEffectHandler {
+class TimerEffectHandler(
+    private val alertProcessor: AlertProcessor
+): ITimerEffectHandler {
 
-    private fun Effect.notValid() : IllegalArgumentException {
+    private fun Effect.notValid() : IllegalArgumentException {//todo: move to core lib
         return IllegalArgumentException("not valid effect: ${this::class.simpleName}")
     }
 
     override suspend fun call(effect: Effect): Message {
-        if(effect is TimerEffect.Trigger.Stop){
-            return Idle
+        return when(effect){
+            is TimerEffect.Trigger.Stop -> Idle
+            is TimerEffect.ShowSuccessMessage -> {
+                alertProcessor.showMessage("timer finished")
+                Idle
+            }
+            else -> throw effect.notValid()
         }
-        throw effect.notValid()
     }
 
     override suspend fun <T> callAsFlow(effect: T): Flow<Message> where T : Effect, T : FlowEffect {
@@ -29,10 +36,10 @@ class TimerEffectHandler: ITimerEffectHandler {
             is TimerEffect.Trigger.Start -> {
                 flow<Message> {
                     for(i in 1..effect.value){
-                        delay(1000)//todo: use const
+                        delay(1_000)//todo: use const
                         emit(TimerMessage.ValueChanged(effect.value - i))
                     }
-                    delay(1000)
+                    delay(1_000)
                     emit(TimerMessage.Finish)
                 }
             }

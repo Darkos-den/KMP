@@ -11,7 +11,11 @@ class TimerDI {
     @OptIn(InternalCoroutinesApi::class)
     val module = DI.Module(TAG){
         bind<ITimerReducer>() with provider { TimerReducer() }
-        bind<ITimerEffectHandler>() with provider { TimerEffectHandler() }
+        bind<ITimerEffectHandler>() with provider {
+            TimerEffectHandler(
+                alertProcessor = instance()
+            )
+        }
         bind<ITimerComponent>() with provider {
             TimerComponent(
                 effectHandler = instance(),
