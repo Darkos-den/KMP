@@ -1,37 +1,41 @@
 import SwiftUI
 import appDi
 
-class VM: ObservableObject {
+class MessageProcessor: ObservableObject {
+    var isShow = false
     private let processor = CommonInjector.init().getAlertProcessor()
     
-    @Published var isShow = false
+    var message: String = ""
     
     init(){
         self.processor.onAlertShowRequest { (msg: String) in
-            print("show")
+            self.message = msg
             self.isShow = true
         }
     }
-}
-
-class MessageProcessor: ObservableObject {
-    @ObservedObject var vm: VM
-    
-    init(){
-        vm = VM()
-    }
     
     func createView() -> AlertView {
-        AlertView(isShow: $vm.isShow)
+        let isAlertShow = Binding<Bool>(get: { () -> Bool in
+            self.isShow
+        }, set: { (b: Bool) in
+            self.isShow = b
+        })
+        
+        let alertMessage = Binding<String>(get: { () -> String in
+            self.message
+        }) { (String) in }
+        
+        return AlertView(message: alertMessage, isShow: isAlertShow)
     }
 }
 
 struct AlertView: View {
+    @Binding var message: String
     @Binding var isShow: Bool
     
     var body: some View {
         VStack(){EmptyView()}.alert(isPresented: $isShow) { () -> Alert in
-            Alert(title: Text("text"))
+            Alert(title: Text(message))
         }
     }
 }
@@ -39,7 +43,6 @@ struct AlertView: View {
 struct ContentView: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
     let processor = CommonInjector.init().getAlertProcessor()
-    @ObservedObject var vm = VM()
     @ObservedObject var prc = MessageProcessor()
     
     var body: some View {
