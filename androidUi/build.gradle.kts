@@ -61,6 +61,7 @@ fun DependencyHandlerScope.applyCompose() {
     implementation(AppLibs.AndroidX.Compose.materialIconsCore)
     implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
     implementation(AppLibs.AndroidX.Compose.livedata)
+//    implementation(AppLibs.AndroidX.Compose.navigation)
 }
 
 fun DependencyHandlerScope.applyAndroidDependencies(){

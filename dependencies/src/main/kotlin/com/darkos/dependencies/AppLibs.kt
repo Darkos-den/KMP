@@ -40,6 +40,7 @@ object AppLibs {
                 "androidx.compose.material:material-icons-extended:$version"
             const val runtime = "androidx.compose.runtime:runtime:$version"
             const val livedata = "androidx.compose.runtime:runtime-livedata:$version"
+            const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha04"
         }
     }
 

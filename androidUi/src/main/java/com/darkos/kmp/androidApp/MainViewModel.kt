@@ -1,5 +1,8 @@
 package com.darkos.kmp.androidApp
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.darkos.kmp.feature.timer.api.ITimerComponent
@@ -11,17 +14,19 @@ class MainViewModel(
     private val component: ITimerComponent
 ) : ViewModel(), ITimerComponent by component {
 
-    val state = MutableLiveData<TimerState>()
+    var state by mutableStateOf(createInitialState())
+        private set
 
     init {
-        component.applyStateListener {
-            state.value = it
+        applyStateListener {
+            state = it
         }
-        component.start()
+        start()
     }
 
     override fun onCleared() {
-        component.clear()
+        clearStateListener()
+        clear()
         super.onCleared()
     }
 }

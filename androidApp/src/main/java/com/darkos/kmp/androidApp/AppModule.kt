@@ -8,7 +8,7 @@ class AppModule {
 
     @InternalCoroutinesApi
     fun getModule() = DI.Module(TAG) {
-        import(CommonInjector().createAppModule())
+        import(CommonInjector.createAppModule())
     }
 
     companion object {

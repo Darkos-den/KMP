@@ -1,7 +1,8 @@
 package com.darkos.kmp.feature.timer
 
-import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
 import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
+import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
+import com.darkos.kmp.feature.timer.api.alertProcessor.IAlertProcessor
 import com.darkos.kmp.feature.timer.api.model.TimerEffect
 import com.darkos.kmp.feature.timer.api.model.TimerMessage
 import com.darkos.mvu.model.Effect
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class TimerEffectHandler(
-    private val alertProcessor: AlertProcessor
+    private val alertProcessor: IAlertProcessor
 ): ITimerEffectHandler {
 
     private fun Effect.notValid() : IllegalArgumentException {//todo: move to core lib
@@ -24,7 +25,7 @@ class TimerEffectHandler(
         return when(effect){
             is TimerEffect.Trigger.Stop -> Idle
             is TimerEffect.ShowSuccessMessage -> {
-                alertProcessor.showMessage("timer finished")
+                alertProcessor.showSimpleMessage("timer finished")
                 Idle
             }
             else -> throw effect.notValid()

@@ -8,7 +8,7 @@ class MessageProcessor: ObservableObject {
     var message: String = ""
     
     init(){
-        self.processor.onAlertShowRequest { (msg: String) in
+        self.processor.showSimpleMessage = {(msg: String) in
             self.message = msg
             self.isShow = true
         }

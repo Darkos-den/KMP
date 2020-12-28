@@ -2,6 +2,7 @@ package com.darkos.kmp.androidApp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,6 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+//import androidx.navigation.NavController
+//import androidx.navigation.compose.NavHost
+//import androidx.navigation.compose.composable
+//import androidx.navigation.compose.rememberNavController
 import com.darkos.kmp.feature.timer.api.model.TimerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,60 +43,31 @@ class MainActivity : AppCompatActivity(), DIAware {
                 component = instance()
             )
         }
+        bind() from provider {
+            AndroidAlertProcessor(alertProcessor = instance())
+        }
     }
 
     override val diTrigger = DITrigger()
 
-    private val viewModel: MainViewModel by instance()
+    private val alertProcessor: AndroidAlertProcessor by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         diTrigger.trigger()
 
+        alertProcessor.attach(this)
+
         setContent {
-            val state: TimerState by viewModel.state.observeAsState(
-                initial = viewModel.createInitialState()
+            val viewModel: MainViewModel by remember { mutableStateOf(di.direct.instance()) }
+
+            HomeScreen(
+                state = viewModel.state,
+                onTextChanged = viewModel::onTextChanged,
+                onStopClick = viewModel::onStopClick,
+                onStartClick = viewModel::onStartClick
             )
-
-            onDispose {
-                viewModel.clearStateListener()
-            }
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if(state.progress){
-                    Text(
-                        text = state.value.toString()
-                    )
-                }else {
-                    TextField(
-                        value = state.str,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number
-                        ),
-                        onValueChange = {
-                            viewModel.onTextChanged(it)
-                        }
-                    )
-                }
-
-                Button(onClick = {
-                    if(state.progress){
-                        viewModel.onStopClick()
-                    }else{
-                        viewModel.onStartClick()
-                    }
-                }) {
-                    Text(text = calculateButtonText(state))
-                }
-            }
         }
-    }
-
-    private fun calculateButtonText(state: TimerState): String{
-        return if(state.progress) "stop" else "start"
     }
 }
