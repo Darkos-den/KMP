@@ -1,4 +1,4 @@
-package com.darkos.kmp.androidApp
+package com.darkos.kmp.androidApp.common
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity

@@ -13,7 +13,8 @@ class TimerDI {
         bind<ITimerReducer>() with provider { TimerReducer() }
         bind<ITimerEffectHandler>() with provider {
             TimerEffectHandler(
-                alertProcessor = instance()
+                alertProcessor = instance(),
+                navigator = instance()
             )
         }
         bind<ITimerComponent>() with provider {

@@ -40,6 +40,17 @@ struct AlertView: View {
     }
 }
 
+struct CoreView: View {
+    var body: some View {
+        EmptyView()
+    }
+}
+
+class IosNavigator{
+    
+    
+}
+
 struct ContentView: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
     @ObservedObject var processor = MessageProcessor()

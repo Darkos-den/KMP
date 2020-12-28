@@ -14,4 +14,6 @@ sealed class TimerEffect: Effect() {
         class Start(val value: Int): Trigger(), FlowEffect
         object Stop: Trigger()
     }
+
+    object NavigateToOther: TimerEffect()
 }

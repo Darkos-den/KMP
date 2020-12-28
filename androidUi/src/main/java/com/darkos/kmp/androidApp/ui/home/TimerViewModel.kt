@@ -1,4 +1,4 @@
-package com.darkos.kmp.androidApp
+package com.darkos.kmp.androidApp.ui.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +10,7 @@ import com.darkos.kmp.feature.timer.api.model.TimerState
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
-class MainViewModel(
+class TimerViewModel(
     private val component: ITimerComponent
 ) : ViewModel(), ITimerComponent by component {
 

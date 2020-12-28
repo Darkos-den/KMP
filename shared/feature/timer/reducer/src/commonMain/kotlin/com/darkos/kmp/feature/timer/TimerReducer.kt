@@ -18,10 +18,11 @@ class TimerReducer: ITimerReducer {
     override fun update(state: TimerState, message: Message): StateCmdData<TimerState> {
         return when(message) {
             is TimerMessage.StartClick -> {
-                state.copy(
-                    progress = true,
-                    value = state.count
-                ) andCmd TimerEffect.Trigger.Start(state.count)
+//                state.copy(
+//                    progress = true,
+//                    value = state.count
+//                ) andCmd TimerEffect.Trigger.Start(state.count)
+                state andCmd TimerEffect.NavigateToOther//todo: for check navigation
             }
             is TimerMessage.StopClick -> {
                 state.copy(progress = false) andCmd TimerEffect.Trigger.Stop

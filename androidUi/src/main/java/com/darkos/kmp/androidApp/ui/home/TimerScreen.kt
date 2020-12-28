@@ -1,4 +1,4 @@
-package com.darkos.kmp.androidApp
+package com.darkos.kmp.androidApp.ui.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ private fun calculateButtonText(state: TimerState): String{
 }
 
 @Composable
-fun HomeScreen(
+fun TimerScreen(
     state: TimerState,
     onTextChanged: (String)->Unit,
     onStopClick: ()->Unit,
