@@ -1,0 +1,6 @@
+framework module featureTimer {
+    umbrella header "featureTimer.h"
+
+    export *
+    module * { export * }
+}
