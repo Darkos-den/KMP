@@ -2,8 +2,8 @@ package com.darkos.kmp
 
 import com.darkos.kmp.feature.timer.TimerDI
 import com.darkos.kmp.feature.timer.TimerDiFacade
-import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
-import com.darkos.kmp.feature.timer.api.alertProcessor.IAlertProcessor
+import com.darkos.kmp.alertProcessor.AlertProcessor
+import com.darkos.kmp.alertProcessor.IAlertProcessor
 import org.kodein.di.*
 import kotlin.native.concurrent.ThreadLocal
 

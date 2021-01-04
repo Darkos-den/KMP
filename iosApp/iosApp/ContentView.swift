@@ -46,12 +46,56 @@ struct CoreView: View {
     }
 }
 
-class IosNavigator{
+struct FirstScreen: View {
+    var onClick: ()->()
     
-    
+    var body: some View {
+        VStack{
+            Text("First")
+            Button("next"){
+                self.onClick()
+            }
+        }.navigationBarBackButtonHidden(true)
+    }
+}
+
+struct SecondScreen: View {
+    var body: some View {
+        Text("Second")
+    }
 }
 
 struct ContentView: View {
+    @State var currentDestination: String? = nil
+    
+    var body: some View {
+        return NavigationView {
+            VStack{
+                NavigationLink(
+                    destination: FirstScreen(
+                        onClick: {
+                            self.currentDestination = "second"
+                        }
+                    ),
+                    tag: "first",
+                    selection: $currentDestination
+                ){ EmptyView() }
+                
+                NavigationLink(
+                    destination: SecondScreen(),
+                    tag: "second",
+                    selection: $currentDestination
+                ){ EmptyView() }
+                
+                Button("init"){
+                    self.currentDestination = "first"
+                }
+            }
+        }
+    }
+}
+
+struct ContentView2: View {
     @ObservedObject var viewModel: TimerViewModel = TimerViewModel()
     @ObservedObject var processor = MessageProcessor()
     

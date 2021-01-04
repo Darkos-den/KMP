@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-android-extensions")
     id("dependencies")
 }
 
@@ -54,6 +55,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    androidExtensions {
+        isExperimental = true
     }
     (this as ExtensionAware).configure<KotlinJvmOptions> {
         jvmTarget = "1.8"

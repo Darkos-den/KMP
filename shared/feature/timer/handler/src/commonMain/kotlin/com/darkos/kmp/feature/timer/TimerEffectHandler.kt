@@ -2,8 +2,7 @@ package com.darkos.kmp.feature.timer
 
 import com.darkos.kmp.feature.timer.api.INavigator
 import com.darkos.kmp.feature.timer.api.ITimerEffectHandler
-import com.darkos.kmp.feature.timer.api.alertProcessor.AlertProcessor
-import com.darkos.kmp.feature.timer.api.alertProcessor.IAlertProcessor
+import com.darkos.kmp.alertProcessor.IAlertProcessor
 import com.darkos.kmp.feature.timer.api.model.TimerEffect
 import com.darkos.kmp.feature.timer.api.model.TimerMessage
 import com.darkos.mvu.model.Effect

@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.timer.api.alertProcessor
+package com.darkos.kmp.alertProcessor
 
 interface IAlertProcessor {
     suspend fun showSimpleMessage(message: String)

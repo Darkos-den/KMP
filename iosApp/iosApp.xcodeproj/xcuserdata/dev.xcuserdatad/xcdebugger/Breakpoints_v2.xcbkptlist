@@ -3,4 +3,114 @@
    uuid = "8F53BC2D-41F0-4029-925B-D9A5098B605A"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iosApp/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - d30a315ebfcc7426"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of iosApp.ContentView.currentDestination : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "31">
+               </Location>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - a33f17233481ea3f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iosApp.ContentView.currentDestination.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "190">
+               </Location>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - c700345c199f9a2b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iosApp.ContentView.currentDestination.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "209">
+               </Location>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - 9d790ba519991e3a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iosApp.ContentView.currentDestination.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "91">
+               </Location>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - 6a03fbc88edeadfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iosApp.ContentView.currentDestination.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "A5F3241F-ECEB-4EA4-BAA2-819BF26861BB - 2bd2269ab1e729e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iosApp.ContentView.$currentDestination.getter : SwiftUI.Binding&lt;Swift.Optional&lt;Swift.String&gt;&gt;"
+                  moduleName = "iosApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dev/StudioProjects/darkos/KMP/iosApp/iosApp/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "224">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

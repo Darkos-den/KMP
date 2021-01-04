@@ -34,8 +34,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.4.20"
-        kotlinCompilerExtensionVersion = "1.0.0-alpha08"
+        kotlinCompilerVersion = "1.4.21"
+        kotlinCompilerExtensionVersion = "1.0.0-alpha09"
     }
 }
 
@@ -44,6 +44,8 @@ dependencies {
 
     implementation(AppLibs.MVU.core)
     implementation(AppLibs.MVU.program)
+
+    implementation("androidx.navigation:navigation-compose:1.0.0-alpha04")
 
     applyCompose()
 
