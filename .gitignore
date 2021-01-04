@@ -25,3 +25,13 @@ local.properties
 /config/build
 /androidUi/build
 /shared/appDi/build
+/shared/feature/auth/api/build
+/shared/feature/auth/di/build
+/shared/feature/auth/handler/build
+/shared/feature/auth/component/build
+/shared/feature/auth/reducer/build
+/shared/feature/splash/api/build
+/shared/feature/splash/di/build
+/shared/feature/splash/handler/build
+/shared/feature/splash/component/build
+/shared/feature/splash/reducer/build
