@@ -53,6 +53,7 @@ dependencies {
     implementation("org.kodein.di:kodein-di-framework-android-x:7.1.0")//todo
 
     implementation(project(":shared:feature:splash:api"))
+    implementation(project(":shared:common:alertProcessor"))
 }
 
 fun DependencyHandlerScope.applyCompose() {

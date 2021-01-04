@@ -1,4 +1,4 @@
-package com.darkos.kmp.alertProcessor
+package com.darkos.kmp.common.alertProcessor
 
 import com.darkos.mvu.Ui
 import kotlinx.coroutines.withContext

@@ -35,3 +35,4 @@ local.properties
 /shared/feature/splash/handler/build
 /shared/feature/splash/component/build
 /shared/feature/splash/reducer/build
+/shared/common/alertProcessor/build

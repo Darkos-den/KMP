@@ -32,3 +32,7 @@ include(
     ":shared:feature:auth:component",
     ":shared:feature:auth:di"
 )
+
+include(
+    ":shared:common:alertProcessor"
+)

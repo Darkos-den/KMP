@@ -1,24 +1,29 @@
 import com.darkos.dependencies.AppLibs
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-android-extensions")
     id("dependencies")
 }
 
 kotlin {
     android()
-    ios()
+    ios {
+        binaries {
+            framework {
+                baseName = "featureTimer"
+            }
+        }
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(AppLibs.Coroutines.core)
-                implementation(AppLibs.MVU.core)
+                api(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
-
-                implementation(project(":shared:feature:splash:api"))
-                implementation(project(":shared:common:alertProcessor"))
             }
         }
         val commonTest by getting {
@@ -51,7 +56,30 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    androidExtensions {
+        isExperimental = true
+    }
     (this as ExtensionAware).configure<KotlinJvmOptions> {
         jvmTarget = "1.8"
     }
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+}
+
+val packForXcode by tasks.creating(Sync::class) {
+    group = "build"
+    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+    val framework =
+        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    inputs.property("mode", mode)
+    dependsOn(framework.linkTask)
+    val targetDir = File(buildDir, "xcode-frameworks")
+    from({ framework.outputDirectory })
+    into(targetDir)
+}
+tasks.getByName("build").dependsOn(packForXcode)

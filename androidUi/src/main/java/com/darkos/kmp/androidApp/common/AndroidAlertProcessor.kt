@@ -2,7 +2,7 @@ package com.darkos.kmp.androidApp.common
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.darkos.kmp.alertProcessor.AlertProcessor
+import com.darkos.kmp.common.alertProcessor.AlertProcessor
 import java.lang.ref.WeakReference
 
 class AndroidAlertProcessor(
