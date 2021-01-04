@@ -8,4 +8,6 @@ interface ISplashSecure {
 
     suspend fun saveAuthToken(token: String, expire: Long)
     suspend fun saveRefreshToken(token: String, expire: Long)
+
+    suspend fun clearSecureData()
 }

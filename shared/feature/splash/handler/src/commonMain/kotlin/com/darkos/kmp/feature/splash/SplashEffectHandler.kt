@@ -33,6 +33,15 @@ class SplashEffectHandler(
                     Idle
                 }
             }
+            is SplashEffect.RetryTokenRefresh -> {
+                checkRefreshToken()
+            }
+            is SplashEffect.Logout -> {
+                secure.clearSecureData()
+
+                navigation.goToLogin()
+                Idle
+            }
             else -> throw IllegalArgumentException("effect not supported")
         }
     }

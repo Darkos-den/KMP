@@ -5,4 +5,7 @@ import com.darkos.mvu.model.Message
 sealed class SplashMessage : Message() {
     class ServerError(val message: String) : SplashMessage()
     object ConnectionError : SplashMessage()
+
+    object RetryClick : SplashMessage()
+    object LogoutClick : SplashMessage()
 }

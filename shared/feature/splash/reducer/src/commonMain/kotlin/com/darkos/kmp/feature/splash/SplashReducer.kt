@@ -23,6 +23,18 @@ class SplashReducer : ISplashReducer {
             is SplashMessage.ConnectionError -> {
                 SplashState.NetworkError.none()
             }
+            is SplashMessage.RetryClick -> {
+                when (state) {
+                    is SplashState.NetworkError,
+                    SplashState.ServerError -> {
+                        SplashState.Progress andEffect SplashEffect.RetryTokenRefresh
+                    }
+                    else -> throw IllegalStateException()
+                }
+            }
+            is SplashMessage.LogoutClick -> {
+                state andEffect SplashEffect.Logout
+            }
             else -> throw IllegalArgumentException()
         }
     }
