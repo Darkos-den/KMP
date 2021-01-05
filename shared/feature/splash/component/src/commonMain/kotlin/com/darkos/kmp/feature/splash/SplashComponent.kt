@@ -3,6 +3,7 @@ package com.darkos.kmp.feature.splash
 import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
 import com.darkos.kmp.feature.splash.api.ISplashReducer
+import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -18,5 +19,13 @@ class SplashComponent(
 
     override fun createInitialState(): SplashState {
         return SplashState.Progress
+    }
+
+    fun onRetryClick() {
+        accept(SplashMessage.RetryClick)
+    }
+
+    fun onLogoutClick() {
+        accept(SplashMessage.LogoutClick)
     }
 }

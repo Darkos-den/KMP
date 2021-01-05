@@ -36,3 +36,8 @@ include(
 include(
     ":shared:common:alertProcessor"
 )
+
+include(
+    ":shared:source:secure",
+    ":shared:source:remote"
+)

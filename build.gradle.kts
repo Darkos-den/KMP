@@ -23,9 +23,11 @@ allprojects {
         jcenter()
         mavenCentral()
 
+        maven(url = "https://kotlin.bintray.com/kotlinx")
         maven(url = "https://jitpack.io")
         maven(url = "https://dl.bintray.com/darkosinc/MVU")
         maven(url = "https://dl.bintray.com/kodein-framework/Kodein-DI")
         maven(url = "https://dl.bintray.com/badoo/maven")
+        maven(url = "https://dl.bintray.com/netguru/maven")
     }
 }

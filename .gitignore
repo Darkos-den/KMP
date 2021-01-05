@@ -36,3 +36,5 @@ local.properties
 /shared/feature/splash/component/build
 /shared/feature/splash/reducer/build
 /shared/common/alertProcessor/build
+/shared/source/remote/build
+/shared/source/secure/build

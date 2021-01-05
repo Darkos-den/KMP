@@ -30,6 +30,14 @@ kotlin {
                 api(project(":shared:feature:splash:api"))
                 api(project(":shared:feature:splash:di"))
 
+                api(project(":shared:feature:auth:api"))
+                api(project(":shared:feature:auth:di"))
+
+                api(project(":shared:source:secure"))
+                api(project(":shared:source:remote"))
+
+                api(project(":shared:common:alertProcessor"))
+
                 implementation("org.kodein.di:kodein-di:7.1.0")//todo
             }
         }
