@@ -1,10 +1,9 @@
 package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.feature.splash.api.ISplashReducer
+import com.darkos.kmp.feature.splash.api.Retry
 import com.darkos.kmp.feature.splash.model.SplashEffect
-import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
-import com.darkos.mvu.common.none
 import com.darkos.mvu.model.*
 
 class SplashReducer : ISplashReducer {
@@ -17,23 +16,8 @@ class SplashReducer : ISplashReducer {
             is ComponentInitialized -> {
                 SplashState.Progress andEffect SplashEffect.CheckAuthState
             }
-            is SplashMessage.ServerError -> {
-                SplashState.ServerError.none()
-            }
-            is SplashMessage.ConnectionError -> {
-                SplashState.NetworkError.none()
-            }
-            is SplashMessage.RetryClick -> {
-                when (state) {
-                    is SplashState.NetworkError,
-                    SplashState.ServerError -> {
-                        SplashState.Progress andEffect SplashEffect.RetryTokenRefresh
-                    }
-                    else -> throw IllegalStateException()
-                }
-            }
-            is SplashMessage.LogoutClick -> {
-                state andEffect SplashEffect.Logout
+            is Retry -> {
+                state andEffect SplashEffect.RetryTokenRefresh
             }
             else -> throw IllegalArgumentException()
         }

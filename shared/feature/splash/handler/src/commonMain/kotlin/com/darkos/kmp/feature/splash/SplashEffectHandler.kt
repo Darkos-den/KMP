@@ -1,11 +1,7 @@
 package com.darkos.kmp.feature.splash
 
-import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
-import com.darkos.kmp.feature.splash.api.ISplashNavigation
-import com.darkos.kmp.feature.splash.api.ISplashRemote
-import com.darkos.kmp.feature.splash.api.ISplashSecure
+import com.darkos.kmp.feature.splash.api.*
 import com.darkos.kmp.feature.splash.model.SplashEffect
-import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.exception.NetworkException
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
 import com.darkos.mvu.model.Effect
@@ -15,7 +11,8 @@ import com.darkos.mvu.model.Message
 class SplashEffectHandler(
     private val remote: ISplashRemote,
     private val secure: ISplashSecure,
-    private val navigation: ISplashNavigation
+    private val navigation: ISplashNavigation,
+    private val errorHandler: ErrorHandler
 ) : ISplashEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -61,9 +58,10 @@ class SplashEffectHandler(
                 Idle
             }
         } catch (e: NetworkException) {
-            SplashMessage.ConnectionError
+            errorHandler.onNetworkError()
+            Idle
         } catch (e: Exception) {
-            SplashMessage.ServerError(e.message.orEmpty())
+            errorHandler.app(e.message.orEmpty())
         }
     }
 }

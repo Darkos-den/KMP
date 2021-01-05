@@ -1,9 +1,6 @@
 package com.darkos.kmp.feature.splash
 
-import com.darkos.kmp.feature.splash.api.ISplashComponent
-import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
-import com.darkos.kmp.feature.splash.api.ISplashReducer
-import com.darkos.kmp.feature.splash.model.SplashMessage
+import com.darkos.kmp.feature.splash.api.*
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -11,7 +8,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @OptIn(InternalCoroutinesApi::class)
 class SplashComponent(
     reducer: ISplashReducer,
-    effectHandler: ISplashEffectHandler
+    effectHandler: ISplashEffectHandler,
+    private val connectionHandler: ErrorHandler
 ) : MVUComponent<SplashState>(
     reducer = reducer,
     effectHandler = effectHandler
@@ -21,11 +19,13 @@ class SplashComponent(
         return SplashState.Progress
     }
 
-    fun onRetryClick() {
-        accept(SplashMessage.RetryClick)
+    init {
+        connectionHandler.doOrRetry {
+            accept(Retry)
+        }
     }
 
     fun onLogoutClick() {
-        accept(SplashMessage.LogoutClick)
+//        accept(SplashMessage.LogoutClick)
     }
 }
