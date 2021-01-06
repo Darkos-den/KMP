@@ -18,10 +18,6 @@ import kotlin.native.concurrent.ThreadLocal
 object CommonInjector {
 
     private val diContainer by DI.lazy {
-        bind() from singleton {
-            ErrorHandler()
-        }
-
         import(createAppModule())
     }
 
@@ -29,6 +25,9 @@ object CommonInjector {
     fun splashDiFacade() = SplashDiFacade(diContainer.direct)
 
     fun createAppModule() = DI.Module("app") {
+        bind() from singleton {
+            ErrorHandler()
+        }
         importAll(
             secureStorageModule(),
             remoteStorageModule(),

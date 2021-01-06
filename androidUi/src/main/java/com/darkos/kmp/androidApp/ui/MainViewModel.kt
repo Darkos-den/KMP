@@ -5,6 +5,11 @@ import com.darkos.mvu.component.ProgramComponent
 
 class MainViewModel : ViewModel() {
     var component: ProgramComponent<*>? = null
+        set(value) {
+            field?.clearStateListener()
+            field?.clear()
+            field = value
+        }
 
     fun attach(component: ProgramComponent<*>) {
         this.component = component

@@ -1,17 +1,21 @@
 package com.darkos.kmp.androidApp.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.feature.splash.api.ErrorHandler
+import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.mvu.component.ProgramComponent
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.kodein.di.*
@@ -29,18 +33,22 @@ class MainActivity : AppCompatActivity(), DIAware {
 
     override val diTrigger = DITrigger()
 
-    val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     private val alertProcessor: AndroidAlertProcessor by instance()
-    private val connectionHandler: ErrorHandler by instance()
+    private val errorHandler: ErrorHandler by instance()
 
-    inline fun <reified T : ProgramComponent<*>> getOrInit(): T {
-        return if (viewModel.isValidComponent<T>()) {
-            return viewModel.component as T
+    private inline fun <reified T : ProgramComponent<*>> getOrInit(block: (T) -> Unit) {
+        Log.d("SKA", "get or init")
+        if (viewModel.isValidComponent<T>()) {
+            viewModel.component as T
         } else {
             di.direct.instance<T>().also {
                 viewModel.attach(it)
+                it.start()
             }
+        }.let {
+            block(it)
         }
     }
 
@@ -52,30 +60,45 @@ class MainActivity : AppCompatActivity(), DIAware {
         alertProcessor.attach(this)
 
         viewModel.doWhenDestroy {
-            connectionHandler.clear()
+            errorHandler.clear()
         }
 
         setContent {
             val navController = rememberNavController()
 
-            connectionHandler.observeNetworkError {
-                navController.popBackStack()
-                connectionHandler.retry()
+            errorHandler.run {
+                observeNetworkError {
+                    (navController as NavController).navigate(networkError)
+                }
+
+                observeAppError {
+                    (navController as NavController).navigate("$appError/$it")
+                }
             }
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
-                    SplashScreen(
-                        state =,
-                        retryClick = { /*TODO*/ },
-                        logoutClick = { /*TODO*/ }
-                    )
+                    getOrInit<ISplashComponent> {
+                        SplashScreen()
+                    }
                 }
                 composable(networkError) {
-                    ConnectionErrorScreen()
+                    ConnectionErrorScreen {
+                        navController.popBackStack()
+                        errorHandler.retry()
+                    }
                 }
-                composable(appError) {
-                    AppErrorScreen()
+                composable("$appError/{message}") {
+                    AppErrorScreen(
+                        message = it.arguments?.getString("message")!!,
+                        onRetry = {
+                            navController.popBackStack()
+                            errorHandler.retry()
+                        },
+                        onLogout = {
+                            errorHandler.logout()
+                        }
+                    )
                 }
             }
         }

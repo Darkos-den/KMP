@@ -21,13 +21,15 @@ class SplashDI {
             SplashEffectHandler(
                 remote = instance(),
                 secure = instance(),
-                navigation = instance()
+                navigation = instance(),
+                errorHandler = instance()
             )
         }
         bind<ISplashComponent>() with provider {
             SplashComponent(
                 effectHandler = instance(),
-                reducer = instance()
+                reducer = instance(),
+                errorHandler = instance()
             )
         }
     }

@@ -9,23 +9,37 @@ import kotlinx.coroutines.InternalCoroutinesApi
 class SplashComponent(
     reducer: ISplashReducer,
     effectHandler: ISplashEffectHandler,
-    private val connectionHandler: ErrorHandler
+    private val errorHandler: ErrorHandler
 ) : MVUComponent<SplashState>(
     reducer = reducer,
     effectHandler = effectHandler
 ), ISplashComponent {
 
     override fun createInitialState(): SplashState {
-        return SplashState.Progress
+        return SplashState
     }
 
     init {
-        connectionHandler.doOrRetry {
-            accept(Retry)
-        }
+        errorHandler.applyHandler(this)
     }
 
-    fun onLogoutClick() {
-//        accept(SplashMessage.LogoutClick)
+    override fun clear() {
+        errorHandler.clearComponentListeners()
+        super.clear()
     }
+}
+
+@OptIn(InternalCoroutinesApi::class)
+fun ErrorHandler.applyHandler(handler: MVUComponent<*>) {
+    this.doOnLogout {
+        handler.accept(Logout)
+    }
+    this.doOrRetry {
+        handler.accept(Retry)
+    }
+}
+
+fun ErrorHandler.clearComponentListeners() {
+    this.doOnLogout {}
+    this.doOrRetry {}
 }

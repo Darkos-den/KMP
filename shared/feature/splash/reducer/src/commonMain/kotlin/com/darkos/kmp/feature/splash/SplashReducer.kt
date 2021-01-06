@@ -1,6 +1,8 @@
 package com.darkos.kmp.feature.splash
 
+import com.darkos.kmp.feature.splash.api.DoLogout
 import com.darkos.kmp.feature.splash.api.ISplashReducer
+import com.darkos.kmp.feature.splash.api.Logout
 import com.darkos.kmp.feature.splash.api.Retry
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashState
@@ -14,10 +16,13 @@ class SplashReducer : ISplashReducer {
     override fun update(state: SplashState, message: Message): StateCmdData<SplashState> {
         return when (message) {
             is ComponentInitialized -> {
-                SplashState.Progress andEffect SplashEffect.CheckAuthState
+                SplashState andEffect SplashEffect.CheckAuthState
             }
             is Retry -> {
                 state andEffect SplashEffect.RetryTokenRefresh
+            }
+            is Logout -> {
+                state andEffect DoLogout
             }
             else -> throw IllegalArgumentException()
         }

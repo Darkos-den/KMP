@@ -33,7 +33,7 @@ class SplashEffectHandler(
             is SplashEffect.RetryTokenRefresh -> {
                 checkRefreshToken()
             }
-            is SplashEffect.Logout -> {
+            is DoLogout -> {
                 secure.clearSecureData()
 
                 navigation.goToLogin()
@@ -61,7 +61,8 @@ class SplashEffectHandler(
             errorHandler.onNetworkError()
             Idle
         } catch (e: Exception) {
-            errorHandler.app(e.message.orEmpty())
+            errorHandler.onAppError(e.message.orEmpty())
+            Idle
         }
     }
 }

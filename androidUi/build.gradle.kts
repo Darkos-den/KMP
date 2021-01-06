@@ -3,6 +3,7 @@ import com.darkos.dependencies.AppLibs
 plugins {
     id("com.android.library")
     kotlin("android")
+    id("kotlin-android-extensions")
     id("dependencies")
 }
 
@@ -31,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         useIR = true
+    }
+
+    androidExtensions {
+        isExperimental = true
     }
 
     composeOptions {
