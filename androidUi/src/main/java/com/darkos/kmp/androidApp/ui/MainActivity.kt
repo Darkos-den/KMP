@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.savedinstancestate.Saver
+import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -14,6 +19,7 @@ import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
+import com.darkos.kmp.androidApp.ui.splash.map
 import com.darkos.kmp.feature.splash.api.ErrorHandler
 import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
@@ -65,7 +71,7 @@ class MainActivity : AppCompatActivity(), DIAware {
             viewModel.component as T
         } else {
             di.direct.instance<T>().also {
-                viewModel.attach(it)
+//                viewModel.attach(it)
                 it.start()
             }
         }.let {
@@ -100,9 +106,32 @@ class MainActivity : AppCompatActivity(), DIAware {
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
-                    getOrInit<ISplashComponent> {
-                        SplashScreen()
+                    val component = remember { di.direct.instance<ISplashComponent>() }
+
+                    if (viewModel.isValidComponent<ISplashComponent>().not()) {
+                        viewModel.attach(component)
                     }
+
+                    var state by savedInstanceState(
+                        saver = Saver(
+                            save = { it },
+                            restore = {
+                                it.also {
+                                    component.restore(it.map())
+                                }
+                            }
+                        )
+                    ) { component.createInitialState().map() }
+
+                    component.applyStateListener { newState ->
+                        state = newState.map()
+                    }
+
+                    SplashScreen(
+                        state = state,
+                        onPlus = component::onPlusClicked,
+                        onNext = component::onNextClicked
+                    )
                 }
                 composable(networkError) {
                     ConnectionErrorScreen {

@@ -1,6 +1,7 @@
 package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.feature.splash.api.*
+import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -16,7 +17,7 @@ class SplashComponent(
 ), ISplashComponent {
 
     override fun createInitialState(): SplashState {
-        return SplashState
+        return SplashState(0)
     }
 
     init {
@@ -26,6 +27,14 @@ class SplashComponent(
     override fun clear() {
         errorHandler.clearComponentListeners()
         super.clear()
+    }
+
+    override fun onPlusClicked() {
+        accept(SplashMessage.Plus)
+    }
+
+    override fun onNextClicked() {
+        accept(SplashMessage.Next)
     }
 }
 

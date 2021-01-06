@@ -31,7 +31,9 @@ class SplashEffectHandler(
                 }
             }
             is SplashEffect.RetryTokenRefresh -> {
-                checkRefreshToken()
+//                checkRefreshToken()
+                errorHandler.onAppError("test error")
+                Idle
             }
             is DoLogout -> {
                 secure.clearSecureData()
@@ -44,8 +46,9 @@ class SplashEffectHandler(
     }
 
     private suspend fun checkRefreshToken(): Message {
+        return Idle
         return try {
-            throw Exception("test exception")
+//            throw Exception("test exception")
             if (secure.isRefreshTokenValid()) {
                 remote.refreshAuthToken(secure.getRefreshToken()).let {
                     secure.saveAuthToken(it.auth.token, it.auth.expire)
