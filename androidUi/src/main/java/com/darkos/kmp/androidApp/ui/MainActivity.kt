@@ -16,11 +16,13 @@ import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.feature.splash.api.ErrorHandler
 import com.darkos.kmp.feature.splash.api.ISplashComponent
+import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.mvu.component.ProgramComponent
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.kodein.di.*
 import org.kodein.di.android.di
 import org.kodein.di.android.retainedSubDI
+import java.lang.ref.WeakReference
 
 @InternalCoroutinesApi
 class MainActivity : AppCompatActivity(), DIAware {
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity(), DIAware {
         bind() from provider {
             AndroidAlertProcessor(alertProcessor = instance())
         }
+        bind() from singleton { Navigation() }
+        bind<ISplashNavigation>() with provider { instance<Navigation>() }
     }
 
     override val diTrigger = DITrigger()
@@ -37,6 +41,23 @@ class MainActivity : AppCompatActivity(), DIAware {
 
     private val alertProcessor: AndroidAlertProcessor by instance()
     private val errorHandler: ErrorHandler by instance()
+    private val navigation: Navigation by instance()
+
+    class Navigation : ISplashNavigation {
+        private var navController = WeakReference<NavController>(null)
+
+        fun attach(navController: NavController) {
+            this.navController = WeakReference(navController)
+        }
+
+        override fun goToLogin() {
+            TODO("Not yet implemented")
+        }
+
+        override fun goToHome() {
+            TODO("Not yet implemented")
+        }
+    }
 
     private inline fun <reified T : ProgramComponent<*>> getOrInit(block: (T) -> Unit) {
         Log.d("SKA", "get or init")
@@ -65,6 +86,7 @@ class MainActivity : AppCompatActivity(), DIAware {
 
         setContent {
             val navController = rememberNavController()
+            navigation.attach(navController)
 
             errorHandler.run {
                 observeNetworkError {
