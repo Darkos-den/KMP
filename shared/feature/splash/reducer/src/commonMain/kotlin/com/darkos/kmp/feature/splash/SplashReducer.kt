@@ -6,6 +6,7 @@ import com.darkos.kmp.feature.splash.api.Logout
 import com.darkos.kmp.feature.splash.api.Retry
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashState
+import com.darkos.mvu.common.none
 import com.darkos.mvu.model.*
 
 class SplashReducer : ISplashReducer {
@@ -24,7 +25,8 @@ class SplashReducer : ISplashReducer {
             is Logout -> {
                 state andEffect DoLogout
             }
-            else -> throw IllegalArgumentException()
+            is Idle -> state.none()
+            else -> throw IllegalArgumentException("message: $message")
         }
     }
 }

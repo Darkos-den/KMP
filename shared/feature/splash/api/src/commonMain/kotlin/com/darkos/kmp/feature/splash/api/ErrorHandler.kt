@@ -1,7 +1,9 @@
 package com.darkos.kmp.feature.splash.api
 
+import com.darkos.mvu.Ui
 import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Message
+import kotlinx.coroutines.withContext
 
 //todo: move to common
 object Retry : Message()
@@ -27,11 +29,11 @@ class ErrorHandler {
         connectionErrorObserver = block
     }
 
-    fun onNetworkError() {
+    suspend fun onNetworkError() = withContext(Ui) {
         connectionErrorObserver()
     }
 
-    fun onAppError(errorMessage: String) {
+    suspend fun onAppError(errorMessage: String) = withContext(Ui) {
         appErrorObserver(errorMessage)
     }
 

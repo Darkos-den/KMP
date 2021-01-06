@@ -7,6 +7,7 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.DITrigger
 import org.kodein.di.instance
+import java.util.*
 
 class App : Application(), DIAware {
 
@@ -24,5 +25,8 @@ class App : Application(), DIAware {
         diTrigger.trigger()
 
         secure.authExpire//todo: for initialize storage
+
+        secure.authToken = "12345"//todo: for test
+        secure.authExpire = Calendar.getInstance().timeInMillis
     }
 }

@@ -45,6 +45,7 @@ class SplashEffectHandler(
 
     private suspend fun checkRefreshToken(): Message {
         return try {
+            throw Exception("test exception")
             if (secure.isRefreshTokenValid()) {
                 remote.refreshAuthToken(secure.getRefreshToken()).let {
                     secure.saveAuthToken(it.auth.token, it.auth.expire)
