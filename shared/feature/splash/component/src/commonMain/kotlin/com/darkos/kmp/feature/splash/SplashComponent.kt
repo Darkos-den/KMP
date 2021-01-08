@@ -1,6 +1,7 @@
 package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.feature.splash.api.*
+import com.darkos.kmp.feature.splash.model.RestoreState
 import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
@@ -35,6 +36,10 @@ class SplashComponent(
 
     override fun onNextClicked() {
         accept(SplashMessage.Next)
+    }
+
+    override fun restore(state: SplashState) {
+        accept(RestoreState(state))
     }
 }
 

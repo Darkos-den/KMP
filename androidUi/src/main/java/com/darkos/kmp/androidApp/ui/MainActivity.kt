@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.savedinstancestate.Saver
+import androidx.compose.runtime.savedinstancestate.SaverScope
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
@@ -19,11 +21,16 @@ import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
-import com.darkos.kmp.androidApp.ui.splash.map
+import com.darkos.kmp.androidApp.ui.splash.SplashUiState
+import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
+import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
+import com.darkos.kmp.feature.splash.api.BaseComponent
 import com.darkos.kmp.feature.splash.api.ErrorHandler
 import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
+import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.ProgramComponent
+import com.darkos.mvu.model.MVUState
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.kodein.di.*
 import org.kodein.di.android.di
@@ -65,18 +72,56 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
     }
 
-    private inline fun <reified T : ProgramComponent<*>> getOrInit(block: (T) -> Unit) {
+    private inline fun <reified T : ProgramComponent<*>> getOrInit(): T {
         Log.d("SKA", "get or init")
-        if (viewModel.isValidComponent<T>()) {
+        return if (viewModel.isValidComponent<T>()) {
             viewModel.component as T
         } else {
             di.direct.instance<T>().also {
-//                viewModel.attach(it)
+                viewModel.attach(it)
                 it.start()
             }
-        }.let {
-            block(it)
         }
+    }
+
+    class ComponentStateSaver<Savable : Any, S : MVUState, T : BaseComponent<S>>(
+        private val component: T,
+        private val mapTo: (S) -> Savable,
+        private val mapFrom: (Savable) -> S
+    ) : Saver<S, Savable> {
+
+        override fun restore(value: Savable): S {
+            return mapFrom(value).also {
+                component.restore(it)
+            }
+        }
+
+        override fun SaverScope.save(value: S): Savable {
+            return mapTo(value)
+        }
+    }
+
+    @Composable
+    private inline fun <reified C : BaseComponent<S>, Ui : Any, S : MVUState> ComponentScreen(
+        noinline mapTo: (S) -> Ui,
+        noinline mapFrom: (Ui) -> S,
+        noinline render: @Composable (component: C, ui: Ui) -> Unit
+    ) {
+        val component = remember { getOrInit<C>() }
+
+        var state by savedInstanceState(
+            saver = ComponentStateSaver(
+                component = component,
+                mapTo = mapTo,
+                mapFrom = mapFrom
+            )
+        ) { component.createInitialState() }
+
+        component.applyStateListener { newState ->
+            state = newState
+        }
+
+        render(component, mapTo(state))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,32 +151,16 @@ class MainActivity : AppCompatActivity(), DIAware {
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
-                    val component = remember { di.direct.instance<ISplashComponent>() }
-
-                    if (viewModel.isValidComponent<ISplashComponent>().not()) {
-                        viewModel.attach(component)
-                    }
-
-                    var state by savedInstanceState(
-                        saver = Saver(
-                            save = { it },
-                            restore = {
-                                it.also {
-                                    component.restore(it.map())
-                                }
-                            }
+                    ComponentScreen<ISplashComponent, SplashUiState, SplashState>(
+                        mapTo = ::mapToSplashUi,
+                        mapFrom = ::mapFromSplashUi
+                    ) { component, ui ->
+                        SplashScreen(
+                            state = ui,
+                            onPlus = component::onPlusClicked,
+                            onNext = component::onNextClicked
                         )
-                    ) { component.createInitialState().map() }
-
-                    component.applyStateListener { newState ->
-                        state = newState.map()
                     }
-
-                    SplashScreen(
-                        state = state,
-                        onPlus = component::onPlusClicked,
-                        onNext = component::onNextClicked
-                    )
                 }
                 composable(networkError) {
                     ConnectionErrorScreen {

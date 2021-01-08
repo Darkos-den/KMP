@@ -17,6 +17,14 @@ fun SplashState.map(): SplashUiState {
     return SplashUiState(count)
 }
 
+fun mapToSplashUi(state: SplashState): SplashUiState {
+    return state.map()
+}
+
+fun mapFromSplashUi(state: SplashUiState): SplashState {
+    return state.map()
+}
+
 fun SplashUiState.map(): SplashState {
     return SplashState(count)
 }
