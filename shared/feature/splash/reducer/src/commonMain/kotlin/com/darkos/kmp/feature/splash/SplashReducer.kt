@@ -1,9 +1,6 @@
 package com.darkos.kmp.feature.splash
 
-import com.darkos.kmp.feature.splash.api.DoLogout
 import com.darkos.kmp.feature.splash.api.ISplashReducer
-import com.darkos.kmp.feature.splash.api.Logout
-import com.darkos.kmp.feature.splash.api.Retry
 import com.darkos.kmp.feature.splash.model.RestoreState
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
@@ -19,30 +16,28 @@ class SplashReducer : ISplashReducer {
     override fun update(state: SplashState, message: Message): StateCmdData<SplashState> {
         return when (message) {
             is ComponentInitialized -> {
-                state andEffect SplashEffect.CheckAuthState
+                if (state is SplashState.Init) {
+                    state andEffect SplashEffect.CheckAuthState
+                } else state.none()
             }
-            is Retry -> {
-                state andEffect SplashEffect.RetryTokenRefresh
+            is SplashMessage.NetworkError -> {
+                SplashState.RefreshTokenError andEffect SplashEffect.ProcessNetworkError
             }
-            is Logout -> {
-                state andEffect DoLogout
+            is SplashMessage.AppError -> {
+                SplashState.RefreshTokenError andEffect SplashEffect.ProcessAppError(message.message)
             }
-            is RestoreState<*> -> {//todo: move to core lib
-                when (val newState = message.state) {
-                    is SplashState -> {
-                        newState.none()
+            is RestoreState<*> -> {
+                message.state.let {
+                    if (it !is SplashState) {
+                        throw RuntimeException("invalid state: $it")//todo: create exception class
                     }
-                    else -> throw IllegalArgumentException()
+                    if (it is SplashState.RefreshTokenError) {
+                        state andEffect SplashEffect.RetryTokenRefresh
+                    } else it.none()
                 }
             }
-            is SplashMessage.Next -> {
-                state andEffect SplashEffect.RetryTokenRefresh
-            }
-            is SplashMessage.Plus -> {
-                state.copy(state.count.inc()).none()
-            }
             is Idle -> state.none()
-            else -> throw IllegalArgumentException("message: $message")
+            else -> throw UnsupportedOperationException(message.toString())
         }
     }
 }

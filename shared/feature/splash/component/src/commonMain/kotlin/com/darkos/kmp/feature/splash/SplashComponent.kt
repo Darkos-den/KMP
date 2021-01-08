@@ -2,7 +2,6 @@ package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.feature.splash.api.*
 import com.darkos.kmp.feature.splash.model.RestoreState
-import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -18,27 +17,19 @@ class SplashComponent(
 ), ISplashComponent {
 
     override fun createInitialState(): SplashState {
-        return SplashState(0)
+        return SplashState.PrepareData
     }
 
     init {
-        errorHandler.applyHandler(this)
+        errorHandler.applyHandler(this)//todo: move to common
     }
 
     override fun clear() {
-        errorHandler.clearComponentListeners()
+        errorHandler.clearComponentListeners()//todo: move to common
         super.clear()
     }
 
-    override fun onPlusClicked() {
-        accept(SplashMessage.Plus)
-    }
-
-    override fun onNextClicked() {
-        accept(SplashMessage.Next)
-    }
-
-    override fun restore(state: SplashState) {
+    override fun restore(state: SplashState) {//todo: move to core
         accept(RestoreState(state))
     }
 }
@@ -48,12 +39,8 @@ fun ErrorHandler.applyHandler(handler: MVUComponent<*>) {
     this.doOnLogout {
         handler.accept(Logout)
     }
-    this.doOrRetry {
-        handler.accept(Retry)
-    }
 }
 
 fun ErrorHandler.clearComponentListeners() {
     this.doOnLogout {}
-    this.doOrRetry {}
 }

@@ -8,6 +8,6 @@ data class RestoreState<T : MVUState>(
 ) : Message()//todo: move to core
 
 sealed class SplashMessage : Message() {
-    object Plus : SplashMessage()
-    object Next : SplashMessage()
+    object NetworkError : SplashMessage()
+    class AppError(val message: String) : SplashMessage()
 }

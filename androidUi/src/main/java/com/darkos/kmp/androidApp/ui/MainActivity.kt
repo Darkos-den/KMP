@@ -1,7 +1,6 @@
 package com.darkos.kmp.androidApp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
@@ -21,14 +20,11 @@ import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
-import com.darkos.kmp.androidApp.ui.splash.SplashUiState
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.feature.splash.api.BaseComponent
 import com.darkos.kmp.feature.splash.api.ErrorHandler
-import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
-import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.ProgramComponent
 import com.darkos.mvu.model.MVUState
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -73,7 +69,6 @@ class MainActivity : AppCompatActivity(), DIAware {
     }
 
     private inline fun <reified T : ProgramComponent<*>> getOrInit(): T {
-        Log.d("SKA", "get or init")
         return if (viewModel.isValidComponent<T>()) {
             viewModel.component as T
         } else {
@@ -124,6 +119,14 @@ class MainActivity : AppCompatActivity(), DIAware {
         render(component, mapTo(state))
     }
 
+    @Composable
+    private inline fun <reified C : BaseComponent<*>> ImmutableStateComponentScreen(
+        noinline render: @Composable (component: C) -> Unit
+    ) {
+        val component = remember { getOrInit<C>() }
+        render(component)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -151,21 +154,16 @@ class MainActivity : AppCompatActivity(), DIAware {
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
-                    ComponentScreen<ISplashComponent, SplashUiState, SplashState>(
+                    ComponentScreen(
                         mapTo = ::mapToSplashUi,
                         mapFrom = ::mapFromSplashUi
-                    ) { component, ui ->
-                        SplashScreen(
-                            state = ui,
-                            onPlus = component::onPlusClicked,
-                            onNext = component::onNextClicked
-                        )
+                    ) { _, _ ->
+                        SplashScreen()
                     }
                 }
                 composable(networkError) {
                     ConnectionErrorScreen {
                         navController.popBackStack()
-                        errorHandler.retry()
                     }
                 }
                 composable("$appError/{message}") {
@@ -173,7 +171,6 @@ class MainActivity : AppCompatActivity(), DIAware {
                         message = it.arguments?.getString("message")!!,
                         onRetry = {
                             navController.popBackStack()
-                            errorHandler.retry()
                         },
                         onLogout = {
                             errorHandler.logout()

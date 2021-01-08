@@ -1,20 +1,26 @@
 package com.darkos.kmp.androidApp.ui.splash
 
 import android.os.Parcelable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.darkos.kmp.feature.splash.model.SplashState
 import kotlinx.android.parcel.Parcelize
 
+enum class SplashScreenState {
+    INIT, PROGRESS, ERROR
+}
+
 @Parcelize
 data class SplashUiState(
-    val count: Int
+    val screenState: SplashScreenState
 ) : Parcelable
 
 fun SplashState.map(): SplashUiState {
-    return SplashUiState(count)
+    return when (this) {
+        is SplashState.Init -> SplashUiState(SplashScreenState.INIT)
+        is SplashState.PrepareData -> SplashUiState(SplashScreenState.PROGRESS)
+        is SplashState.RefreshTokenError -> SplashUiState(SplashScreenState.ERROR)
+    }
 }
 
 fun mapToSplashUi(state: SplashState): SplashUiState {
@@ -30,18 +36,6 @@ fun SplashUiState.map(): SplashState {
 }
 
 @Composable
-fun SplashScreen(
-    state: SplashUiState,
-    onPlus: () -> Unit,
-    onNext: () -> Unit
-) {
-    Column {
-        Text(text = "progress... ${state.count}")
-        Button(onClick = onPlus) {
-            Text(text = "Plus")
-        }
-        Button(onClick = onNext) {
-            Text(text = "Next")
-        }
-    }
+fun SplashScreen() {
+    Text(text = "progress...")
 }

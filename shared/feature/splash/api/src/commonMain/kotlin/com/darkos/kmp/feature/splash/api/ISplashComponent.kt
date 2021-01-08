@@ -8,7 +8,4 @@ interface BaseComponent<T : MVUState> : ProgramComponent<T> {
     fun restore(state: T)//todo: move to core
 }
 
-interface ISplashComponent : BaseComponent<SplashState> {
-    fun onPlusClicked()
-    fun onNextClicked()
-}
+interface ISplashComponent : BaseComponent<SplashState>

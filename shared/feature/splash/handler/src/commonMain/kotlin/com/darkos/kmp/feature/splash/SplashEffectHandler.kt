@@ -2,11 +2,15 @@ package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.feature.splash.api.*
 import com.darkos.kmp.feature.splash.model.SplashEffect
+import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.exception.NetworkException
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
+import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
+import com.darkos.mvu.model.flow.FlowEffect
+import kotlinx.coroutines.flow.Flow
 
 class SplashEffectHandler(
     private val remote: ISplashRemote,
@@ -31,8 +35,15 @@ class SplashEffectHandler(
                 }
             }
             is SplashEffect.RetryTokenRefresh -> {
-//                checkRefreshToken()
-                errorHandler.onAppError("test error")
+                checkRefreshToken()
+                Idle
+            }
+            is SplashEffect.ProcessNetworkError -> {
+                errorHandler.onNetworkError()
+                Idle
+            }
+            is SplashEffect.ProcessAppError -> {
+                errorHandler.onAppError(effect.message)
                 Idle
             }
             is DoLogout -> {
@@ -41,14 +52,12 @@ class SplashEffectHandler(
                 navigation.goToLogin()
                 Idle
             }
-            else -> throw IllegalArgumentException("effect not supported")
+            else -> throw UnsupportedOperationException(effect.toString())
         }
     }
 
     private suspend fun checkRefreshToken(): Message {
-        return Idle
         return try {
-//            throw Exception("test exception")
             if (secure.isRefreshTokenValid()) {
                 remote.refreshAuthToken(secure.getRefreshToken()).let {
                     secure.saveAuthToken(it.auth.token, it.auth.expire)
@@ -62,11 +71,25 @@ class SplashEffectHandler(
                 Idle
             }
         } catch (e: NetworkException) {
-            errorHandler.onNetworkError()
-            Idle
+            SplashMessage.NetworkError
         } catch (e: Exception) {
-            errorHandler.onAppError(e.message.orEmpty())
-            Idle
+            SplashMessage.AppError(e.message.orEmpty())
         }
     }
+}
+
+class LogoutEffectHandler(
+) : EffectHandler {
+    override suspend fun call(effect: Effect): Message {
+        if (effect is DoLogout) {
+            TODO()
+        } else {
+            throw UnsupportedOperationException(effect.toString())
+        }
+    }
+
+    override suspend fun <T> callAsFlow(effect: T): Flow<Message> where T : Effect, T : FlowEffect {
+        throw UnsupportedOperationException()
+    }
+
 }
