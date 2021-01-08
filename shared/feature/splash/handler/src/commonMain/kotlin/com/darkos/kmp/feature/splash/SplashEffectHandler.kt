@@ -36,7 +36,6 @@ class SplashEffectHandler(
             }
             is SplashEffect.RetryTokenRefresh -> {
                 checkRefreshToken()
-                Idle
             }
             is SplashEffect.ProcessNetworkError -> {
                 errorHandler.onNetworkError()

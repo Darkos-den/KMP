@@ -17,7 +17,7 @@ class SplashComponent(
 ), ISplashComponent {
 
     override fun createInitialState(): SplashState {
-        return SplashState.PrepareData
+        return SplashState.Init
     }
 
     init {

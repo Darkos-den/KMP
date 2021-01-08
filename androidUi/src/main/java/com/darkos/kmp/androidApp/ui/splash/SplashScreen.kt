@@ -32,7 +32,11 @@ fun mapFromSplashUi(state: SplashUiState): SplashState {
 }
 
 fun SplashUiState.map(): SplashState {
-    return SplashState(count)
+    return when (screenState) {
+        SplashScreenState.INIT -> SplashState.Init
+        SplashScreenState.PROGRESS -> SplashState.PrepareData
+        SplashScreenState.ERROR -> SplashState.RefreshTokenError
+    }
 }
 
 @Composable

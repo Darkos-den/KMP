@@ -17,7 +17,7 @@ class SplashReducer : ISplashReducer {
         return when (message) {
             is ComponentInitialized -> {
                 if (state is SplashState.Init) {
-                    state andEffect SplashEffect.CheckAuthState
+                    SplashState.PrepareData andEffect SplashEffect.CheckAuthState
                 } else state.none()
             }
             is SplashMessage.NetworkError -> {
@@ -32,7 +32,7 @@ class SplashReducer : ISplashReducer {
                         throw RuntimeException("invalid state: $it")//todo: create exception class
                     }
                     if (it is SplashState.RefreshTokenError) {
-                        state andEffect SplashEffect.RetryTokenRefresh
+                        SplashState.PrepareData andEffect SplashEffect.RetryTokenRefresh
                     } else it.none()
                 }
             }
