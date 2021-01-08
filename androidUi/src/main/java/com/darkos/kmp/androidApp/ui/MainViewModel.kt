@@ -22,15 +22,7 @@ class MainViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        whenDestroy()
-        whenDestroy = {}
         component = null
         super.onCleared()
-    }
-
-    private var whenDestroy: () -> Unit = {}
-
-    fun doWhenDestroy(block: () -> Unit) {
-        whenDestroy = block
     }
 }

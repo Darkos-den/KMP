@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.savedinstancestate.Saver
-import androidx.compose.runtime.savedinstancestate.SaverScope
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
@@ -17,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
+import com.darkos.kmp.androidApp.common.ComponentStateSaver
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
@@ -79,23 +78,6 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
     }
 
-    class ComponentStateSaver<Savable : Any, S : MVUState, T : BaseComponent<S>>(
-        private val component: T,
-        private val mapTo: (S) -> Savable,
-        private val mapFrom: (Savable) -> S
-    ) : Saver<S, Savable> {
-
-        override fun restore(value: Savable): S {
-            return mapFrom(value).also {
-                component.restore(it)
-            }
-        }
-
-        override fun SaverScope.save(value: S): Savable {
-            return mapTo(value)
-        }
-    }
-
     @Composable
     private inline fun <reified C : BaseComponent<S>, Ui : Any, S : MVUState> ComponentScreen(
         noinline mapTo: (S) -> Ui,
@@ -134,10 +116,6 @@ class MainActivity : AppCompatActivity(), DIAware {
 
         alertProcessor.attach(this)
 
-        viewModel.doWhenDestroy {
-            errorHandler.clear()
-        }
-
         setContent {
             val navController = rememberNavController()
             navigation.attach(navController)
@@ -173,12 +151,17 @@ class MainActivity : AppCompatActivity(), DIAware {
                             navController.popBackStack()
                         },
                         onLogout = {
-                            errorHandler.logout()
+                            TODO()
                         }
                     )
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        errorHandler.clear()
+        super.onDestroy()
     }
 
     companion object Destinations {

@@ -27,11 +27,21 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")//todo
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+            }
+        }
         val iosMain by getting
         val iosTest by getting
     }
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 android {
     compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")

@@ -5,12 +5,9 @@ import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.exception.NetworkException
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
-import com.darkos.mvu.EffectHandler
 import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
-import com.darkos.mvu.model.flow.FlowEffect
-import kotlinx.coroutines.flow.Flow
 
 class SplashEffectHandler(
     private val remote: ISplashRemote,
@@ -75,20 +72,4 @@ class SplashEffectHandler(
             SplashMessage.AppError(e.message.orEmpty())
         }
     }
-}
-
-class LogoutEffectHandler(
-) : EffectHandler {
-    override suspend fun call(effect: Effect): Message {
-        if (effect is DoLogout) {
-            TODO()
-        } else {
-            throw UnsupportedOperationException(effect.toString())
-        }
-    }
-
-    override suspend fun <T> callAsFlow(effect: T): Flow<Message> where T : Effect, T : FlowEffect {
-        throw UnsupportedOperationException()
-    }
-
 }

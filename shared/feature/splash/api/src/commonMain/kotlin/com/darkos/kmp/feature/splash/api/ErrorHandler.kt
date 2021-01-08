@@ -14,12 +14,10 @@ class ErrorHandler {
 
     private var connectionErrorObserver: () -> Unit = {}
     private var appErrorObserver: (String) -> Unit = {}
-    private var onLogout: () -> Unit = {}
 
     fun clear() {
         connectionErrorObserver = {}
         appErrorObserver = {}
-        onLogout = {}
     }
 
     fun observeNetworkError(block: () -> Unit) {
@@ -36,13 +34,5 @@ class ErrorHandler {
 
     fun observeAppError(block: (String) -> Unit) {
         appErrorObserver = block
-    }
-
-    fun doOnLogout(block: () -> Unit) {
-        onLogout = block
-    }
-
-    fun logout() {
-        onLogout()
     }
 }
