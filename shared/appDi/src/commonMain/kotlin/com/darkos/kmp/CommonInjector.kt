@@ -2,7 +2,7 @@ package com.darkos.kmp
 
 import com.darkos.kmp.common.alertProcessor.AlertProcessor
 import com.darkos.kmp.common.alertProcessor.IAlertProcessor
-import com.darkos.kmp.feature.splash.api.ErrorHandler
+import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.splash.api.ISplashRemote
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.di.SplashDI

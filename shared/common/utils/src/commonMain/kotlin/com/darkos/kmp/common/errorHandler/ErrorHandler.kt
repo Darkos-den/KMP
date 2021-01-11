@@ -1,14 +1,7 @@
-package com.darkos.kmp.feature.splash.api
+package com.darkos.kmp.common.errorHandler
 
 import com.darkos.mvu.Ui
-import com.darkos.mvu.model.Effect
-import com.darkos.mvu.model.Message
 import kotlinx.coroutines.withContext
-
-//todo: move to common
-object Logout : Message()
-
-object DoLogout : Effect()
 
 class ErrorHandler {
 

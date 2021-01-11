@@ -1,6 +1,10 @@
 package com.darkos.kmp.feature.splash
 
-import com.darkos.kmp.feature.splash.api.*
+import com.darkos.kmp.common.errorHandler.ErrorHandler
+import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
+import com.darkos.kmp.feature.splash.api.ISplashNavigation
+import com.darkos.kmp.feature.splash.api.ISplashRemote
+import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.exception.NetworkException
@@ -40,12 +44,6 @@ class SplashEffectHandler(
             }
             is SplashEffect.ProcessAppError -> {
                 errorHandler.onAppError(effect.message)
-                Idle
-            }
-            is DoLogout -> {
-                secure.clearSecureData()
-
-                navigation.goToLogin()
                 Idle
             }
             else -> throw UnsupportedOperationException(effect.toString())

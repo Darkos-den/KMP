@@ -18,6 +18,7 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 implementation(project(":shared:feature:splash:api"))
+                implementation(project(":shared:common:utils"))
             }
         }
         val commonTest by getting {

@@ -36,7 +36,7 @@ kotlin {
                 api(project(":shared:source:secure"))
                 api(project(":shared:source:remote"))
 
-                api(project(":shared:common:alertProcessor"))
+                api(project(":shared:common:utils"))
 
                 implementation("org.kodein.di:kodein-di:7.1.0")//todo
             }

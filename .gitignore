@@ -38,3 +38,4 @@ local.properties
 /shared/common/alertProcessor/build
 /shared/source/remote/build
 /shared/source/secure/build
+/shared/common/utils/build

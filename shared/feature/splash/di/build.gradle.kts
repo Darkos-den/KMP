@@ -23,6 +23,8 @@ kotlin {
                 implementation(project(":shared:feature:splash:handler"))
                 implementation(project(":shared:feature:splash:component"))
 
+                implementation(project(":shared:common:utils"))
+
                 implementation("org.kodein.di:kodein-di:7.1.0")//todo
             }
         }

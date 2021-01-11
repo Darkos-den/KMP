@@ -18,7 +18,7 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 implementation(project(":shared:feature:auth:api"))
-                implementation(project(":shared:common:alertProcessor"))
+                implementation(project(":shared:common:utils"))
             }
         }
         val commonTest by getting {

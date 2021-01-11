@@ -21,8 +21,8 @@ import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
+import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.splash.api.BaseComponent
-import com.darkos.kmp.feature.splash.api.ErrorHandler
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.mvu.component.ProgramComponent
 import com.darkos.mvu.model.MVUState
