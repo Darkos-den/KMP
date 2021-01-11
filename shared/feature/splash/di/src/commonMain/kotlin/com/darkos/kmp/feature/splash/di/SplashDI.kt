@@ -28,8 +28,7 @@ class SplashDI {
         bind<ISplashComponent>() with provider {
             SplashComponent(
                 effectHandler = instance(),
-                reducer = instance(),
-                errorHandler = instance()
+                reducer = instance()
             )
         }
     }

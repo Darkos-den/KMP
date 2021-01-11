@@ -18,10 +18,10 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(":shared:feature:splash:api"))
-                implementation(project(":shared:feature:splash:reducer"))
-                implementation(project(":shared:feature:splash:handler"))
-                implementation(project(":shared:feature:splash:component"))
+                implementation(project(":shared:feature:auth:api"))
+                implementation(project(":shared:feature:auth:reducer"))
+                implementation(project(":shared:feature:auth:handler"))
+                implementation(project(":shared:feature:auth:component"))
 
                 implementation("org.kodein.di:kodein-di:7.1.0")//todo
             }

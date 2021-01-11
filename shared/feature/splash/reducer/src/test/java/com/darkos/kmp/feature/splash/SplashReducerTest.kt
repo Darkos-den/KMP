@@ -118,7 +118,13 @@ internal class SplashReducerTest {
 
         @Test
         fun whenRefreshTokenErrorState() {
-            TODO()
+            val result = reducer.update(
+                SplashState.Init,
+                RestoreState(SplashState.RefreshTokenError)
+            )
+
+            assertEquals(SplashState.PrepareData, result.state)
+            assertEquals(SplashEffect.RetryTokenRefresh, result.effect)
         }
     }
 }
