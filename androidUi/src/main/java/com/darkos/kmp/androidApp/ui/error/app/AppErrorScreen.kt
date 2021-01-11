@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 fun AppErrorScreen(
     message: String,
     onRetry: () -> Unit,
-    onLogout: () -> Unit
+    onRestart: () -> Unit
 ) {
     Column {
         Text(text = "app error: $message")
         Button(onClick = onRetry) {
             Text(text = "Retry")
         }
-        Button(onClick = onLogout) {
-            Text(text = "Logout")
+        Button(onClick = onRestart) {
+            Text(text = "Restart")
         }
     }
 }

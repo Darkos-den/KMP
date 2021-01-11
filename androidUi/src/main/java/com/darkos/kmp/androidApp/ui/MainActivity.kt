@@ -16,8 +16,11 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.common.ComponentStateSaver
+import com.darkos.kmp.androidApp.ui.auth.signIn.SignInScreen
+import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
+import com.darkos.kmp.androidApp.ui.home.HomeScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
@@ -59,11 +62,11 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
 
         override fun goToLogin() {
-            TODO("Not yet implemented")
+            navController.get()?.navigate(signIn)
         }
 
         override fun goToHome() {
-            TODO("Not yet implemented")
+            navController.get()?.navigate(home)
         }
     }
 
@@ -150,10 +153,19 @@ class MainActivity : AppCompatActivity(), DIAware {
                         onRetry = {
                             navController.popBackStack()
                         },
-                        onLogout = {
-                            TODO()
+                        onRestart = {
+                            (navController as NavController).navigate(splash)
                         }
                     )
+                }
+                composable(signIn) {
+                    SignInScreen()
+                }
+                composable(signUp) {
+                    SignUpScreen()
+                }
+                composable(home) {
+                    HomeScreen()
                 }
             }
         }
@@ -168,5 +180,8 @@ class MainActivity : AppCompatActivity(), DIAware {
         private const val splash = "splash"
         private const val networkError = "error.network"
         private const val appError = "error.app"
+        private const val signIn = "auth.singIn"
+        private const val signUp = "auth.signUp"
+        private const val home = "home"
     }
 }
