@@ -68,6 +68,17 @@ class MainActivity : AppCompatActivity(), DIAware {
         override fun goToHome() {
             navController.get()?.navigate(home)
         }
+
+        fun handleBack(activity: AppCompatActivity): Boolean {
+            return navController.get()?.currentDestination?.label?.let {
+                if (it == networkError || it == appError) {
+                    activity.moveTaskToBack(true)
+                    true
+                } else {
+                    false
+                }
+            } ?: false
+        }
     }
 
     private inline fun <reified T : ProgramComponent<*>> getOrInit(): T {
@@ -135,6 +146,8 @@ class MainActivity : AppCompatActivity(), DIAware {
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
+                    it.destination.label = splash
+
                     ComponentScreen(
                         mapTo = ::mapToSplashUi,
                         mapFrom = ::mapFromSplashUi
@@ -143,31 +156,50 @@ class MainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable(networkError) {
+                    it.destination.label = networkError
+
                     ConnectionErrorScreen {
                         navController.popBackStack()
                     }
                 }
                 composable("$appError/{message}") {
+                    it.destination.label = appError
+
                     AppErrorScreen(
                         message = it.arguments?.getString("message")!!,
                         onRetry = {
                             navController.popBackStack()
                         },
                         onRestart = {
-                            (navController as NavController).navigate(splash)
+                            viewModel.clear()
+                            (navController as NavController).navigate(splash) {
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }
                 composable(signIn) {
+                    it.destination.label = signIn
+
                     SignInScreen()
                 }
                 composable(signUp) {
+                    it.destination.label = signUp
+
                     SignUpScreen()
                 }
                 composable(home) {
+                    it.destination.label = home
+
                     HomeScreen()
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (navigation.handleBack(this).not()) {
+            super.onBackPressed()
         }
     }
 

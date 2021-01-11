@@ -21,6 +21,10 @@ class MainViewModel : ViewModel() {
         } ?: false
     }
 
+    fun clear() {
+        component = null
+    }
+
     override fun onCleared() {
         component = null
         super.onCleared()
