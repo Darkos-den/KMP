@@ -18,20 +18,15 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(":shared:feature:auth:api"))
-                implementation(project(":shared:feature:auth:reducer"))
-                implementation(project(":shared:feature:auth:handler"))
-                implementation(project(":shared:feature:auth:component"))
+                implementation(project(AppLibs.Modules.Auth.api))
+                implementation(project(AppLibs.Modules.Auth.reducer))
+                implementation(project(AppLibs.Modules.Auth.handler))
+                implementation(project(AppLibs.Modules.Auth.component))
 
-                implementation("org.kodein.di:kodein-di:7.1.0")//todo
+                implementation(AppLibs.Kodein.core)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting
         val androidTest by getting
         val iosMain by getting

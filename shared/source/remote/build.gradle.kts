@@ -18,27 +18,22 @@ kotlin {
                 api(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation("io.ktor:ktor-client-core:1.5.0")
+                implementation(AppLibs.Ktor.core)
 
-                implementation(project(":shared:feature:splash:api"))
-                implementation(project(":shared:feature:auth:api"))
+                implementation(project(AppLibs.Modules.Splash.api))
+                implementation(project(AppLibs.Modules.Auth.api))
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-okhttp:1.5.0")
+                implementation(AppLibs.Ktor.okHttp)
             }
         }
         val androidTest by getting
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:1.5.0")
+                implementation(AppLibs.Ktor.ios)
             }
         }
         val iosTest by getting

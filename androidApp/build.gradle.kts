@@ -37,25 +37,11 @@ dependencies {
     implementation(AppLibs.MVU.core)
     implementation(AppLibs.MVU.program)
 
-    applyCompose()
+    implementation(AppLibs.Kodein.core)
+    implementation(AppLibs.Kodein.android)
 
-    implementation("org.kodein.di:kodein-di:7.1.0")//todo
-    implementation("org.kodein.di:kodein-di-framework-android-x:7.1.0")//todo
-
-    implementation(project(":shared:appDi"))
-
-    implementation(project(":androidUi"))
-}
-
-fun DependencyHandlerScope.applyCompose() {
-    implementation(AppLibs.AndroidX.Compose.ui)
-    implementation(AppLibs.AndroidX.Compose.tooling)
-    implementation(AppLibs.AndroidX.Compose.foundation)
-    implementation(AppLibs.AndroidX.Compose.material)
-    implementation(AppLibs.AndroidX.Compose.materialIconsCore)
-    implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
-    implementation(AppLibs.AndroidX.Compose.livedata)
-//    implementation(AppLibs.AndroidX.Compose.navigation)
+    implementation(project(AppLibs.Modules.Shared.appDi))
+    implementation(project(AppLibs.Modules.androidUi))
 }
 
 fun DependencyHandlerScope.applyAndroidDependencies() {

@@ -12,6 +12,7 @@ object AppLibs {
 
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
+        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.1"
     }
 
     object AndroidX {
@@ -45,11 +46,10 @@ object AppLibs {
     }
 
     object Kodein {
-        const val version = "6.5.5"
+        const val version = "7.2.0"
 
-        const val jvm = "org.kodein.di:kodein-di-generic-jvm:$version"
+        const val core = "org.kodein.di:kodein-di:$version"
         const val android = "org.kodein.di:kodein-di-framework-android-x:$version"
-        const val erased = "org.kodein.di:kodein-di-erased:$version"
     }
 
     object Coroutines {
@@ -68,8 +68,16 @@ object AppLibs {
         const val program = "com.github.Darkos-den.core2:mvu-program:$version"
     }
 
+    object Kissme {
+        private const val version = "0.2.5"
+
+        const val common = "com.netguru.kissme:common:$version"
+        const val android = "com.netguru.kissme:android:$version"
+        const val ios = "com.netguru.kissme:ios:$version"
+    }
+
     object Ktor {
-        private const val version = "1.4.0"
+        private const val version = "1.5.0"
 
         const val core = "io.ktor:ktor-client-core:$version"
         const val serialization = "io.ktor:ktor-client-serialization:$version"
@@ -80,6 +88,7 @@ object AppLibs {
         const val loggingJvm = "io.ktor:ktor-client-logging-jvm:$version"
         const val okHttp = "io.ktor:ktor-client-okhttp:$version"
         const val android = "io.ktor:ktor-client-android:$version"
+        const val ios = "io.ktor:ktor-client-ios:$version"
     }
 
     object MVU {
@@ -137,32 +146,32 @@ object AppLibs {
     }
 
     object Modules {
-        const val core = ":common:core"
-        const val validation = ":common:validation"
+        const val androidUi = ":androidUi"
 
-        object Source {
-            const val remote = ":common:source:remote"
-            const val secure = ":common:source:secure"
+        object Shared {
+            const val appDi = ":shared:appDi"
+            const val utils = ":shared:common:utils"
         }
 
-        object LoginEmail {
-            const val api = ":common:feature:login-email:login-email-api"
-            const val reducer = ":common:feature:login-email:login-email-reducer"
-            const val effectHandler = ":common:feature:login-email:login-email-effect-handler"
-        }
-
-        object Initial {
-            const val api = ":common:feature:initial:initial-api"
-            const val android = ":common:feature:initial:initial-android"
-            const val reducer = ":common:feature:initial:initial-reducer"
-            const val effectHandler = ":common:feature:initial:initial-effect-handler"
+        object Splash {
+            const val api = ":shared:feature:splash:api"
+            const val di = ":shared:feature:splash:di"
+            const val reducer = ":shared:feature:splash:reducer"
+            const val handler = ":shared:feature:splash:handler"
+            const val component = ":shared:feature:splash:component"
         }
 
         object Auth {
-            const val api = ":common:feature:auth:auth-api"
-            const val android = ":common:feature:auth:auth-android"
-            const val reducer = ":common:feature:auth:auth-reducer"
-            const val effectHandler = ":common:feature:auth:auth-effect-handler"
+            const val api = ":shared:feature:auth:api"
+            const val di = ":shared:feature:auth:di"
+            const val reducer = ":shared:feature:auth:reducer"
+            const val handler = ":shared:feature:auth:handler"
+            const val component = ":shared:feature:auth:component"
+        }
+
+        object Source {
+            const val secure = ":shared:source:secure"
+            const val remote = ":shared:source:remote"
         }
     }
 }

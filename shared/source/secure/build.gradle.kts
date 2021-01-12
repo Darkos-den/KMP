@@ -18,28 +18,23 @@ kotlin {
                 api(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
-                implementation("com.netguru.kissme:common:0.2.5")
+                implementation(AppLibs.Kotlin.datetime)
+                implementation(AppLibs.Kissme.common)
 
-                implementation(project(":shared:feature:splash:api"))
-                implementation(project(":shared:feature:auth:api"))
+                implementation(project(AppLibs.Modules.Splash.api))
+                implementation(project(AppLibs.Modules.Auth.api))
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting {
             dependencies {
-                implementation("com.netguru.kissme:android:0.2.5")//todo: try remove
+                implementation(AppLibs.Kissme.android)
             }
         }
         val androidTest by getting
         val iosMain by getting {
             dependencies {
-                implementation("com.netguru.kissme:ios:0.2.5")
+                implementation(AppLibs.Kissme.ios)
             }
         }
         val iosTest by getting

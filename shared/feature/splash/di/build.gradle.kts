@@ -18,22 +18,17 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(":shared:feature:splash:api"))
-                implementation(project(":shared:feature:splash:reducer"))
-                implementation(project(":shared:feature:splash:handler"))
-                implementation(project(":shared:feature:splash:component"))
+                implementation(project(AppLibs.Modules.Splash.api))
+                implementation(project(AppLibs.Modules.Splash.reducer))
+                implementation(project(AppLibs.Modules.Splash.handler))
+                implementation(project(AppLibs.Modules.Splash.component))
 
-                implementation(project(":shared:common:utils"))
+                implementation(project(AppLibs.Modules.Shared.utils))
 
-                implementation("org.kodein.di:kodein-di:7.1.0")//todo
+                implementation(AppLibs.Kodein.core)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting
         val androidTest by getting
         val iosMain by getting

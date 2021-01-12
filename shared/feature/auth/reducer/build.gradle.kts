@@ -17,15 +17,10 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(":shared:feature:auth:api"))
+                implementation(project(AppLibs.Modules.Auth.api))
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting
         val androidTest by getting
         val iosMain by getting

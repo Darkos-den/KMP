@@ -14,8 +14,8 @@ kotlin {
         binaries {
             framework {
                 baseName = "appDi"
-                export(project(":shared:feature:splash:api"))
-                export(project(":shared:feature:splash:di"))
+                export(project(AppLibs.Modules.Splash.api))
+                export(project(AppLibs.Modules.Splash.di))
             }
         }
     }
@@ -27,26 +27,21 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                api(project(":shared:feature:splash:api"))
-                api(project(":shared:feature:splash:di"))
+                api(project(AppLibs.Modules.Splash.api))
+                api(project(AppLibs.Modules.Splash.di))
 
-                api(project(":shared:feature:auth:api"))
-                api(project(":shared:feature:auth:di"))
+                api(project(AppLibs.Modules.Auth.api))
+                api(project(AppLibs.Modules.Auth.di))
 
-                api(project(":shared:source:secure"))
-                api(project(":shared:source:remote"))
+                api(project(AppLibs.Modules.Source.secure))
+                api(project(AppLibs.Modules.Source.remote))
 
-                api(project(":shared:common:utils"))
+                api(project(AppLibs.Modules.Shared.utils))
 
-                implementation("org.kodein.di:kodein-di:7.1.0")//todo
+                implementation(AppLibs.Kodein.core)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
         val androidMain by getting
         val androidTest by getting
         val iosMain by getting

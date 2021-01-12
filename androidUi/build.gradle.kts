@@ -50,15 +50,13 @@ dependencies {
     implementation(AppLibs.MVU.core)
     implementation(AppLibs.MVU.program)
 
-    implementation("androidx.navigation:navigation-compose:1.0.0-alpha04")
-
     applyCompose()
 
-    implementation("org.kodein.di:kodein-di:7.1.0")//todo
-    implementation("org.kodein.di:kodein-di-framework-android-x:7.1.0")//todo
+    implementation(AppLibs.Kodein.core)
+    implementation(AppLibs.Kodein.android)
 
-    implementation(project(":shared:feature:splash:api"))
-    implementation(project(":shared:common:utils"))
+    implementation(project(AppLibs.Modules.Splash.api))
+    implementation(project(AppLibs.Modules.Shared.utils))
 }
 
 fun DependencyHandlerScope.applyCompose() {
@@ -69,7 +67,7 @@ fun DependencyHandlerScope.applyCompose() {
     implementation(AppLibs.AndroidX.Compose.materialIconsCore)
     implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
     implementation(AppLibs.AndroidX.Compose.livedata)
-//    implementation(AppLibs.AndroidX.Compose.navigation)
+    implementation(AppLibs.AndroidX.Compose.navigation)
 }
 
 fun DependencyHandlerScope.applyAndroidDependencies() {
