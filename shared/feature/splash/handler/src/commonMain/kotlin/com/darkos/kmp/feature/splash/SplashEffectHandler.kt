@@ -9,9 +9,12 @@ import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.exception.NetworkException
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
+import com.darkos.mvu.Ui
 import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 class SplashEffectHandler(
     private val remote: ISplashRemote,
@@ -20,19 +23,25 @@ class SplashEffectHandler(
     private val errorHandler: ErrorHandler
 ) : ISplashEffectHandler {
 
+    private suspend fun navigate(block: () -> Unit): Message {
+        withContext(Ui) {
+            block()
+        }
+        return Idle
+    }
+
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
             is SplashEffect.CheckAuthState -> {
+                delay(3_000)//todo: for test
                 try {
                     if (secure.isAuthTokenValid()) {
-                        navigation.goToHome()
-                        Idle
+                        navigate(navigation::goToHome)
                     } else {
                         checkRefreshToken()
                     }
                 } catch (e: NotFoundException) {
-                    navigation.goToLogin()
-                    Idle
+                    navigate(navigation::goToLogin)
                 }
             }
             is SplashEffect.RetryTokenRefresh -> {
@@ -57,12 +66,10 @@ class SplashEffectHandler(
                     secure.saveAuthToken(it.auth.token, it.auth.expire)
                     secure.saveRefreshToken(it.refresh.token, it.refresh.expire)
 
-                    navigation.goToHome()
-                    Idle
+                    navigate(navigation::goToHome)
                 }
             } else {
-                navigation.goToLogin()
-                Idle
+                navigate(navigation::goToLogin)
             }
         } catch (e: NetworkException) {
             SplashMessage.NetworkError

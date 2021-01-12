@@ -1,8 +1,13 @@
 package com.darkos.kmp.androidApp.ui.splash
 
 import android.os.Parcelable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.darkos.kmp.feature.splash.model.SplashState
 import kotlinx.android.parcel.Parcelize
 
@@ -41,5 +46,11 @@ fun SplashUiState.map(): SplashState {
 
 @Composable
 fun SplashScreen() {
-    Text(text = "progress...")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "progress...")
+    }
 }
