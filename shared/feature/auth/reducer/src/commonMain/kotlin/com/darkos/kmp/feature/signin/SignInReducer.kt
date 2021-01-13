@@ -1,5 +1,6 @@
 package com.darkos.kmp.feature.signin
 
+import com.darkos.kmp.common.mvu.RestoreState
 import com.darkos.kmp.feature.signin.api.ISignInReducer
 import com.darkos.kmp.feature.signin.model.FieldState
 import com.darkos.kmp.feature.signin.model.SignInMessage
@@ -33,6 +34,15 @@ class SignInReducer : ISignInReducer {
                         error = null
                     )
                 ).none()
+            }
+            is RestoreState<*> -> {
+                message.state.let {
+                    if (it is SignInState) {
+                        it.none()
+                    } else {
+                        throw UnsupportedOperationException()
+                    }
+                }
             }
             else -> {
                 throw UnsupportedOperationException()
