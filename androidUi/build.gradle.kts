@@ -56,6 +56,7 @@ dependencies {
     implementation(AppLibs.Kodein.android)
 
     implementation(project(AppLibs.Modules.Splash.api))
+    implementation(project(AppLibs.Modules.Auth.api))
     implementation(project(AppLibs.Modules.Shared.utils))
 }
 

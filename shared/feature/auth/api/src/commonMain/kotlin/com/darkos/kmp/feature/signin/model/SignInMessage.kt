@@ -1,4 +1,9 @@
 package com.darkos.kmp.feature.signin.model
 
-class SignInMessage {
+import com.darkos.mvu.model.Message
+
+sealed class SignInMessage : Message() {
+    class EmailChanged(val value: String) : SignInMessage()
+    class PasswordChanged(val value: String) : SignInMessage()
+    object SubmitClicked : SignInMessage()
 }

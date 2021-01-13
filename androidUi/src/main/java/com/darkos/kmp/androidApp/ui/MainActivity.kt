@@ -17,6 +17,9 @@ import androidx.navigation.compose.rememberNavController
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.common.ComponentStateSaver
 import com.darkos.kmp.androidApp.ui.auth.signIn.SignInScreen
+import com.darkos.kmp.androidApp.ui.auth.signIn.SignInUiState
+import com.darkos.kmp.androidApp.ui.auth.signIn.mapFromSignInUi
+import com.darkos.kmp.androidApp.ui.auth.signIn.mapToSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
@@ -25,7 +28,9 @@ import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.common.errorHandler.ErrorHandler
-import com.darkos.kmp.feature.splash.api.BaseComponent
+import com.darkos.kmp.common.mvu.BaseComponent
+import com.darkos.kmp.feature.signin.api.ISignInComponent
+import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.mvu.component.ProgramComponent
 import com.darkos.mvu.model.MVUState
@@ -181,7 +186,20 @@ class MainActivity : AppCompatActivity(), DIAware {
                 composable(signIn) {
                     it.destination.label = signIn
 
-                    SignInScreen()
+                    ComponentScreen<ISignInComponent, SignInUiState, SignInState>(
+                        mapTo = ::mapToSignInUi,
+                        mapFrom = ::mapFromSignInUi
+                    ) { component, ui ->
+                        SignInScreen(
+                            state = ui,
+                            onEmailChanged = component::onEmailChanged,
+                            onPasswordChanged = component::onPasswordChanged,
+                            onSubmitClick = component::onSubmitClick,
+                            onSignUp = {
+                                navController.navigate(signUp)
+                            }
+                        )
+                    }
                 }
                 composable(signUp) {
                     it.destination.label = signUp

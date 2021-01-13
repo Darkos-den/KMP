@@ -1,7 +1,7 @@
 package com.darkos.kmp.feature.splash
 
+import com.darkos.kmp.common.mvu.RestoreState
 import com.darkos.kmp.feature.splash.api.ISplashReducer
-import com.darkos.kmp.feature.splash.model.RestoreState
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState

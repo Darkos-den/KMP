@@ -2,7 +2,7 @@ package com.darkos.kmp.androidApp.common
 
 import androidx.compose.runtime.savedinstancestate.Saver
 import androidx.compose.runtime.savedinstancestate.SaverScope
-import com.darkos.kmp.feature.splash.api.BaseComponent
+import com.darkos.kmp.common.mvu.BaseComponent
 import com.darkos.mvu.model.MVUState
 
 class ComponentStateSaver<Savable : Any, S : MVUState, T : BaseComponent<S>>(
