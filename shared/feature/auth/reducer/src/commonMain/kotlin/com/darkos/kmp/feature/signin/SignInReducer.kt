@@ -13,7 +13,10 @@ import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
 import com.darkos.mvu.model.StateCmdData
 
-class SignInReducer : ISignInReducer {
+class SignInReducer(
+    private val emailValidationMessage: String,
+    private val passwordValidationMessage: String
+) : ISignInReducer {
 
     override fun update(state: SignInState, message: Message): StateCmdData<SignInState> {
         return when (message) {
@@ -48,10 +51,10 @@ class SignInReducer : ISignInReducer {
             is SignInMessage.ValidationError -> {
                 state.copy(
                     email = state.email.copy(
-                        error = "Email error".takeIf { message.emailStatus.not() }
+                        error = emailValidationMessage.takeIf { message.emailStatus.not() }
                     ),
                     password = state.password.copy(
-                        error = "Password error".takeIf { message.passwordStatus.not() }
+                        error = passwordValidationMessage.takeIf { message.passwordStatus.not() }
                     ),
                     screenState = ScreenState.EDIT
                 ).none()

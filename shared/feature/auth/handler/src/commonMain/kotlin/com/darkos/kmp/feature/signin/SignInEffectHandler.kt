@@ -4,8 +4,7 @@ import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.errorHandler.runAndHandleErrors
 import com.darkos.kmp.common.mvu.navigate
-import com.darkos.kmp.common.validator.Email
-import com.darkos.kmp.common.validator.Password
+import com.darkos.kmp.common.validator.Validator
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
 import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.signin.api.ISignInRemote
@@ -22,7 +21,9 @@ class SignInEffectHandler(
     private val remote: ISignInRemote,
     private val secure: ISignInSecure,
     private val errorHandler: ErrorHandler,
-    private val navigation: ISignInNavigation
+    private val navigation: ISignInNavigation,
+    private val emailValidator: Validator,
+    private val passwordValidator: Validator
 ) : ISignInEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -44,8 +45,8 @@ class SignInEffectHandler(
 
     private fun validateSignInData(effect: SignInEffect.ProcessSignIn): Message? {
         return SignInMessage.ValidationError(
-            emailStatus = Email.validate(effect.email),
-            passwordStatus = Password.validate(effect.password)
+            emailStatus = emailValidator.validate(effect.email),
+            passwordStatus = passwordValidator.validate(effect.password)
         ).takeIf {
             (it.emailStatus && it.passwordStatus).not()
         }

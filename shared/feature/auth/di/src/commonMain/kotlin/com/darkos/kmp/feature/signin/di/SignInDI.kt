@@ -1,5 +1,7 @@
 package com.darkos.kmp.feature.signin.di
 
+import com.darkos.kmp.common.validator.Email
+import com.darkos.kmp.common.validator.Password
 import com.darkos.kmp.feature.signin.SignInComponent
 import com.darkos.kmp.feature.signin.SignInEffectHandler
 import com.darkos.kmp.feature.signin.SignInReducer
@@ -16,13 +18,20 @@ class SignInDI {
 
     @OptIn(InternalCoroutinesApi::class)
     val module = DI.Module(TAG) {
-        bind<ISignInReducer>() with provider { SignInReducer() }
+        bind<ISignInReducer>() with provider {
+            SignInReducer(
+                emailValidationMessage = "Email invalid",//todo
+                passwordValidationMessage = "Password invalid"
+            )
+        }
         bind<ISignInEffectHandler>() with provider {
             SignInEffectHandler(
                 remote = instance(),
                 secure = instance(),
                 errorHandler = instance(),
-                navigation = instance()
+                navigation = instance(),
+                emailValidator = Email,//todo
+                passwordValidator = Password
             )
         }
         bind<ISignInComponent>() with provider {
