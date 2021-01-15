@@ -21,7 +21,8 @@ class SignInDI {
             SignInEffectHandler(
                 remote = instance(),
                 secure = instance(),
-                errorHandler = instance()
+                errorHandler = instance(),
+                navigation = instance()
             )
         }
         bind<ISignInComponent>() with provider {

@@ -2,10 +2,7 @@ package com.darkos.kmp.feature.signin
 
 import com.darkos.kmp.common.mvu.RestoreState
 import com.darkos.kmp.feature.signin.api.ISignInReducer
-import com.darkos.kmp.feature.signin.model.FieldState
-import com.darkos.kmp.feature.signin.model.SignInEffect
-import com.darkos.kmp.feature.signin.model.SignInMessage
-import com.darkos.kmp.feature.signin.model.SignInState
+import com.darkos.kmp.feature.signin.model.*
 import com.darkos.mvu.common.none
 import com.darkos.mvu.model.*
 
@@ -38,7 +35,7 @@ class SignInReducer : ISignInReducer {
             }
             is SignInMessage.SubmitClicked -> {
                 state.copy(
-                    progress = true
+                    screenState = ScreenState.PROGRESS
                 ) andEffect SignInEffect.ProcessSignIn(
                     email = state.email.text,
                     password = state.password.text
@@ -51,7 +48,8 @@ class SignInReducer : ISignInReducer {
                     ),
                     password = state.password.copy(
                         error = "Password error".takeIf { message.passwordStatus.not() }
-                    )
+                    ),
+                    screenState = ScreenState.EDIT
                 ).none()
             }
             is RestoreState<*> -> {
@@ -62,6 +60,16 @@ class SignInReducer : ISignInReducer {
                         throw UnsupportedOperationException()
                     }
                 }
+            }
+            is SignInMessage.SignInNetworkError -> {
+                state.copy(
+                    screenState = ScreenState.SIGN_IN_ERROR
+                ) andEffect SignInEffect.ProcessNetworkError
+            }
+            is SignInMessage.SignInAppError -> {
+                state.copy(
+                    screenState = ScreenState.SIGN_IN_ERROR
+                ) andEffect SignInEffect.ProcessAppError(message.message)
             }
             else -> {
                 throw UnsupportedOperationException()

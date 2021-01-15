@@ -5,6 +5,7 @@ import com.darkos.kmp.feature.signin.api.ISignInComponent
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
 import com.darkos.kmp.feature.signin.api.ISignInReducer
 import com.darkos.kmp.feature.signin.model.FieldState
+import com.darkos.kmp.feature.signin.model.ScreenState
 import com.darkos.kmp.feature.signin.model.SignInMessage
 import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.mvu.component.MVUComponent
@@ -45,7 +46,7 @@ class SignInComponent(
                 text = "",
                 error = null
             ),
-            progress = false
+            screenState = ScreenState.EDIT
         )
     }
 }

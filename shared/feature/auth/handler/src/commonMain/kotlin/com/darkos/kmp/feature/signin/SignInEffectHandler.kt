@@ -5,6 +5,7 @@ import com.darkos.kmp.common.errorHandler.NetworkException
 import com.darkos.kmp.common.validator.Email
 import com.darkos.kmp.common.validator.Password
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
+import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.signin.api.ISignInRemote
 import com.darkos.kmp.feature.signin.api.ISignInSecure
 import com.darkos.kmp.feature.signin.model.SignInEffect
@@ -18,7 +19,8 @@ import com.darkos.mvu.model.None
 class SignInEffectHandler(
     private val remote: ISignInRemote,
     private val secure: ISignInSecure,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val navigation: ISignInNavigation
 ) : ISignInEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -32,14 +34,32 @@ class SignInEffectHandler(
                         SignInDto(effect.email, effect.password).let {
                             remote.signIn(it)
                         }.let {
-                            TODO()
+                            secure.run {
+                                it.auth.let {
+                                    saveAuthToken(it.token, it.expire)
+                                }
+                                it.refresh.let {
+                                    saveRefreshToken(it.token, it.expire)
+                                }
+                            }
+
+                            navigation.goToHome()
+                            Idle
                         }
                     } catch (e: NetworkException) {
-                        SignInMessage.NetworkError
+                        SignInMessage.SignInNetworkError
                     } catch (e: Exception) {
-                        SignInMessage.AppError(e.message.orEmpty())
+                        SignInMessage.SignInAppError(e.message.orEmpty())
                     }
                 }
+            }
+            is SignInEffect.ProcessNetworkError -> {
+                errorHandler.onNetworkError()//todo: maybe move to common?
+                Idle
+            }
+            is SignInEffect.ProcessAppError -> {
+                errorHandler.onAppError(effect.message)//todo: maybe move to common?
+                Idle
             }
             else -> {
                 throw UnsupportedOperationException()

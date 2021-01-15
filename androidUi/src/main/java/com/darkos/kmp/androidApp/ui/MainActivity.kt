@@ -30,6 +30,7 @@ import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.mvu.BaseComponent
 import com.darkos.kmp.feature.signin.api.ISignInComponent
+import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.mvu.component.ProgramComponent
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
         bind() from singleton { Navigation() }
         bind<ISplashNavigation>() with provider { instance<Navigation>() }
+        bind<ISignInNavigation>() with provider { instance<Navigation>() }
     }
 
     override val diTrigger = DITrigger()
@@ -59,7 +61,7 @@ class MainActivity : AppCompatActivity(), DIAware {
     private val errorHandler: ErrorHandler by instance()
     private val navigation: Navigation by instance()
 
-    class Navigation : ISplashNavigation {
+    class Navigation : ISplashNavigation, ISignInNavigation {
         private var navController = WeakReference<NavController>(null)
 
         fun attach(navController: NavController) {

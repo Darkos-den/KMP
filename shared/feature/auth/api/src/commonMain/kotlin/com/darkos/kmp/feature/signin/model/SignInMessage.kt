@@ -12,6 +12,6 @@ sealed class SignInMessage : Message() {
         val passwordStatus: Boolean
     ) : SignInMessage()
 
-    object NetworkError : SignInMessage()
-    class AppError(val message: String) : SignInMessage()
+    object SignInNetworkError : SignInMessage()
+    class SignInAppError(val message: String) : SignInMessage()
 }

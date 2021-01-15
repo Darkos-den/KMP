@@ -8,4 +8,7 @@ sealed class SignInEffect : Effect() {
         val email: String,
         val password: String
     ) : SignInEffect()
+
+    object ProcessNetworkError : SignInEffect()
+    class ProcessAppError(val message: String) : SignInEffect()
 }

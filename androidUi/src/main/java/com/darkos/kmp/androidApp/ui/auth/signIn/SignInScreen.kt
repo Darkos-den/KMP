@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.darkos.kmp.feature.signin.model.FieldState
+import com.darkos.kmp.feature.signin.model.ScreenState
 import com.darkos.kmp.feature.signin.model.SignInState
 import kotlinx.android.parcel.Parcelize
 
@@ -23,7 +24,7 @@ data class FieldUiState(
 data class SignInUiState(
     val email: FieldUiState,
     val password: FieldUiState,
-    val progress: Boolean
+    val screenState: ScreenState
 ) : Parcelable
 
 fun SignInState.map(): SignInUiState {
@@ -36,7 +37,7 @@ fun SignInState.map(): SignInUiState {
             text = password.text,
             error = password.error
         ),
-        progress = progress
+        screenState = screenState
     )
 }
 
@@ -50,7 +51,7 @@ fun SignInUiState.map(): SignInState {
             text = password.text,
             error = password.error
         ),
-        progress = progress
+        screenState = screenState
     )
 }
 
@@ -153,7 +154,7 @@ fun EmptyStatePreview() {
                 text = "",
                 error = null
             ),
-            progress = false
+            screenState = ScreenState.EDIT
         ),
         onEmailChanged = {},
         onPasswordChanged = {},

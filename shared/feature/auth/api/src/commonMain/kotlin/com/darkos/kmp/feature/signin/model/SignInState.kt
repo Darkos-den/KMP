@@ -7,8 +7,12 @@ data class FieldState(
     val error: String?
 )
 
+enum class ScreenState {
+    EDIT, PROGRESS, SIGN_IN_ERROR
+}
+
 data class SignInState(
     val email: FieldState,
     val password: FieldState,
-    val progress: Boolean
+    val screenState: ScreenState
 ) : MVUState()
