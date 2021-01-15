@@ -7,8 +7,8 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.utils.io.core.*
 
 class RemoteStorage {
-    private val httpClient: HttpClient by lazy {
-        HttpClient {
+    private val httpClient: HttpClient
+        get() = HttpClient {
             install(JsonFeature) {
                 serializer = KotlinxSerializer()
             }
@@ -28,7 +28,6 @@ class RemoteStorage {
                 }
             }
         }
-    }
 
     class Config(
         var environment: Environment = Environment.DEVELOPMENT,

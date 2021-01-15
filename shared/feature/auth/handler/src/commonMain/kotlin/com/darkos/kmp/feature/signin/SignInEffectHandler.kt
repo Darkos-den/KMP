@@ -1,7 +1,8 @@
 package com.darkos.kmp.feature.signin
 
+import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
-import com.darkos.kmp.common.errorHandler.NetworkException
+import com.darkos.kmp.common.errorHandler.runAndHandleErrors
 import com.darkos.kmp.common.validator.Email
 import com.darkos.kmp.common.validator.Password
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
@@ -30,7 +31,7 @@ class SignInEffectHandler(
             }
             is SignInEffect.ProcessSignIn -> {
                 validateSignInData(effect) ?: run {
-                    try {
+                    runAndHandleErrors {
                         SignInDto(effect.email, effect.password).let {
                             remote.signIn(it)
                         }.let {
@@ -46,20 +47,11 @@ class SignInEffectHandler(
                             navigation.goToHome()
                             Idle
                         }
-                    } catch (e: NetworkException) {
-                        SignInMessage.SignInNetworkError
-                    } catch (e: Exception) {
-                        SignInMessage.SignInAppError(e.message.orEmpty())
                     }
                 }
             }
-            is SignInEffect.ProcessNetworkError -> {
-                errorHandler.onNetworkError()//todo: maybe move to common?
-                Idle
-            }
-            is SignInEffect.ProcessAppError -> {
-                errorHandler.onAppError(effect.message)//todo: maybe move to common?
-                Idle
+            is ErrorEffect -> {
+                errorHandler.processErrorEffect(effect)
             }
             else -> {
                 throw UnsupportedOperationException()

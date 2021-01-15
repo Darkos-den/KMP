@@ -1,15 +1,19 @@
 package com.darkos.kmp.feature.signin
 
+import com.darkos.kmp.common.errorHandler.ErrorMessage
+import com.darkos.kmp.common.errorHandler.processErrorMessage
 import com.darkos.kmp.common.mvu.RestoreState
+import com.darkos.kmp.common.mvu.andEffect
+import com.darkos.kmp.common.mvu.restoreState
 import com.darkos.kmp.feature.signin.api.ISignInReducer
 import com.darkos.kmp.feature.signin.model.*
 import com.darkos.mvu.common.none
-import com.darkos.mvu.model.*
+import com.darkos.mvu.model.ComponentInitialized
+import com.darkos.mvu.model.Idle
+import com.darkos.mvu.model.Message
+import com.darkos.mvu.model.StateCmdData
 
 class SignInReducer : ISignInReducer {
-
-    private infix fun <T : MVUState> T.andEffect(cmd: Effect) =
-        StateCmdData(state = this, effect = cmd)//todo: move to core lib
 
     override fun update(state: SignInState, message: Message): StateCmdData<SignInState> {
         return when (message) {
@@ -53,23 +57,12 @@ class SignInReducer : ISignInReducer {
                 ).none()
             }
             is RestoreState<*> -> {
-                message.state.let {
-                    if (it is SignInState) {
-                        it.none()
-                    } else {
-                        throw UnsupportedOperationException()
-                    }
+                restoreState(message)
+            }
+            is ErrorMessage -> {
+                processErrorMessage(message) {
+                    state.copy(screenState = ScreenState.SIGN_IN_ERROR)
                 }
-            }
-            is SignInMessage.SignInNetworkError -> {
-                state.copy(
-                    screenState = ScreenState.SIGN_IN_ERROR
-                ) andEffect SignInEffect.ProcessNetworkError
-            }
-            is SignInMessage.SignInAppError -> {
-                state.copy(
-                    screenState = ScreenState.SIGN_IN_ERROR
-                ) andEffect SignInEffect.ProcessAppError(message.message)
             }
             else -> {
                 throw UnsupportedOperationException()

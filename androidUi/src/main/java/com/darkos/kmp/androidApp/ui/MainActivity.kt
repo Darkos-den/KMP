@@ -147,6 +147,7 @@ class MainActivity : AppCompatActivity(), DIAware {
                 }
 
                 observeAppError {
+                    viewModel.clear()
                     (navController as NavController).navigate("$appError/$it")
                 }
             }
@@ -178,7 +179,6 @@ class MainActivity : AppCompatActivity(), DIAware {
                             navController.popBackStack()
                         },
                         onRestart = {
-                            viewModel.clear()
                             (navController as NavController).navigate(splash) {
                                 launchSingleTop = true
                             }
