@@ -2,6 +2,7 @@ package com.darkos.kmp.source.secure
 
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
+import com.darkos.kmp.source.secure.common.SecureStorage
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
@@ -26,20 +27,10 @@ class SplashSecure(
     }
 
     override suspend fun saveAuthToken(token: String, expire: Long) {
-        secure.run {
-            authToken = token
-            authExpire = expire
-        }
+        secure.auth = SecureStorage.Token(token, expire)
     }
 
     override suspend fun saveRefreshToken(token: String, expire: Long) {
-        secure.run {
-            refreshToken = token
-            refreshExpire = expire
-        }
-    }
-
-    override suspend fun clearSecureData() {
-        secure.clear()
+        secure.refresh = SecureStorage.Token(token, expire)
     }
 }

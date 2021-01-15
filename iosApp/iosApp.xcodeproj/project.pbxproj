@@ -17,6 +17,8 @@
 		7555FFA1242A565B00829871 /* iosAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FFA0242A565B00829871 /* iosAppUITests.swift */; };
 		D748B3FB2589EDFD00F68D77 /* appDi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D748B3FA2589EDFD00F68D77 /* appDi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D76A59282588C0BC0005A1D5 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76A59272588C0BC0005A1D5 /* TimerViewModel.swift */; };
+		D79980BC25B047520014B132 /* SampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79980BB25B047520014B132 /* SampleScreen.swift */; };
+		D79980BE25B047B80014B132 /* MessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79980BD25B047B80014B132 /* MessageProcessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		7555FFA2242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D748B3FA2589EDFD00F68D77 /* appDi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = appDi.framework; path = "../shared/appDi/build/xcode-frameworks/appDi.framework"; sourceTree = "<group>"; };
 		D76A59272588C0BC0005A1D5 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
+		D79980BB25B047520014B132 /* SampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleScreen.swift; sourceTree = "<group>"; };
+		D79980BD25B047B80014B132 /* MessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				D79980BA25B0473B0014B132 /* ui */,
 				7555FF7E242A565900829871 /* AppDelegate.swift */,
 				7555FF80242A565900829871 /* SceneDelegate.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -162,6 +167,15 @@
 				D748B3FA2589EDFD00F68D77 /* appDi.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D79980BA25B0473B0014B132 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				D79980BB25B047520014B132 /* SampleScreen.swift */,
+				D79980BD25B047B80014B132 /* MessageProcessor.swift */,
+			);
+			path = ui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,6 +332,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D79980BE25B047B80014B132 /* MessageProcessor.swift in Sources */,
+				D79980BC25B047520014B132 /* SampleScreen.swift in Sources */,
 				D76A59282588C0BC0005A1D5 /* TimerViewModel.swift in Sources */,
 				7555FF7F242A565900829871 /* AppDelegate.swift in Sources */,
 				7555FF81242A565900829871 /* SceneDelegate.swift in Sources */,

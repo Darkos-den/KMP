@@ -44,6 +44,16 @@ class SignInReducer : ISignInReducer {
                     password = state.password.text
                 )
             }
+            is SignInMessage.ValidationError -> {
+                state.copy(
+                    email = state.email.copy(
+                        error = "Email error".takeIf { message.emailStatus.not() }
+                    ),
+                    password = state.password.copy(
+                        error = "Password error".takeIf { message.passwordStatus.not() }
+                    )
+                ).none()
+            }
             is RestoreState<*> -> {
                 message.state.let {
                     if (it is SignInState) {

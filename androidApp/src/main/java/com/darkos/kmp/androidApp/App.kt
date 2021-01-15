@@ -1,13 +1,13 @@
 package com.darkos.kmp.androidApp
 
 import android.app.Application
-import com.darkos.kmp.source.secure.SecureStorage
+import com.darkos.kmp.source.remote.RemoteStorage
+import com.darkos.kmp.source.secure.common.SecureStorage
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.DITrigger
 import org.kodein.di.instance
-import java.util.*
 
 class App : Application(), DIAware {
 
@@ -17,6 +17,7 @@ class App : Application(), DIAware {
     }
 
     private val secure: SecureStorage by instance()
+    private val remote: RemoteStorage by instance()
 
     override val diTrigger = DITrigger()
 
@@ -24,9 +25,11 @@ class App : Application(), DIAware {
         super.onCreate()
         diTrigger.trigger()
 
-        secure.authExpire//todo: for initialize storage
+        secure.init()
 
-        secure.authToken = "12345"//todo: for test
-        secure.authExpire = Calendar.getInstance().timeInMillis
+        remote.configure {
+            apiVersion = 1
+            environment = RemoteStorage.Config.Environment.DEVELOPMENT
+        }
     }
 }

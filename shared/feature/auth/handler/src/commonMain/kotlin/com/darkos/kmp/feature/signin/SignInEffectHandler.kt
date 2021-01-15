@@ -1,15 +1,25 @@
 package com.darkos.kmp.feature.signin
 
+import com.darkos.kmp.common.errorHandler.ErrorHandler
+import com.darkos.kmp.common.errorHandler.NetworkException
+import com.darkos.kmp.common.validator.Email
+import com.darkos.kmp.common.validator.Password
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
+import com.darkos.kmp.feature.signin.api.ISignInRemote
+import com.darkos.kmp.feature.signin.api.ISignInSecure
 import com.darkos.kmp.feature.signin.model.SignInEffect
+import com.darkos.kmp.feature.signin.model.SignInMessage
+import com.darkos.kmp.feature.signin.model.dto.SignInDto
 import com.darkos.mvu.model.Effect
 import com.darkos.mvu.model.Idle
 import com.darkos.mvu.model.Message
 import com.darkos.mvu.model.None
 
-class SignInEffectHandler : ISignInEffectHandler {
-
-    class ValidationException : Exception()
+class SignInEffectHandler(
+    private val remote: ISignInRemote,
+    private val secure: ISignInSecure,
+    private val errorHandler: ErrorHandler
+) : ISignInEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
@@ -17,12 +27,19 @@ class SignInEffectHandler : ISignInEffectHandler {
                 Idle
             }
             is SignInEffect.ProcessSignIn -> {
-                try {
-                    validateSignInData(effect.email, effect.password)
-                } catch (e: ValidationException) {
-                    TODO()
+                validateSignInData(effect) ?: run {
+                    try {
+                        SignInDto(effect.email, effect.password).let {
+                            remote.signIn(it)
+                        }.let {
+                            TODO()
+                        }
+                    } catch (e: NetworkException) {
+                        SignInMessage.NetworkError
+                    } catch (e: Exception) {
+                        SignInMessage.AppError(e.message.orEmpty())
+                    }
                 }
-                TODO()
             }
             else -> {
                 throw UnsupportedOperationException()
@@ -30,11 +47,12 @@ class SignInEffectHandler : ISignInEffectHandler {
         }
     }
 
-    private fun validateSignInData(email: String, password: String) {
-        TODO()
-    }
-
-    private fun validateEmail(email: String): Boolean {
-        TODO()
+    private fun validateSignInData(effect: SignInEffect.ProcessSignIn): Message? {
+        return SignInMessage.ValidationError(
+            emailStatus = Email.validate(effect.email),
+            passwordStatus = Password.validate(effect.password)
+        ).takeIf {
+            (it.emailStatus && it.passwordStatus).not()
+        }
     }
 }

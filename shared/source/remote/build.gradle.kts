@@ -6,6 +6,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android-extensions")
     id("dependencies")
+    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -19,6 +20,9 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 implementation(AppLibs.Ktor.core)
+                implementation(AppLibs.Ktor.serialization)
+                implementation(AppLibs.Ktor.json)
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
                 implementation(project(AppLibs.Modules.Splash.api))
                 implementation(project(AppLibs.Modules.Auth.api))

@@ -6,4 +6,12 @@ sealed class SignInMessage : Message() {
     class EmailChanged(val value: String) : SignInMessage()
     class PasswordChanged(val value: String) : SignInMessage()
     object SubmitClicked : SignInMessage()
+
+    class ValidationError(
+        val emailStatus: Boolean,
+        val passwordStatus: Boolean
+    ) : SignInMessage()
+
+    object NetworkError : SignInMessage()
+    class AppError(val message: String) : SignInMessage()
 }

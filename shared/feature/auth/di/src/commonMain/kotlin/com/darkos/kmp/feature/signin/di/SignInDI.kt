@@ -18,7 +18,11 @@ class SignInDI {
     val module = DI.Module(TAG) {
         bind<ISignInReducer>() with provider { SignInReducer() }
         bind<ISignInEffectHandler>() with provider {
-            SignInEffectHandler()
+            SignInEffectHandler(
+                remote = instance(),
+                secure = instance(),
+                errorHandler = instance()
+            )
         }
         bind<ISignInComponent>() with provider {
             SignInComponent(

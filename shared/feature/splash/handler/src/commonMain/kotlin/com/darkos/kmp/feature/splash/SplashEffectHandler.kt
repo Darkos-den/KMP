@@ -1,13 +1,13 @@
 package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.common.errorHandler.ErrorHandler
+import com.darkos.kmp.common.errorHandler.NetworkException
 import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.kmp.feature.splash.api.ISplashRemote
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
-import com.darkos.kmp.feature.splash.model.exception.NetworkException
 import com.darkos.kmp.feature.splash.model.exception.NotFoundException
 import com.darkos.mvu.Ui
 import com.darkos.mvu.model.Effect

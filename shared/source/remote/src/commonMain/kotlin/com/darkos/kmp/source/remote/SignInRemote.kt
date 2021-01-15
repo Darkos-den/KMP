@@ -1,35 +1,37 @@
 package com.darkos.kmp.source.remote
 
-import com.darkos.kmp.feature.splash.api.ISplashRemote
-import com.darkos.kmp.feature.splash.model.dto.RefreshDto
-import com.darkos.kmp.feature.splash.model.dto.TokenDto
+import com.darkos.kmp.feature.signin.api.ISignInRemote
+import com.darkos.kmp.feature.signin.model.dto.SignInDto
+import com.darkos.kmp.feature.signin.model.dto.SignInResultDto
+import com.darkos.kmp.feature.signin.model.dto.TokenDto
 import com.darkos.kmp.source.remote.model.RefreshResponse
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 
-class SplashRemote(
+class SignInRemote(
     private val remote: RemoteStorage
-) : ISplashRemote {
+) : ISignInRemote {
 
-    override suspend fun refreshAuthToken(refresh: String): RefreshDto {
+    override suspend fun signIn(dto: SignInDto): SignInResultDto {
         return remote.use {
-            it.post<RefreshResponse>("$baseUrl/auth/refresh") {
+            it.post<RefreshResponse>("$baseUrl/sign-in") {
                 body = FormDataContent(
                     Parameters.build {
-                        append("Refresh-token", refresh)
+                        append("email", dto.email)
+                        append("password", dto.password)
                     }
                 )
             }
-        }.let { response ->
-            RefreshDto(
-                auth = response.access.let {
+        }.let {
+            SignInResultDto(
+                auth = it.access.let {
                     TokenDto(
                         token = it.token,
                         expire = it.expire
                     )
                 },
-                refresh = response.refresh.let {
+                refresh = it.refresh.let {
                     TokenDto(
                         token = it.token,
                         expire = it.expire

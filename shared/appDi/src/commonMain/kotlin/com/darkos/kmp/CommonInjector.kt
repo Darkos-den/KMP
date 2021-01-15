@@ -3,15 +3,19 @@ package com.darkos.kmp
 import com.darkos.kmp.common.alertProcessor.AlertProcessor
 import com.darkos.kmp.common.alertProcessor.IAlertProcessor
 import com.darkos.kmp.common.errorHandler.ErrorHandler
+import com.darkos.kmp.feature.signin.api.ISignInRemote
+import com.darkos.kmp.feature.signin.api.ISignInSecure
 import com.darkos.kmp.feature.signin.di.SignInDI
 import com.darkos.kmp.feature.splash.api.ISplashRemote
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.di.SplashDI
 import com.darkos.kmp.feature.splash.di.SplashDiFacade
 import com.darkos.kmp.source.remote.RemoteStorage
+import com.darkos.kmp.source.remote.SignInRemote
 import com.darkos.kmp.source.remote.SplashRemote
-import com.darkos.kmp.source.secure.SecureStorage
+import com.darkos.kmp.source.secure.SignInSecure
 import com.darkos.kmp.source.secure.SplashSecure
+import com.darkos.kmp.source.secure.common.SecureStorage
 import org.kodein.di.*
 import kotlin.native.concurrent.ThreadLocal
 
@@ -47,6 +51,11 @@ object CommonInjector {
                 secure = instance()
             )
         }
+        bind<ISignInSecure>() with provider {
+            SignInSecure(
+                secure = instance()
+            )
+        }
     }
 
     private fun remoteStorageModule() = DI.Module("Source.Remote") {
@@ -55,6 +64,11 @@ object CommonInjector {
         }
         bind<ISplashRemote>() with provider {
             SplashRemote(
+                remote = instance()
+            )
+        }
+        bind<ISignInRemote>() with provider {
+            SignInRemote(
                 remote = instance()
             )
         }
