@@ -1,17 +1,20 @@
 package com.darkos.kmp.feature.splash
 
+import com.darkos.kmp.common.errorHandler.ErrorMessage
+import com.darkos.kmp.common.errorHandler.processErrorMessage
 import com.darkos.kmp.common.mvu.RestoreState
+import com.darkos.kmp.common.mvu.andEffect
+import com.darkos.kmp.common.mvu.restoreStateAndEffect
 import com.darkos.kmp.feature.splash.api.ISplashReducer
 import com.darkos.kmp.feature.splash.model.SplashEffect
-import com.darkos.kmp.feature.splash.model.SplashMessage
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.common.none
-import com.darkos.mvu.model.*
+import com.darkos.mvu.model.ComponentInitialized
+import com.darkos.mvu.model.Idle
+import com.darkos.mvu.model.Message
+import com.darkos.mvu.model.StateCmdData
 
 class SplashReducer : ISplashReducer {
-
-    private infix fun <T : MVUState> T.andEffect(cmd: Effect) =
-        StateCmdData(state = this, effect = cmd)//todo: move to core lib
 
     override fun update(state: SplashState, message: Message): StateCmdData<SplashState> {
         return when (message) {
@@ -20,20 +23,18 @@ class SplashReducer : ISplashReducer {
                     SplashState.PrepareData andEffect SplashEffect.CheckAuthState
                 } else state.none()
             }
-            is SplashMessage.NetworkError -> {
-                SplashState.RefreshTokenError andEffect SplashEffect.ProcessNetworkError
-            }
-            is SplashMessage.AppError -> {
-                SplashState.RefreshTokenError andEffect SplashEffect.ProcessAppError(message.message)
-            }
             is RestoreState<*> -> {
-                message.state.let {
-                    if (it !is SplashState) {
-                        throw RuntimeException("invalid state: $it")//todo: create exception class
-                    }
+                restoreStateAndEffect(message) {
                     if (it is SplashState.RefreshTokenError) {
                         SplashState.PrepareData andEffect SplashEffect.RetryTokenRefresh
-                    } else it.none()
+                    } else {
+                        it.none()
+                    }
+                }
+            }
+            is ErrorMessage -> {
+                processErrorMessage(message) {
+                    SplashState.RefreshTokenError
                 }
             }
             is Idle -> state.none()

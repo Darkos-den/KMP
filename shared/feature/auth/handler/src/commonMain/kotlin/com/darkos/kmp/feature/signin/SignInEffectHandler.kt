@@ -3,6 +3,7 @@ package com.darkos.kmp.feature.signin
 import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.errorHandler.runAndHandleErrors
+import com.darkos.kmp.common.mvu.navigate
 import com.darkos.kmp.common.validator.Email
 import com.darkos.kmp.common.validator.Password
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
@@ -30,25 +31,7 @@ class SignInEffectHandler(
                 Idle
             }
             is SignInEffect.ProcessSignIn -> {
-                validateSignInData(effect) ?: run {
-                    runAndHandleErrors {
-                        SignInDto(effect.email, effect.password).let {
-                            remote.signIn(it)
-                        }.let {
-                            secure.run {
-                                it.auth.let {
-                                    saveAuthToken(it.token, it.expire)
-                                }
-                                it.refresh.let {
-                                    saveRefreshToken(it.token, it.expire)
-                                }
-                            }
-
-                            navigation.goToHome()
-                            Idle
-                        }
-                    }
-                }
+                validateSignInData(effect) ?: auth(effect)
             }
             is ErrorEffect -> {
                 errorHandler.processErrorEffect(effect)
@@ -65,6 +48,25 @@ class SignInEffectHandler(
             passwordStatus = Password.validate(effect.password)
         ).takeIf {
             (it.emailStatus && it.passwordStatus).not()
+        }
+    }
+
+    private suspend fun auth(effect: SignInEffect.ProcessSignIn): Message {
+        return runAndHandleErrors {
+            SignInDto(effect.email, effect.password).let {
+                remote.signIn(it)
+            }.let {
+                secure.run {
+                    it.auth.let {
+                        saveAuthToken(it.token, it.expire)
+                    }
+                    it.refresh.let {
+                        saveRefreshToken(it.token, it.expire)
+                    }
+                }
+            }.let {
+                navigate(navigation::goToHome)
+            }
         }
     }
 }
