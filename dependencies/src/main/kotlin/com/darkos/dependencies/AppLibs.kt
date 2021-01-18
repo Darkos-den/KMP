@@ -68,14 +68,6 @@ object AppLibs {
         const val program = "com.github.Darkos-den.core2:mvu-program:$version"
     }
 
-    object Kissme {
-        private const val version = "0.2.5"
-
-        const val common = "com.netguru.kissme:common:$version"
-        const val android = "com.netguru.kissme:android:$version"
-        const val ios = "com.netguru.kissme:ios:$version"
-    }
-
     object Ktor {
         private const val version = "1.5.0"
 

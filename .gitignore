@@ -39,3 +39,4 @@ local.properties
 /shared/source/remote/build
 /shared/source/secure/build
 /shared/common/utils/build
+/shared/common/secured/build

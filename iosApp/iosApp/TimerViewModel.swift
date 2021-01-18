@@ -11,21 +11,21 @@ import appDi
 
 class TimerViewModel: ObservableObject {
     
-    let component = CommonInjector().timerDiFacade().getComponent()
-    @Published var state: TimerState
-    
-    init() {
-        state = component.createInitialState() as! TimerState
-        
-        component.applyStateListener { (state: CoreMVUState) in
-            print("new state: \((state as! TimerState).value)")
-            self.state = state as! TimerState
-        }
-        component.start()
-    }
-    
-    public func stop() {
-        print("stop")
-        component.clear()
-    }
+//    let component = CommonInjector().timerDiFacade().getComponent()
+//    @Published var state: TimerState
+//
+//    init() {
+//        state = component.createInitialState() as! TimerState
+//
+//        component.applyStateListener { (state: CoreMVUState) in
+//            print("new state: \((state as! TimerState).value)")
+//            self.state = state as! TimerState
+//        }
+//        component.start()
+//    }
+//
+//    public func stop() {
+//        print("stop")
+//        component.clear()
+//    }
 }

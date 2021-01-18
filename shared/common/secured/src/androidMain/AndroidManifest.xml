@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.netguru.multiplatformsettings">
+
+    <application>
+        <provider
+            android:name="com.netguru.kissme.StorageInitializer"
+            android:authorities="${applicationId}.initprovider"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+</manifest>

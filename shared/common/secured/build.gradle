@@ -1,0 +1,110 @@
+///
+/// got from https://github.com/netguru/Kissme, modified
+///
+
+plugins {
+    id("org.jetbrains.kotlin.multiplatform")
+}
+apply plugin: 'com.android.library'
+
+kotlin {
+    ios {
+        compilations.main.cinterops {
+            keychainwrapper {
+                packageName "com.netguru.keychainWrapper"
+                includeDirs {
+                    allHeaders "./library/keychainwrapper/bin"
+                }
+                compilerOpts "-F${projectDir}"
+            }
+        }
+    }
+
+//    iosArm64("iosArm64") {
+//        compilations.main.cinterops {
+//            keychainwrapper {
+//                packageName "com.netguru.keychainWrapper"
+//                includeDirs {
+//                    allHeaders "./library/keychainwrapper/bin"
+//                }
+//                compilerOpts "-F${projectDir}"
+//            }
+//        }
+//    }
+
+    android()
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common"
+                implementation "org.jetbrains.kotlin:kotlin-test-common"
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
+                implementation "com.github.yandextaxitech:binaryprefs:1.0.1"
+            }
+        }
+        androidTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.21"
+                implementation "org.jetbrains.kotlin:kotlin-test:1.4.21"
+                implementation "io.mockk:mockk:1.9.3"
+                implementation "androidx.test:core:1.2.0"
+                implementation "androidx.test.ext:junit:1.1.1"
+                implementation "org.robolectric:robolectric:4.2"
+            }
+        }
+
+        iosMain {}
+        iosArm64Main.dependsOn iosMain
+        iosX64Main.dependsOn iosMain
+
+        iosTest {}
+        iosArm64Test.dependsOn iosTest
+        iosX64Test.dependsOn iosTest
+    }
+}
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
+            java.srcDirs = ['src/androidMain/java', 'src/androidMain/kotlin']
+            res.srcDirs = ['src/androidMain/res']
+        }
+    }
+}
+
+task generateCinteropConfig(type: Exec) {
+    print(projectDir)
+    workingDir "${projectDir}"
+    commandLine 'sh', "${projectDir}/generate_cinterop_conf.sh"
+}
+
+gradle.taskGraph.beforeTask { Task task ->
+    if (task.project.name.toLowerCase().contains("ios")) {
+        "sh ${projectDir}/generate_cinterop_conf.sh ${projectDir}".execute().text
+    }
+}

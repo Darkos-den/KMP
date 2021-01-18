@@ -1,0 +1,6 @@
+language = Objective-C
+headers = Keychain.h KeychainQuery.h
+compilerOpts = -F/Users/dev/StudioProjects/darkos/KMP/shared/common/secured//library/keychainwrapper/bin
+linkerOpts = -F/Users/dev/StudioProjects/darkos/KMP/shared/common/secured//library/keychainwrapper/bin
+staticLibraries = keychainwrapper.a
+libraryPaths = /Users/dev/StudioProjects/darkos/KMP/shared/common/secured//library/keychainwrapper/bin

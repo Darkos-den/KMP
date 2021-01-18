@@ -11,15 +11,15 @@ import SwiftUI
 
 class MessageProcessor: ObservableObject {
     var isShow = false
-    private let processor = CommonInjector.init().getAlertProcessor()
+//    private let processor = CommonInjector.init().getAlertProcessor()
     
     var message: String = ""
     
     init(){
-        self.processor.showSimpleMessage = {(msg: String) in
-            self.message = msg
-            self.isShow = true
-        }
+//        self.processor.showSimpleMessage = {(msg: String) in
+//            self.message = msg
+//            self.isShow = true
+//        }
     }
     
     func createView() -> AlertView {

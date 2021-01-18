@@ -19,24 +19,16 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 implementation(AppLibs.Kotlin.datetime)
-                implementation(AppLibs.Kissme.common)
 
                 implementation(project(AppLibs.Modules.Splash.api))
                 implementation(project(AppLibs.Modules.Auth.api))
+                implementation(project(":shared:common:secured"))
             }
         }
         val commonTest by getting
-        val androidMain by getting {
-            dependencies {
-                implementation(AppLibs.Kissme.android)
-            }
-        }
+        val androidMain by getting
         val androidTest by getting
-        val iosMain by getting {
-            dependencies {
-                implementation(AppLibs.Kissme.ios)
-            }
-        }
+        val iosMain by getting
         val iosTest by getting
     }
 }

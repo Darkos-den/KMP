@@ -34,7 +34,8 @@ include(
 )
 
 include(
-    ":shared:common:utils"
+    ":shared:common:utils",
+    ":shared:common:secured"
 )
 
 include(
