@@ -1,14 +1,12 @@
 import SwiftUI
 import appDi
 
-struct ContentView: View {
+class ContentView {
     
-    var body: some View {
-        return NavigationView {
-            VStack{
-                SampleScreen()
-            }
-        }
+    var component = CommonInjector.init().splashDiFacade().getComponent()
+    
+    func createView() -> VStack {
+        EmptyView()
     }
 }
 

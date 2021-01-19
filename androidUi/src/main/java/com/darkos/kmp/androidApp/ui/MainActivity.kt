@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.darkos.kmp.CommonNavigator
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.common.ComponentStateSaver
 import com.darkos.kmp.androidApp.ui.auth.signIn.SignInScreen
@@ -30,9 +31,7 @@ import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.mvu.BaseComponent
 import com.darkos.kmp.feature.signin.api.ISignInComponent
-import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.signin.model.SignInState
-import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.mvu.component.ProgramComponent
 import com.darkos.mvu.model.MVUState
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -48,9 +47,11 @@ class MainActivity : AppCompatActivity(), DIAware {
         bind() from provider {
             AndroidAlertProcessor(alertProcessor = instance())
         }
-        bind() from singleton { Navigation() }
-        bind<ISplashNavigation>() with provider { instance<Navigation>() }
-        bind<ISignInNavigation>() with provider { instance<Navigation>() }
+        bind() from singleton {
+            Navigation(
+                common = instance()
+            )
+        }
     }
 
     override val diTrigger = DITrigger()
@@ -61,19 +62,20 @@ class MainActivity : AppCompatActivity(), DIAware {
     private val errorHandler: ErrorHandler by instance()
     private val navigation: Navigation by instance()
 
-    class Navigation : ISplashNavigation, ISignInNavigation {
+    class Navigation(common: CommonNavigator) {
         private var navController = WeakReference<NavController>(null)
+
+        init {
+            common.mGoToHome = {
+                navController.get()?.navigate(home)
+            }
+            common.mGoToLogin = {
+                navController.get()?.navigate(signIn)
+            }
+        }
 
         fun attach(navController: NavController) {
             this.navController = WeakReference(navController)
-        }
-
-        override fun goToLogin() {
-            navController.get()?.navigate(signIn)
-        }
-
-        override fun goToHome() {
-            navController.get()?.navigate(home)
         }
 
         fun handleBack(activity: AppCompatActivity): Boolean {

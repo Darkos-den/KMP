@@ -66,7 +66,7 @@ class SignInEffectHandler(
                     }
                 }
             }.let {
-                navigate(navigation::goToHome)
+                navigate(navigation::fromSignInToHome)
             }
         }
     }

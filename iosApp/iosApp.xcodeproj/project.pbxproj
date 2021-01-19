@@ -19,6 +19,7 @@
 		D76A59282588C0BC0005A1D5 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76A59272588C0BC0005A1D5 /* TimerViewModel.swift */; };
 		D79980BC25B047520014B132 /* SampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79980BB25B047520014B132 /* SampleScreen.swift */; };
 		D79980BE25B047B80014B132 /* MessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79980BD25B047B80014B132 /* MessageProcessor.swift */; };
+		D7BB447725B5A93900E35693 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BB447625B5A93900E35693 /* SplashScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		D76A59272588C0BC0005A1D5 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		D79980BB25B047520014B132 /* SampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleScreen.swift; sourceTree = "<group>"; };
 		D79980BD25B047B80014B132 /* MessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProcessor.swift; sourceTree = "<group>"; };
+		D7BB447625B5A93900E35693 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				D79980BB25B047520014B132 /* SampleScreen.swift */,
 				D79980BD25B047B80014B132 /* MessageProcessor.swift */,
+				D7BB447625B5A93900E35693 /* SplashScreen.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			files = (
 				D79980BE25B047B80014B132 /* MessageProcessor.swift in Sources */,
 				D79980BC25B047520014B132 /* SampleScreen.swift in Sources */,
+				D7BB447725B5A93900E35693 /* SplashScreen.swift in Sources */,
 				D76A59282588C0BC0005A1D5 /* TimerViewModel.swift in Sources */,
 				7555FF7F242A565900829871 /* AppDelegate.swift in Sources */,
 				7555FF81242A565900829871 /* SceneDelegate.swift in Sources */,

@@ -27,12 +27,12 @@ class SplashEffectHandler(
                 delay(3_000)//todo: for test
                 try {
                     if (secure.isAuthTokenValid()) {
-                        navigate(navigation::goToHome)
+                        navigate(navigation::fromSplashToHome)
                     } else {
                         checkRefreshToken()
                     }
                 } catch (e: NotFoundException) {
-                    navigate(navigation::goToLogin)
+                    navigate(navigation::fromSplashToLogin)
                 }
             }
             is SplashEffect.RetryTokenRefresh -> {
@@ -52,10 +52,10 @@ class SplashEffectHandler(
                     secure.saveAuthToken(it.auth.token, it.auth.expire)
                     secure.saveRefreshToken(it.refresh.token, it.refresh.expire)
 
-                    navigate(navigation::goToHome)
+                    navigate(navigation::fromSplashToHome)
                 }
             } else {
-                navigate(navigation::goToLogin)
+                navigate(navigation::fromSplashToLogin)
             }
         }
     }

@@ -6,6 +6,7 @@ import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.signin.api.ISignInRemote
 import com.darkos.kmp.feature.signin.api.ISignInSecure
 import com.darkos.kmp.feature.signin.di.SignInDI
+import com.darkos.kmp.feature.splash.api.ISplashNavigation
 import com.darkos.kmp.feature.splash.api.ISplashRemote
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.di.SplashDI
@@ -28,11 +29,20 @@ object CommonInjector {
 
     fun getAlertProcessor(): AlertProcessor = diContainer.direct.instance()
     fun splashDiFacade() = SplashDiFacade(diContainer.direct)
+    fun getNavigator(): CommonNavigator = diContainer.direct.instance()
 
     fun createAppModule() = DI.Module("app") {
         bind() from singleton {
             ErrorHandler()
         }
+        bind() from singleton {
+            CommonNavigator()
+        }
+
+        bind<ISplashNavigation>() with provider {
+            instance<CommonNavigator>()
+        }
+
         importAll(
             secureStorageModule(),
             remoteStorageModule(),
