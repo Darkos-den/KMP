@@ -35,6 +35,7 @@ include(
 
 include(
     ":shared:common:utils",
+    ":shared:common:debugFeatures",
     ":shared:common:secured"
 )
 

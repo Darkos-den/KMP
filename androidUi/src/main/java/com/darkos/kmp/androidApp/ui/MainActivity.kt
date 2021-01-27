@@ -24,7 +24,7 @@ import com.darkos.kmp.androidApp.ui.auth.signIn.mapToSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
-import com.darkos.kmp.androidApp.ui.home.HomeScreen
+import com.darkos.kmp.androidApp.ui.home.DashboardScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), DIAware {
 
         init {
             common.mGoToHome = {
-                navController.get()?.navigate(home)
+                navController.get()?.navigate(dashboard)
             }
             common.mGoToLogin = {
                 navController.get()?.navigate(signIn)
@@ -210,10 +210,10 @@ class MainActivity : AppCompatActivity(), DIAware {
 
                     SignUpScreen()
                 }
-                composable(home) {
-                    it.destination.label = home
+                composable(dashboard) {
+                    it.destination.label = dashboard
 
-                    HomeScreen()
+                    DashboardScreen()
                 }
             }
         }
@@ -236,6 +236,6 @@ class MainActivity : AppCompatActivity(), DIAware {
         private const val appError = "error.app"
         private const val signIn = "auth.singIn"
         private const val signUp = "auth.signUp"
-        private const val home = "home"
+        private const val dashboard = "home"
     }
 }

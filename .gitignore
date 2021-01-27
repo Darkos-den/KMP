@@ -40,3 +40,4 @@ local.properties
 /shared/source/secure/build
 /shared/common/utils/build
 /shared/common/secured/build
+/shared/common/debugFeatures/build
