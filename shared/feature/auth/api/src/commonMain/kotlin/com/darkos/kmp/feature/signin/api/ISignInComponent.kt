@@ -5,6 +5,14 @@ import com.darkos.kmp.feature.signin.model.SignInState
 
 interface ISignInComponent : BaseComponent<SignInState> {
     fun onSubmitClick()
+
+    /**
+     * @param value new email value
+     */
     fun onEmailChanged(value: String)
+
+    /**
+     * @param value new password value
+     */
     fun onPasswordChanged(value: String)
 }

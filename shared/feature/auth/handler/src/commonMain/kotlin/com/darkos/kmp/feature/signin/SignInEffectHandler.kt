@@ -43,6 +43,11 @@ class SignInEffectHandler(
         }
     }
 
+    /**
+     * Проводит валидацию данных, с помощью соответствующих валидаторов
+     *
+     * @return Возврашает сообщение об ошибке валидации либо null
+     */
     private fun validateSignInData(effect: SignInEffect.ProcessSignIn): Message? {
         return SignInMessage.ValidationError(
             emailStatus = emailValidator.validate(effect.email),
@@ -52,6 +57,13 @@ class SignInEffectHandler(
         }
     }
 
+    /**
+     * Производит запрос на сервер для авторизации пользователя, отлавливает сообщения об
+     * ошибке если оно возникнет.
+     *
+     * В случае если авторизация пройдет успешно, обновляется информация пользовательской
+     * сессии и производится навигация на начальный экран авторизованного пользователя.
+     */
     private suspend fun auth(effect: SignInEffect.ProcessSignIn): Message {
         return runAndHandleErrors {
             SignInDto(effect.email, effect.password).let {

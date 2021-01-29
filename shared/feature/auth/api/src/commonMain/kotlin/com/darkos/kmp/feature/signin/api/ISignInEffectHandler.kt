@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ISignInEffectHandler : EffectHandler {
 
+    //todo: create base not flowable handler
     override suspend fun <T> callAsFlow(effect: T): Flow<Message> where T : Effect, T : FlowEffect {
         throw UnsupportedOperationException()
     }
