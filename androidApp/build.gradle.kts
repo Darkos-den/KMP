@@ -10,7 +10,7 @@ android {
     compileSdkVersion(30)
     defaultConfig {
         applicationId = "com.darkos.kmp.androidApp"
-        minSdkVersion(24)
+        minSdkVersion(26)
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"

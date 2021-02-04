@@ -143,6 +143,7 @@ object AppLibs {
         object Shared {
             const val appDi = ":shared:appDi"
             const val utils = ":shared:common:utils"
+            const val debugFeatures = ":shared:common:debugFeatures"
         }
 
         object Splash {

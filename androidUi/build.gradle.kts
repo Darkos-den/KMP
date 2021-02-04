@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdkVersion(30)
     defaultConfig {
-        minSdkVersion(24)
+        minSdkVersion(26)
         targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
@@ -58,6 +58,8 @@ dependencies {
     implementation(project(AppLibs.Modules.Splash.api))
     implementation(project(AppLibs.Modules.Auth.api))
     implementation(project(AppLibs.Modules.Shared.utils))
+
+    debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))
 
     implementation(project(AppLibs.Modules.Shared.appDi))
 }
