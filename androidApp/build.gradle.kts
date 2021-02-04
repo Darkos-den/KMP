@@ -40,6 +40,8 @@ dependencies {
     implementation(AppLibs.Kodein.core)
     implementation(AppLibs.Kodein.android)
 
+    debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))
+
     implementation(project(AppLibs.Modules.Shared.appDi))
     implementation(project(AppLibs.Modules.androidUi))
 }
