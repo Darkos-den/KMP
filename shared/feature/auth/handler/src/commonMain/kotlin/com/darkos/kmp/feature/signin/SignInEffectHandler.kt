@@ -58,11 +58,11 @@ class SignInEffectHandler(
     }
 
     /**
-     * Производит запрос на сервер для авторизации пользователя, отлавливает сообщения об
-     * ошибке если оно возникнет.
+     * It makes a request to the server to authorize the user,
+     * catches an error message if it occurs.
      *
-     * В случае если авторизация пройдет успешно, обновляется информация пользовательской
-     * сессии и производится навигация на начальный экран авторизованного пользователя.
+     * If the authorization is successful, the user session information
+     * is updated and navigation is made to the initial screen of the authorized user.
      */
     private suspend fun auth(effect: SignInEffect.ProcessSignIn): Message {
         return runAndHandleErrors {

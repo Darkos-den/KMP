@@ -7,7 +7,7 @@ sealed class SignInMessage : Message() {
     class PasswordChanged(val value: String) : SignInMessage()
 
     /**
-     * переводит экран в состояние прогресса, порождает эффект [SignInEffect.ProcessSignIn]
+     * puts the screen in a progress state, produces an effect [SignInEffect.ProcessSignIn]
      */
     object SubmitClicked : SignInMessage()
 
