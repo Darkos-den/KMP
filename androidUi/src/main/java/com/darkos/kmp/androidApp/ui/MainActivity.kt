@@ -28,6 +28,7 @@ import com.darkos.kmp.androidApp.ui.home.DashboardScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
+import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.mvu.BaseComponent
 import com.darkos.kmp.feature.signin.api.ISignInComponent
@@ -62,24 +63,23 @@ class MainActivity : AppCompatActivity(), DIAware {
     private val errorHandler: ErrorHandler by instance()
     private val navigation: Navigation by instance()
 
-    class Navigation(common: CommonNavigator) {
-        private var navController = WeakReference<NavController>(null)
+    class Navigation(common: CommonNavigator) : Attachable<NavController> {
+        override var attachedObject: WeakReference<NavController> = WeakReference(null)
+
+        private val navController: NavController?
+            get() = attachedObject.get()
 
         init {
             common.mGoToHome = {
-                navController.get()?.navigate(dashboard)
+                navController?.navigate(dashboard)
             }
             common.mGoToLogin = {
-                navController.get()?.navigate(signIn)
+                navController?.navigate(signIn)
             }
-        }
-
-        fun attach(navController: NavController) {
-            this.navController = WeakReference(navController)
         }
 
         fun handleBack(activity: AppCompatActivity): Boolean {
-            return navController.get()?.currentDestination?.label?.let {
+            return navController?.currentDestination?.label?.let {
                 if (it == networkError || it == appError) {
                     activity.moveTaskToBack(true)
                     true

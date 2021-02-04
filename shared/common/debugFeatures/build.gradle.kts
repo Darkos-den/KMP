@@ -15,8 +15,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(AppLibs.Coroutines.core)
-                api(AppLibs.MVU.core)
+                implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
+
+                implementation(project(AppLibs.Modules.Shared.utils))
             }
         }
         val commonTest by getting

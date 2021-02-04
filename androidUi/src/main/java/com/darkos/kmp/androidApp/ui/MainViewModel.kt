@@ -1,32 +1,24 @@
 package com.darkos.kmp.androidApp.ui
 
 import androidx.lifecycle.ViewModel
+import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.mvu.component.ProgramComponent
+import java.lang.ref.WeakReference
 
-class MainViewModel : ViewModel() {
-    var component: ProgramComponent<*>? = null
+class MainViewModel : ViewModel(), Attachable<ProgramComponent<*>> {
+    override var attachedObject: WeakReference<ProgramComponent<*>> = WeakReference(null)
         set(value) {
-            field?.clearStateListener()
-            field?.clear()
+            field.get()?.clearStateListener()
+            field.get()?.clear()
             field = value
         }
 
-    fun attach(component: ProgramComponent<*>) {
-        this.component = component
-    }
+    val component: ProgramComponent<*>?
+        get() = attachedObject.get()
 
     inline fun <reified T> isValidComponent(): Boolean {
         return component?.let {
             T::class.isInstance(it)
         } ?: false
-    }
-
-    fun clear() {
-        component = null
-    }
-
-    override fun onCleared() {
-        component = null
-        super.onCleared()
     }
 }
