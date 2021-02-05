@@ -49,14 +49,14 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
+                implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21-2"
                 implementation "com.github.yandextaxitech:binaryprefs:1.0.1"
             }
         }
         androidTest {
             dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.21"
-                implementation "org.jetbrains.kotlin:kotlin-test:1.4.21"
+                implementation "org.jetbrains.kotlin:kotlin-test-junit:1.4.21-2"
+                implementation "org.jetbrains.kotlin:kotlin-test:1.4.21-2"
                 implementation "io.mockk:mockk:1.9.3"
                 implementation "androidx.test:core:1.2.0"
                 implementation "androidx.test.ext:junit:1.1.1"

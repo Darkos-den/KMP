@@ -6,9 +6,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21-2")
         classpath("com.android.tools.build:gradle:7.0.0-alpha02")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:1.4.21")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:1.4.21-2")
     }
 }
 group = "com.darkos.kmp"
