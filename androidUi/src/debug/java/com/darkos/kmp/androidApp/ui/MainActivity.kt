@@ -1,6 +1,7 @@
 package com.darkos.kmp.androidApp.ui
 
 import com.darkos.kmp.common.debugFeatures.DebugNotificationManager
+import com.darkos.kmp.common.debugFeatures.DebugScreenProcessor
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -17,6 +18,10 @@ class MainActivity : CoreMainActivity() {
     }
 
     private val debugNotification: DebugNotificationManager by instance()
+
+    override fun onScreenChanged(screenName: String) {
+        DebugScreenProcessor.onScreenChanged(screenName)
+    }
 
     override fun onResume() {
         super.onResume()

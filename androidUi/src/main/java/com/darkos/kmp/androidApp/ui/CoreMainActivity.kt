@@ -136,6 +136,8 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         render(component)
     }
 
+    abstract fun onScreenChanged(screenName: String)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -160,6 +162,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
 
             NavHost(navController = navController, startDestination = splash) {
                 composable(splash) {
+                    onScreenChanged(splash)
                     it.destination.label = splash
 
                     ComponentScreen(
@@ -170,6 +173,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable(networkError) {
+                    onScreenChanged(networkError)
                     it.destination.label = networkError
 
                     ConnectionErrorScreen {
@@ -177,6 +181,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable("$appError/{message}") {
+                    onScreenChanged(appError)
                     it.destination.label = appError
 
                     AppErrorScreen(
@@ -192,6 +197,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     )
                 }
                 composable(signIn) {
+                    onScreenChanged(signIn)
                     it.destination.label = signIn
 
                     ComponentScreen<ISignInComponent, SignInUiState, SignInState>(
@@ -210,11 +216,13 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable(signUp) {
+                    onScreenChanged(signUp)
                     it.destination.label = signUp
 
                     SignUpScreen()
                 }
                 composable(dashboard) {
+                    onScreenChanged(dashboard)
                     it.destination.label = dashboard
 
                     DashboardScreen()

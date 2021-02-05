@@ -47,6 +47,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion = "1.4.21"
+        kotlinCompilerExtensionVersion = "1.0.0-alpha09"
+    }
+
     androidExtensions {
         isExperimental = true
     }
@@ -55,6 +65,31 @@ android {
     }
 }
 
+dependencies {
+    applyAndroidDependencies()
+    applyCompose()
+}
+
+fun DependencyHandlerScope.applyCompose() {
+    implementation(AppLibs.AndroidX.Compose.ui)
+    implementation(AppLibs.AndroidX.Compose.tooling)
+    implementation(AppLibs.AndroidX.Compose.foundation)
+    implementation(AppLibs.AndroidX.Compose.material)
+    implementation(AppLibs.AndroidX.Compose.materialIconsCore)
+    implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
+    implementation(AppLibs.AndroidX.Compose.livedata)
+    implementation(AppLibs.AndroidX.Compose.navigation)
+}
+
+fun DependencyHandlerScope.applyAndroidDependencies() {
+    implementation(AppLibs.material)
+    implementation(AppLibs.AndroidX.appCompat)
+    implementation(AppLibs.AndroidX.constraintLayout)
+    implementation(AppLibs.Coroutines.core)
+    implementation(AppLibs.AndroidX.lifecycle)
+}
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    kotlinOptions.freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
 }

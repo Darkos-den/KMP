@@ -1,4 +1,9 @@
 package com.darkos.kmp.common.debugFeatures
 
-class DebugFeaturesManager {
+import kotlin.native.concurrent.ThreadLocal
+
+@ThreadLocal
+object DebugFeaturesManager {
+    internal var logScreenChanges: Boolean = true
+
 }
