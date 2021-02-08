@@ -22,7 +22,7 @@ class DebugNotificationManager : Attachable<Context> {
         context?.let {
             createChannel(it)
 
-            val intent = Intent(it, DebugActivity::class.java).apply {
+            val intent = Intent("OPEN_DEBUG_CONSOLE").apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             val pending = PendingIntent.getActivity(it, 0, intent, 0)

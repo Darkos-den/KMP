@@ -42,20 +42,6 @@ android {
             isMinifyEnabled = false
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion = "1.4.21-2"
-        kotlinCompilerExtensionVersion = "1.0.0-alpha11"
-    }
 
     androidExtensions {
         isExperimental = true
@@ -63,30 +49,6 @@ android {
     (this as ExtensionAware).configure<KotlinJvmOptions> {
         jvmTarget = "1.8"
     }
-}
-
-dependencies {
-    applyAndroidDependencies()
-    applyCompose()
-}
-
-fun DependencyHandlerScope.applyCompose() {
-    implementation(AppLibs.AndroidX.Compose.ui)
-    implementation(AppLibs.AndroidX.Compose.tooling)
-    implementation(AppLibs.AndroidX.Compose.foundation)
-    implementation(AppLibs.AndroidX.Compose.material)
-    implementation(AppLibs.AndroidX.Compose.materialIconsCore)
-    implementation(AppLibs.AndroidX.Compose.materialIconsExtended)
-    implementation(AppLibs.AndroidX.Compose.livedata)
-    implementation(AppLibs.AndroidX.Compose.navigation)
-}
-
-fun DependencyHandlerScope.applyAndroidDependencies() {
-    implementation(AppLibs.material)
-    implementation(AppLibs.AndroidX.appCompat)
-    implementation(AppLibs.AndroidX.constraintLayout)
-    implementation(AppLibs.Coroutines.core)
-    implementation(AppLibs.AndroidX.lifecycle)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {

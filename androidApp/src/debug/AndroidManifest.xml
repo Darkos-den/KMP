@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.darkos.kmp.common.debugFeatures.DebugActivity" />
+        <activity android:name=".ui.DebugActivity">
+            <intent-filter>
+                <action android:name="OPEN_DEBUG_CONSOLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

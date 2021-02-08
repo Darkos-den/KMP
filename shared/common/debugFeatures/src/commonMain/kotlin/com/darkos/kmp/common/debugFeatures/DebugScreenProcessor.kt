@@ -4,7 +4,7 @@ import kotlin.native.concurrent.ThreadLocal
 
 @ThreadLocal
 object DebugScreenProcessor {
-    internal var currentScreenName: String = ""
+    var currentScreenName: String = ""
 
     fun onScreenChanged(screenName: String) {
         currentScreenName = screenName
