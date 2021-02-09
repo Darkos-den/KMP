@@ -1,10 +1,7 @@
 package com.darkos.kmp.androidApp.ui.debug
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +24,8 @@ fun DebugModeScreen() {
             LogScreensSwitch()
             Spacer(modifier = Modifier.height(8.dp))
             UseTestAccount()
+            Spacer(modifier = Modifier.height(8.dp))
+            Environment()
         }
     }
 }
@@ -92,6 +91,23 @@ private fun UseTestAccount() {
                 modifier = Modifier.padding(start = 16.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun Environment() {
+    Column {
+        Text(text = "Environment:")
+
+        val options = listOf(
+            "Local", "Dev", "Prod"
+        )
+
+        var selectedItem = "Dev"//todo: save to shared preferences
+
+        RadioButton(selected = false, onClick = { /*TODO*/ })
+        RadioButton(selected = false, onClick = { /*TODO*/ })
+        RadioButton(selected = false, onClick = { /*TODO*/ })
     }
 }
 

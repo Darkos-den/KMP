@@ -7,6 +7,8 @@ object DebugFeaturesManager {
     var logScreenChanges: Boolean = true
     var useTestAccount: Boolean = false
 
+    var selectedEnvironment
+
     var testAuthData: AuthData? = null
 
     class AuthData(
