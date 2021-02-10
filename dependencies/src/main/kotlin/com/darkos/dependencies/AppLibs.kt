@@ -61,13 +61,6 @@ object AppLibs {
         const val native = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
     }
 
-    object Core {
-        const val version = "1.1.0"
-
-        const val presentation = "com.github.Darkos-den.core2:presentation:$version"
-        const val program = "com.github.Darkos-den.core2:mvu-program:$version"
-    }
-
     object Ktor {
         private const val version = "1.5.0"
 
@@ -89,42 +82,10 @@ object AppLibs {
             const val program = "1.0.0-rc1"
 
             const val navigator = "1.1.0"
-
-            const val validationApi = "1.1.0"
-            const val validationReducer = "1.1.0"
-            const val validationHandler = "1.1.0"
-
-            const val loginHandler = "1.1.0"
-            const val loginReducer = "1.1.0"
-            const val loginApi = "1.1.0"
-        }
-
-        object Validation {
-            const val handler = "com.darkosinc.mvu:validation:${Version.validationHandler}"
-            const val handlerJvm = "com.darkosinc.mvu:validation-jvm:${Version.validationHandler}"
-            const val api = "com.darkosinc.mvu:validation-api:${Version.validationApi}"
-            const val apiJvm = "com.darkosinc.mvu:validation-api-jvm:${Version.validationApi}"
-            const val reducer = "com.darkosinc.mvu:validation-reducer:${Version.validationReducer}"
-            const val reducerJvm =
-                "com.darkosinc.mvu:validation-reducer-jvm:${Version.validationReducer}"
-        }
-
-        object Login {
-            const val api = "com.darkosinc.mvu:login-api:${Version.loginApi}"
-            const val apiJvm = "com.darkosinc.mvu:login-api-jvm:${Version.loginApi}"
-            const val handler = "com.darkosinc.mvu:login-effect-handler:${Version.loginHandler}"
-            const val handlerJvm =
-                "com.darkosinc.mvu:login-effect-handler-jvm:${Version.loginHandler}"
-            const val reducer = "com.darkosinc.mvu:login-reducer:${Version.loginReducer}"
-            const val reducerJvm = "com.darkosinc.mvu:login-reducer-jvm:${Version.loginReducer}"
         }
 
         const val core = "com.darkos.mvu:core:${Version.core}"
         const val program = "com.darkos.mvu:program:${Version.program}"
-
-        const val navigator = "com.darkosinc.mvu:navigator:${Version.navigator}"
-        const val navigatorAndroid =
-            "com.darkosinc.mvu:navigator-androidRelease:${Version.navigator}"
     }
 
     object Serialization {
