@@ -1,11 +1,11 @@
 package com.darkos.kmp.feature.splash
 
-import com.darkos.kmp.common.mvu.RestoreState
 import com.darkos.kmp.feature.splash.api.ISplashComponent
 import com.darkos.kmp.feature.splash.api.ISplashEffectHandler
 import com.darkos.kmp.feature.splash.api.ISplashReducer
 import com.darkos.kmp.feature.splash.model.SplashState
 import com.darkos.mvu.component.MVUComponent
+import com.darkos.mvu.model.RestoreState
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @OptIn(InternalCoroutinesApi::class)//todo: move annotation to core

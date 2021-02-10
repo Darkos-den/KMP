@@ -10,15 +10,15 @@ plugins {
 
 kotlin {
     android()
-    ios {
-        binaries {
-            framework {
-                baseName = "appDi"
-                export(project(AppLibs.Modules.Splash.api))
-                export(project(AppLibs.Modules.Splash.di))
-            }
-        }
-    }
+//    ios {
+//        binaries {
+//            framework {
+//                baseName = "appDi"
+//                export(project(AppLibs.Modules.Splash.api))
+//                export(project(AppLibs.Modules.Splash.di))
+//            }
+//        }
+//    }
 
     sourceSets {
         val commonMain by getting {
@@ -44,8 +44,8 @@ kotlin {
         val commonTest by getting
         val androidMain by getting
         val androidTest by getting
-        val iosMain by getting
-        val iosTest by getting
+//        val iosMain by getting
+//        val iosTest by getting
     }
 }
 android {
@@ -75,17 +75,17 @@ dependencies {
     debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))
 }
 
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework =
-        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-tasks.getByName("build").dependsOn(packForXcode)
+//val packForXcode by tasks.creating(Sync::class) {
+//    group = "build"
+//    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+//    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+//    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+//    val framework =
+//        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+//    inputs.property("mode", mode)
+//    dependsOn(framework.linkTask)
+//    val targetDir = File(buildDir, "xcode-frameworks")
+//    from({ framework.outputDirectory })
+//    into(targetDir)
+//}
+//tasks.getByName("build").dependsOn(packForXcode)

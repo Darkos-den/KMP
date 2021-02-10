@@ -9,7 +9,7 @@ plugins {
 
 kotlin {
     android()
-    ios()
+//    ios()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -28,8 +28,8 @@ kotlin {
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
-        val iosMain by getting
-        val iosTest by getting
+//        val iosMain by getting
+//        val iosTest by getting
     }
 }
 

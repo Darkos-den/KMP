@@ -11,7 +11,7 @@ plugins {
 
 kotlin {
     android()
-    ios()
+//    ios()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -35,12 +35,12 @@ kotlin {
             }
         }
         val androidTest by getting
-        val iosMain by getting {
-            dependencies {
-                implementation(AppLibs.Ktor.ios)
-            }
-        }
-        val iosTest by getting
+//        val iosMain by getting {
+//            dependencies {
+//                implementation(AppLibs.Ktor.ios)
+//            }
+//        }
+//        val iosTest by getting
     }
 }
 android {

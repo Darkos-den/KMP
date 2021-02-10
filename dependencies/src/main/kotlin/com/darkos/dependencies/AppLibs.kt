@@ -85,8 +85,8 @@ object AppLibs {
 
     object MVU {
         object Version {
-            const val core = "0.1.0"
-            const val program = "0.2.8"
+            const val core = "1.0.0-rc1"
+            const val program = "1.0.0-rc1"
 
             const val navigator = "1.1.0"
 
@@ -119,8 +119,8 @@ object AppLibs {
             const val reducerJvm = "com.darkosinc.mvu:login-reducer-jvm:${Version.loginReducer}"
         }
 
-        const val core = "com.darkosinc.MVU:core:${Version.core}"
-        const val program = "com.darkosinc.MVU:program:${Version.program}"
+        const val core = "com.darkos.mvu:core:${Version.core}"
+        const val program = "com.darkos.mvu:program:${Version.program}"
 
         const val navigator = "com.darkosinc.mvu:navigator:${Version.navigator}"
         const val navigatorAndroid =
