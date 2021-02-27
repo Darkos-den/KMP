@@ -29,6 +29,15 @@ android {
         jvmTarget = "1.8"
         useIR = true
     }
+
+    packagingOptions {
+        pickFirst("META-INF/di_debug.kotlin_module")
+        pickFirst("META-INF/handler_debug.kotlin_module")
+        pickFirst("META-INF/component_debug.kotlin_module")
+        pickFirst("META-INF/api_debug.kotlin_module")
+        pickFirst("META-INF/reducer_debug.kotlin_module")
+        pickFirst("META-INF/handler_debug.kotlin_module")
+    }
 }
 
 dependencies {
