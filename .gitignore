@@ -41,3 +41,4 @@ local.properties
 /shared/common/utils/build
 /shared/common/secured/build
 /shared/common/debugFeatures/build
+/androidApp/google-services.json

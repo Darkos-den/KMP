@@ -1,7 +1,10 @@
 package com.darkos.kmp.feature.signin
 
+import com.darkos.kmp.common.auth.AuthManager
+import com.darkos.kmp.common.auth.AuthResult
 import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
+import com.darkos.kmp.common.errorHandler.ErrorMessage
 import com.darkos.kmp.common.errorHandler.runAndHandleErrors
 import com.darkos.kmp.common.mvu.navigate
 import com.darkos.kmp.common.validator.Validator
@@ -23,7 +26,8 @@ class SignInEffectHandler(
     private val errorHandler: ErrorHandler,
     private val navigation: ISignInNavigation,
     private val emailValidator: Validator,
-    private val passwordValidator: Validator
+    private val passwordValidator: Validator,
+    private val authManager: AuthManager
 ) : ISignInEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -57,28 +61,20 @@ class SignInEffectHandler(
         }
     }
 
-    /**
-     * It makes a request to the server to authorize the user,
-     * catches an error message if it occurs.
-     *
-     * If the authorization is successful, the user session information
-     * is updated and navigation is made to the initial screen of the authorized user.
-     */
     private suspend fun auth(effect: SignInEffect.ProcessSignIn): Message {
-        return runAndHandleErrors {
-            SignInDto(effect.email, effect.password).let {
-                remote.signIn(it)
-            }.let {
-                secure.run {
-                    it.auth.let {
-                        saveAuthToken(it.token, it.expire)
-                    }
-                    it.refresh.let {
-                        saveRefreshToken(it.token, it.expire)
+        return authManager.signInByEmail(effect.email, effect.password).let {
+            when (it) {
+                is AuthResult.Success -> {
+                    navigate(navigation::fromSignInToHome)
+                }
+                is AuthResult.Canceled -> {
+                    SignInMessage.SignInCanceled
+                }
+                is AuthResult.Error -> {
+                    runAndHandleErrors {
+                        throw it.error
                     }
                 }
-            }.let {
-                navigate(navigation::fromSignInToHome)
             }
         }
     }

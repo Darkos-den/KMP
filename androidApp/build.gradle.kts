@@ -4,6 +4,8 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("dependencies")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -49,10 +51,8 @@ dependencies {
     implementation(AppLibs.Kodein.core)
     implementation(AppLibs.Kodein.android)
 
-    debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))
-
-    implementation(project(AppLibs.Modules.Shared.appDi))
-    implementation(project(AppLibs.Modules.androidUi))
+    applyGoogleDependencies()
+    applyProjectModulesDependencies()
 }
 
 fun DependencyHandlerScope.applyAndroidDependencies() {
@@ -61,4 +61,20 @@ fun DependencyHandlerScope.applyAndroidDependencies() {
     implementation(AppLibs.AndroidX.constraintLayout)
     implementation(AppLibs.Coroutines.core)
     implementation(AppLibs.AndroidX.lifecycle)
+}
+
+fun DependencyHandlerScope.applyGoogleDependencies(){
+    implementation(platform("com.google.firebase:firebase-bom:26.5.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+}
+
+fun DependencyHandlerScope.applyProjectModulesDependencies(){
+    debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))
+
+    implementation(project(AppLibs.Modules.Shared.appDi))
+    implementation(project(AppLibs.Modules.androidUi))
 }

@@ -18,6 +18,7 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 implementation(project(AppLibs.Modules.Auth.api))
+                implementation(project(AppLibs.Modules.Shared.utils))
             }
         }
         val commonTest by getting

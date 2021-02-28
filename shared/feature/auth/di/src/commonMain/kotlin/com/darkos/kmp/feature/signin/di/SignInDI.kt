@@ -31,7 +31,8 @@ class SignInDI {
                 errorHandler = instance(),
                 navigation = instance(),
                 emailValidator = Email,//todo
-                passwordValidator = Password
+                passwordValidator = Password,
+                authManager = instance()
             )
         }
         bind<ISignInComponent>() with provider {

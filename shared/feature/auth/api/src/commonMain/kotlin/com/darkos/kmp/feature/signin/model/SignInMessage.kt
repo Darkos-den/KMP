@@ -11,6 +11,8 @@ sealed class SignInMessage : Message() {
      */
     object SubmitClicked : SignInMessage()
 
+    object SignInCanceled: SignInMessage()
+
     class ValidationError(
         val emailStatus: Boolean,
         val passwordStatus: Boolean

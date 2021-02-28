@@ -23,6 +23,8 @@ kotlin {
                 implementation(project(AppLibs.Modules.Auth.handler))
                 implementation(project(AppLibs.Modules.Auth.component))
 
+                implementation(project(AppLibs.Modules.Shared.utils))
+
                 implementation(AppLibs.Kodein.core)
             }
         }

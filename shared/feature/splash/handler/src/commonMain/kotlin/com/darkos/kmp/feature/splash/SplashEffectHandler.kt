@@ -1,5 +1,6 @@
 package com.darkos.kmp.feature.splash
 
+import com.darkos.kmp.common.auth.AuthManager
 import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.errorHandler.runAndHandleErrors
@@ -18,20 +19,18 @@ class SplashEffectHandler(
     private val remote: ISplashRemote,
     private val secure: ISplashSecure,
     private val navigation: ISplashNavigation,
-    private val errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val authManager: AuthManager
 ) : ISplashEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
             is SplashEffect.CheckAuthState -> {
                 delay(3_000)//todo: for test
-                try {
-                    if (secure.isAuthTokenValid()) {
-                        navigate(navigation::fromSplashToHome)
-                    } else {
-                        checkRefreshToken()
-                    }
-                } catch (e: NotFoundException) {
+
+                if (authManager.hasAuthorizedUser()) {
+                    navigate(navigation::fromSplashToHome)
+                } else {
                     navigate(navigation::fromSplashToLogin)
                 }
             }

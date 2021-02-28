@@ -26,7 +26,8 @@ class SignInReducer(
                     email = FieldState(
                         text = message.value,
                         error = null
-                    )
+                    ),
+                    screenState = ScreenState.EDIT
                 ).none()
             }
             is SignInMessage.PasswordChanged -> {
@@ -34,7 +35,8 @@ class SignInReducer(
                     password = FieldState(
                         text = message.value,
                         error = null
-                    )
+                    ),
+                    screenState = ScreenState.EDIT
                 ).none()
             }
             is SignInMessage.SubmitClicked -> {
@@ -75,6 +77,9 @@ class SignInReducer(
                 processErrorMessage(message) {
                     state.copy(screenState = ScreenState.SIGN_IN_ERROR)
                 }
+            }
+            is SignInMessage.SignInCanceled -> {
+                state.copy(screenState = ScreenState.EDIT).none()
             }
             else -> {
                 throw UnsupportedOperationException()

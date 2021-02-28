@@ -8,7 +8,7 @@ data class FieldState(
 )
 
 enum class ScreenState {
-    EDIT, PROGRESS, SIGN_IN_ERROR
+    EDIT, PROGRESS, SIGN_IN_ERROR, IDLE
 }
 
 data class SignInState(

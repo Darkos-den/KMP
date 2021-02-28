@@ -46,7 +46,7 @@ class SignInComponent(
                 text = "",
                 error = null
             ),
-            screenState = ScreenState.EDIT
+            screenState = ScreenState.IDLE
         )
     }
 }
