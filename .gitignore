@@ -42,3 +42,13 @@ local.properties
 /shared/common/secured/build
 /shared/common/debugFeatures/build
 /androidApp/google-services.json
+/shared/feature/dashboard/api/build
+/shared/feature/dashboard/di/build
+/shared/feature/dashboard/reducer/build
+/shared/feature/dashboard/handler/build
+/shared/feature/dashboard/component/build
+/shared/feature/drawer/api/build
+/shared/feature/drawer/di/build
+/shared/feature/drawer/reducer/build
+/shared/feature/drawer/handler/build
+/shared/feature/drawer/component/build

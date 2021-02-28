@@ -123,6 +123,14 @@ object AppLibs {
             const val component = ":shared:feature:auth:component"
         }
 
+        object Dashboard {
+            const val api = ":shared:feature:dashboard:api"
+            const val di = ":shared:feature:dashboard:di"
+            const val reducer = ":shared:feature:dashboard:reducer"
+            const val handler = ":shared:feature:dashboard:handler"
+            const val component = ":shared:feature:dashboard:component"
+        }
+
         object Source {
             const val secure = ":shared:source:secure"
             const val remote = ":shared:source:remote"

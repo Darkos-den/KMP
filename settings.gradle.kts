@@ -34,6 +34,22 @@ include(
 )
 
 include(
+    ":shared:feature:dashboard:api",
+    ":shared:feature:dashboard:reducer",
+    ":shared:feature:dashboard:handler",
+    ":shared:feature:dashboard:component",
+    ":shared:feature:dashboard:di"
+)
+
+include(
+    ":shared:feature:drawer:api",
+    ":shared:feature:drawer:reducer",
+    ":shared:feature:drawer:handler",
+    ":shared:feature:drawer:component",
+    ":shared:feature:drawer:di"
+)
+
+include(
     ":shared:common:utils",
     ":shared:common:debugFeatures",
     ":shared:common:secured"
