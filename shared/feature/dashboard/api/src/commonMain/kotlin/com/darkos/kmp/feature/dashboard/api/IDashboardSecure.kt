@@ -1,6 +1,6 @@
-package com.darkos.kmp.feature.splash.api
+package com.darkos.kmp.feature.dashboard.api
 
-interface ISplashSecure {
+interface IDashboardSecure {
     suspend fun isAuthTokenValid(): Boolean
     suspend fun isRefreshTokenValid(): Boolean
 
