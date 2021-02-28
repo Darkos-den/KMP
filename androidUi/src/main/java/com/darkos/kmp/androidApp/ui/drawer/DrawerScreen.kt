@@ -21,20 +21,20 @@ fun DrawerScreen(
             TopAppBar(
                 title = { Text(title) },
                 navigationIcon = {
-                    Column {
-                        Icon(
-                            Icons.Default.Menu,
-                            null,
-                            modifier = Modifier.clickable { scaffoldState.drawerState.open() })
-                        Button(onClick = onLogoutClick) {
-                            Text("Logout")
-                        }
-                    }
+                    Icon(
+                        Icons.Default.Menu,
+                        null,
+                        modifier = Modifier.clickable { scaffoldState.drawerState.open() })
                 },
             )
         },
         drawerContent = {
-            Text("Apte4ka")
+            Column {
+                Text("Apte4ka")
+                Button(onClick = onLogoutClick) {
+                    Text("Logout")
+                }
+            }
         },
         scaffoldState = scaffoldState
     ) {

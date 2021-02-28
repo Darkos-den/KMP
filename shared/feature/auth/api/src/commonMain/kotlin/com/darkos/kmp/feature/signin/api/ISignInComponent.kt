@@ -1,9 +1,9 @@
 package com.darkos.kmp.feature.signin.api
 
-import com.darkos.kmp.common.mvu.BaseComponent
 import com.darkos.kmp.feature.signin.model.SignInState
+import com.darkos.mvu.component.ProgramComponent
 
-interface ISignInComponent : BaseComponent<SignInState> {
+interface ISignInComponent : ProgramComponent<SignInState> {
     fun onSubmitClick()
 
     /**

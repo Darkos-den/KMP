@@ -25,12 +25,16 @@ import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.home.DashboardScreen
+import com.darkos.kmp.androidApp.ui.home.DashboardUiState
+import com.darkos.kmp.androidApp.ui.home.mapFromDashboardUi
+import com.darkos.kmp.androidApp.ui.home.mapToDashboardUi
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.kmp.common.errorHandler.ErrorHandler
-import com.darkos.kmp.common.mvu.BaseComponent
+import com.darkos.kmp.feature.dashboard.api.IDashboardComponent
+import com.darkos.kmp.feature.dashboard.model.DashboardState
 import com.darkos.kmp.feature.signin.api.ISignInComponent
 import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.mvu.component.ProgramComponent
@@ -106,7 +110,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
     }
 
     @Composable
-    private inline fun <reified C : BaseComponent<S>, Ui : Any, S : MVUState> ComponentScreen(
+    private inline fun <reified C : ProgramComponent<S>, Ui : Any, S : MVUState> ComponentScreen(
         noinline mapTo: (S) -> Ui,
         noinline mapFrom: (Ui) -> S,
         noinline render: @Composable (component: C, ui: Ui) -> Unit
@@ -129,7 +133,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
     }
 
     @Composable
-    private inline fun <reified C : BaseComponent<*>> ImmutableStateComponentScreen(
+    private inline fun <reified C : ProgramComponent<*>> ImmutableStateComponentScreen(
         noinline render: @Composable (component: C) -> Unit
     ) {
         val component = remember { getOrInit<C>() }
@@ -225,7 +229,16 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     onScreenChanged(dashboard)
                     it.destination.label = dashboard
 
-                    DashboardScreen()
+                    ComponentScreen<IDashboardComponent, DashboardUiState, DashboardState>(
+                        mapTo = ::mapToDashboardUi,
+                        mapFrom = ::mapFromDashboardUi
+                    ) { component, ui ->
+                        DashboardScreen(
+                            onLogoutClick = {
+                                TODO()
+                            }
+                        )
+                    }
                 }
             }
         }

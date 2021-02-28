@@ -1,6 +1,5 @@
 package com.darkos.kmp.feature.signin
 
-import com.darkos.kmp.common.mvu.RestoreState
 import com.darkos.kmp.feature.signin.api.ISignInComponent
 import com.darkos.kmp.feature.signin.api.ISignInEffectHandler
 import com.darkos.kmp.feature.signin.api.ISignInReducer
@@ -9,9 +8,9 @@ import com.darkos.kmp.feature.signin.model.ScreenState
 import com.darkos.kmp.feature.signin.model.SignInMessage
 import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.mvu.component.MVUComponent
+import com.darkos.mvu.model.RestoreState
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@OptIn(InternalCoroutinesApi::class)
 class SignInComponent(
     reducer: ISignInReducer,
     effectHandler: ISignInEffectHandler

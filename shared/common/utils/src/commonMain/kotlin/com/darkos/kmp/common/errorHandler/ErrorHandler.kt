@@ -1,6 +1,5 @@
 package com.darkos.kmp.common.errorHandler
 
-import com.darkos.kmp.common.mvu.andEffect
 import com.darkos.mvu.Ui
 import com.darkos.mvu.model.*
 import kotlinx.coroutines.withContext

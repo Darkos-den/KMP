@@ -1,5 +1,6 @@
 package com.darkos.kmp.feature.splash
 
+import com.darkos.kmp.feature.dashboard.DashboardReducer
 import com.darkos.kmp.feature.splash.model.RestoreState
 import com.darkos.kmp.feature.splash.model.SplashEffect
 import com.darkos.kmp.feature.splash.model.SplashMessage
@@ -14,11 +15,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 
 internal class SplashReducerTest {
 
-    lateinit var reducer: SplashReducer
+    lateinit var reducer: DashboardReducer
 
     @BeforeEach
     fun init() {
-        reducer = SplashReducer()
+        reducer = DashboardReducer()
     }
 
     @Nested

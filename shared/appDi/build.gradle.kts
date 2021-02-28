@@ -33,6 +33,9 @@ kotlin {
                 api(project(AppLibs.Modules.Auth.api))
                 api(project(AppLibs.Modules.Auth.di))
 
+                api(project(AppLibs.Modules.Dashboard.api))
+                api(project(AppLibs.Modules.Dashboard.di))
+
                 api(project(AppLibs.Modules.Source.secure))
                 api(project(AppLibs.Modules.Source.remote))
 
