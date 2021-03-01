@@ -17,7 +17,7 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(AppLibs.Modules.Splash.api))
+                implementation(project(AppLibs.Modules.Drawer.api))
             }
         }
         val commonTest by getting

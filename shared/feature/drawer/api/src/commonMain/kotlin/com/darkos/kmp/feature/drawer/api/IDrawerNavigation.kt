@@ -1,6 +1,6 @@
 package com.darkos.kmp.feature.drawer.api
 
-interface ISplashNavigation {
+interface IDrawerNavigation {
     fun fromSplashToLogin()
     fun fromSplashToHome()
 }

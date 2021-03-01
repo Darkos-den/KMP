@@ -6,7 +6,7 @@ import com.darkos.mvu.model.Message
 import com.darkos.mvu.model.flow.FlowEffect
 import kotlinx.coroutines.flow.Flow
 
-interface ISplashEffectHandler : EffectHandler {
+interface IDrawerEffectHandler : EffectHandler {
 
     override suspend fun <T> callAsFlow(effect: T): Flow<Message> where T : Effect, T : FlowEffect {
         throw IllegalStateException("operation not supported")

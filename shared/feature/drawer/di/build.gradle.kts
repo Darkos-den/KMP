@@ -18,10 +18,10 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(AppLibs.Modules.Splash.api))
-                implementation(project(AppLibs.Modules.Splash.reducer))
-                implementation(project(AppLibs.Modules.Splash.handler))
-                implementation(project(AppLibs.Modules.Splash.component))
+                implementation(project(AppLibs.Modules.Drawer.api))
+                implementation(project(AppLibs.Modules.Drawer.reducer))
+                implementation(project(AppLibs.Modules.Drawer.handler))
+                implementation(project(AppLibs.Modules.Drawer.component))
 
                 implementation(project(AppLibs.Modules.Shared.utils))
 
