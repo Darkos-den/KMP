@@ -10,10 +10,7 @@ import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import com.darkos.kmp.CommonNavigator
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
 import com.darkos.kmp.androidApp.common.ComponentStateSaver
@@ -82,7 +79,10 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                 navController?.navigate(dashboard)
             }
             common.mGoToLogin = {
-                navController?.navigate(signIn)
+                navController?.navigate(signIn){
+                    launchSingleTop = true
+
+                }
             }
         }
 
@@ -234,9 +234,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                         mapFrom = ::mapFromDashboardUi
                     ) { component, ui ->
                         DashboardScreen(
-                            onLogoutClick = {
-                                TODO()
-                            }
+                            onLogoutClick = component::onLogoutClick
                         )
                     }
                 }

@@ -18,7 +18,10 @@ class DashboardDI {
     val module = DI.Module(TAG) {
         bind<IDashboardReducer>() with provider { DashboardReducer() }
         bind<IDashboardEffectHandler>() with provider {
-            DashboardEffectHandler()
+            DashboardEffectHandler(
+                authManager = instance(),
+                navigation = instance()
+            )
         }
         bind<IDashboardComponent>() with provider {
             DashboardComponent(

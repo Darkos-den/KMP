@@ -3,6 +3,7 @@ package com.darkos.kmp.feature.dashboard
 import com.darkos.kmp.feature.dashboard.api.IDashboardComponent
 import com.darkos.kmp.feature.dashboard.api.IDashboardEffectHandler
 import com.darkos.kmp.feature.dashboard.api.IDashboardReducer
+import com.darkos.kmp.feature.dashboard.model.DashboardMessage
 import com.darkos.kmp.feature.dashboard.model.DashboardState
 import com.darkos.mvu.component.MVUComponent
 import com.darkos.mvu.model.RestoreState
@@ -21,5 +22,9 @@ class DashboardComponent(
 
     override fun restore(state: DashboardState) {//todo: move to core
         accept(RestoreState(state))
+    }
+
+    override fun onLogoutClick() {
+        accept(DashboardMessage.LogoutClicked)
     }
 }
