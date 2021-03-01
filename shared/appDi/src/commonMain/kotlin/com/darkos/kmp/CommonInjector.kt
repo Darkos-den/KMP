@@ -4,6 +4,7 @@ import com.darkos.kmp.common.alertProcessor.AlertProcessor
 import com.darkos.kmp.common.alertProcessor.IAlertProcessor
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.dashboard.di.DashboardDI
+import com.darkos.kmp.feature.drawer.di.DrawerDI
 import com.darkos.kmp.feature.signin.api.ISignInRemote
 import com.darkos.kmp.feature.signin.api.ISignInSecure
 import com.darkos.kmp.feature.signin.di.SignInDI
@@ -50,7 +51,8 @@ object CommonInjector {
             alertProcessorModule(),
             SplashDI().module,
             SignInDI().module,
-            DashboardDI().module
+            DashboardDI().module,
+            DrawerDI().module
         )
     }
 

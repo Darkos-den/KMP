@@ -14,7 +14,6 @@ import org.kodein.di.provider
 
 class SplashDI {
 
-    @OptIn(InternalCoroutinesApi::class)
     val module = DI.Module(TAG) {
         bind<ISplashReducer>() with provider { SplashReducer() }
         bind<ISplashEffectHandler>() with provider {

@@ -36,6 +36,9 @@ kotlin {
                 api(project(AppLibs.Modules.Dashboard.api))
                 api(project(AppLibs.Modules.Dashboard.di))
 
+                api(project(AppLibs.Modules.Drawer.api))
+                api(project(AppLibs.Modules.Drawer.di))
+
                 api(project(AppLibs.Modules.Source.secure))
                 api(project(AppLibs.Modules.Source.remote))
 

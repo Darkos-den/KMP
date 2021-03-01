@@ -16,7 +16,6 @@ import org.kodein.di.provider
 
 class SignInDI {
 
-    @OptIn(InternalCoroutinesApi::class)
     val module = DI.Module(TAG) {
         bind<ISignInReducer>() with provider {
             SignInReducer(

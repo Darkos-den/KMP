@@ -14,7 +14,6 @@ import org.kodein.di.provider
 
 class DashboardDI {
 
-    @OptIn(InternalCoroutinesApi::class)
     val module = DI.Module(TAG) {
         bind<IDashboardReducer>() with provider { DashboardReducer() }
         bind<IDashboardEffectHandler>() with provider {
