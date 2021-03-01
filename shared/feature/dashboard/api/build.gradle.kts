@@ -19,6 +19,7 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 api(project(AppLibs.Modules.Shared.utils))
+                api(project(AppLibs.Modules.Drawer.api))
             }
         }
         val commonTest by getting {
@@ -27,7 +28,11 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                api(project(AppLibs.Modules.Drawer.api))
+            }
+        }
         val androidTest by getting
 //        val iosMain by getting
 //        val iosTest by getting

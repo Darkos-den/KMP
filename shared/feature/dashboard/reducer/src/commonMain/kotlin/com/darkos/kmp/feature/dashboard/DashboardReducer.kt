@@ -15,9 +15,9 @@ class DashboardReducer : IDashboardReducer {
                 state.none()
             }
             is Idle -> state.none()
-            is DashboardMessage.LogoutClicked -> {
-                state andEffect DashboardEffect.Logout
-            }
+//            is DashboardMessage.LogoutClicked -> {
+//                state andEffect DashboardEffect.Logout
+//            }
             else -> throw UnsupportedOperationException(message.toString())
         }
     }

@@ -7,6 +7,7 @@ import com.darkos.kmp.feature.dashboard.model.DashboardMessage
 import com.darkos.kmp.feature.dashboard.model.DashboardState
 import com.darkos.mvu.component.MVUComponent
 import com.darkos.mvu.model.RestoreState
+import com.darkos.kmp.feature.drawer.api
 
 class DashboardComponent(
     reducer: IDashboardReducer,
@@ -14,7 +15,10 @@ class DashboardComponent(
 ) : MVUComponent<DashboardState>(
     reducer = reducer,
     effectHandler = effectHandler
-), IDashboardComponent {
+), IDashboardComponent, IDrawerComponent {
+
+    override val x: com.darkos.kmp.feature.drawer.api.IDrawerComponent
+        get() = TODO("Not yet implemented")
 
     override fun createInitialState(): DashboardState {
         return DashboardState()
@@ -24,7 +28,5 @@ class DashboardComponent(
         accept(RestoreState(state))
     }
 
-    override fun onLogoutClick() {
-        accept(DashboardMessage.LogoutClicked)
-    }
+
 }
