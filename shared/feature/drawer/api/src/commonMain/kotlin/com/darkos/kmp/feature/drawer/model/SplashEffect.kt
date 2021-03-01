@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.splash.model
+package com.darkos.kmp.feature.drawer.model
 
 import com.darkos.mvu.model.Effect
 

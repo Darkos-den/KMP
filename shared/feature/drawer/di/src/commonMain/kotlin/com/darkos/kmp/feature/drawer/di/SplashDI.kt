@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.splash.di
+package com.darkos.kmp.feature.drawer.di
 
 import com.darkos.kmp.feature.splash.SplashComponent
 import com.darkos.kmp.feature.splash.SplashEffectHandler

@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.splash
+package com.darkos.kmp.feature.drawer
 
 import com.darkos.kmp.common.auth.AuthManager
 import com.darkos.kmp.common.errorHandler.ErrorEffect

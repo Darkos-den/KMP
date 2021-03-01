@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.splash.api
+package com.darkos.kmp.feature.drawer.api
 
 interface ISplashNavigation {
     fun fromSplashToLogin()

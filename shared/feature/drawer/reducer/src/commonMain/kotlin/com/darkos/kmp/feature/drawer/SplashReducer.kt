@@ -1,4 +1,4 @@
-package com.darkos.kmp.feature.splash
+package com.darkos.kmp.feature.drawer
 
 import com.darkos.kmp.common.errorHandler.ErrorMessage
 import com.darkos.kmp.common.errorHandler.processErrorMessage
