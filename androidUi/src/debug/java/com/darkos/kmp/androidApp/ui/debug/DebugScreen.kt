@@ -13,17 +13,23 @@ import com.darkos.kmp.common.debugFeatures.DebugFeaturesManager
 import com.darkos.kmp.common.debugFeatures.DebugScreenProcessor
 
 @Composable
-fun DebugModeScreen() {
+fun DebugModeScreen(
+    currentScreenName: String,
+    logScreenChanges: Boolean,
+    useTestAccount: Boolean,
+    onLogScreenChanged: (Boolean)->Unit,
+    onUseQuickAuthorizationChanged: (Boolean)->Unit
+) {
     MainContainer {
         Column(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
         ) {
             Spacer(modifier = Modifier.height(24.dp))
-            CurrentScreen()
+            CurrentScreen(currentScreenName)
             Spacer(modifier = Modifier.height(8.dp))
-            LogScreensSwitch()
+            LogScreensSwitch(logScreenChanges, onLogScreenChanged)
             Spacer(modifier = Modifier.height(8.dp))
-            UseTestAccount()
+            UseQuickAuthorization(useTestAccount, onUseQuickAuthorizationChanged)
             Spacer(modifier = Modifier.height(8.dp))
             Environment()
         }
@@ -31,24 +37,22 @@ fun DebugModeScreen() {
 }
 
 @Composable
-private fun CurrentScreen() {
+private fun CurrentScreen(currentScreenName: String) {
     Text(
-        text = "Current screen: ${DebugScreenProcessor.currentScreenName}",
+        text = "Current screen: $currentScreenName",
         modifier = Modifier.fillMaxWidth()
     )
 }
 
 @Composable
-private fun LogScreensSwitch() {
-    var current by mutableStateOf(DebugFeaturesManager.logScreenChanges)
+private fun LogScreensSwitch(
+    state: Boolean,
+    onCheckedChanged: (Boolean)->Unit
+) {
     CheckBoxWithText(
-        state = current,
+        state = state,
         text = "Log screen changes",
-        onCheckedChanged = {
-            DebugFeaturesManager.logScreenChanges =
-                DebugFeaturesManager.logScreenChanges.not()
-            current = DebugFeaturesManager.logScreenChanges
-        }
+        onCheckedChanged = onCheckedChanged
     )
 }
 
@@ -71,16 +75,18 @@ private fun CheckBoxWithText(
 }
 
 @Composable
-private fun UseTestAccount() {
+private fun UseQuickAuthorization(
+    state: Boolean,
+    onCheckedChanged: (Boolean)->Unit
+) {
     Column {
-        var current by mutableStateOf(DebugFeaturesManager.useTestAccount)
+        var current by mutableStateOf(state)
         CheckBoxWithText(
             state = current,
-            text = "Use test account",
+            text = "Use quick authorization",
             onCheckedChanged = {
-                DebugFeaturesManager.useTestAccount =
-                    DebugFeaturesManager.useTestAccount.not()
-                current = DebugFeaturesManager.useTestAccount
+                onCheckedChanged(it)
+                current = it//todo
             }
         )
         if (current) {
@@ -129,5 +135,11 @@ private fun MainContainer(block: @Composable () -> Unit) {
 @Preview
 @Composable
 fun Preview() {
-    DebugModeScreen()
+    DebugModeScreen(
+        logScreenChanges = false,
+        useTestAccount = false,
+        onLogScreenChanged = {},
+        onUseQuickAuthorizationChanged = {},
+        currentScreenName = "temp"
+    )
 }

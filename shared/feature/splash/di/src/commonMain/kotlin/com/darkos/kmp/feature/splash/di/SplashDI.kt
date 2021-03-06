@@ -22,7 +22,8 @@ class SplashDI {
                 secure = instance(),
                 navigation = instance(),
                 errorHandler = instance(),
-                authManager = instance()
+                authManager = instance(),
+                debugFeaturesManager = instance()
             )
         }
         bind<ISplashComponent>() with provider {

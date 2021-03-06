@@ -19,6 +19,7 @@ kotlin {
 
                 implementation(project(AppLibs.Modules.Dashboard.api))
                 implementation(project(AppLibs.Modules.Shared.utils))
+                implementation(project(AppLibs.Modules.Drawer.api))
             }
         }
         val commonTest by getting

@@ -259,7 +259,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         private const val appError = "error.app"
         private const val signIn = "auth.singIn"
         private const val signUp = "auth.signUp"
-        private const val dashboard = "home"
+        private const val dashboard = "dashboard"
     }
 
 }

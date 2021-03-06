@@ -26,6 +26,8 @@ kotlin {
                 implementation(project(AppLibs.Modules.Shared.utils))
 
                 implementation(AppLibs.Kodein.core)
+
+                implementation(project(AppLibs.Modules.Shared.debugFeatures))
             }
         }
         val commonTest by getting

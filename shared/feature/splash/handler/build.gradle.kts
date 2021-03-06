@@ -19,6 +19,8 @@ kotlin {
 
                 implementation(project(AppLibs.Modules.Splash.api))
                 implementation(project(AppLibs.Modules.Shared.utils))
+
+                implementation(project(AppLibs.Modules.Shared.debugFeatures))
             }
         }
         val commonTest by getting

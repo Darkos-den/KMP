@@ -1,6 +1,8 @@
 package com.darkos.kmp.feature.splash
 
 import com.darkos.kmp.common.auth.AuthManager
+import com.darkos.kmp.common.auth.AuthResult
+import com.darkos.kmp.common.debugFeatures.DebugFeaturesManager
 import com.darkos.kmp.common.errorHandler.ErrorEffect
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.common.errorHandler.runAndHandleErrors
@@ -20,7 +22,8 @@ class SplashEffectHandler(
     private val secure: ISplashSecure,
     private val navigation: ISplashNavigation,
     private val errorHandler: ErrorHandler,
-    private val authManager: AuthManager
+    private val authManager: AuthManager,
+    private val debugFeaturesManager: DebugFeaturesManager
 ) : ISplashEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
@@ -31,7 +34,12 @@ class SplashEffectHandler(
                 if (authManager.hasAuthorizedUser()) {
                     navigate(navigation::fromSplashToHome)
                 } else {
-                    navigate(navigation::fromSplashToLogin)
+                    secure.getRefreshToken()
+                    if(debugFeaturesManager.useTestAccount.value){
+                        authByDefaultAccount()
+                    }else {
+                        navigate(navigation::fromSplashToLogin)
+                    }
                 }
             }
             is SplashEffect.RetryTokenRefresh -> {
@@ -41,6 +49,20 @@ class SplashEffectHandler(
                 errorHandler.processErrorEffect(effect)
             }
             else -> throw UnsupportedOperationException(effect.toString())
+        }
+    }
+
+    private suspend fun authByDefaultAccount(): Message {
+        return authManager.signInByEmail("root@darkos.com", "12345678").let {
+            when (it) {
+                is AuthResult.Success -> {
+                    navigate(navigation::fromSplashToHome)
+                }
+                is AuthResult.Canceled,
+                is AuthResult.Error -> {
+                    navigate(navigation::fromSplashToLogin)
+                }
+            }
         }
     }
 

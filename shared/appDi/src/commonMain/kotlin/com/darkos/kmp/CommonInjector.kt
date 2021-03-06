@@ -2,6 +2,9 @@ package com.darkos.kmp
 
 import com.darkos.kmp.common.alertProcessor.AlertProcessor
 import com.darkos.kmp.common.alertProcessor.IAlertProcessor
+import com.darkos.kmp.common.debugFeatures.DebugFeaturesManager
+import com.darkos.kmp.common.debugFeatures.DebugScreenProcessor
+import com.darkos.kmp.common.debugFeatures.IDebugSecure
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.dashboard.di.DashboardDI
 import com.darkos.kmp.feature.drawer.di.DrawerDI
@@ -16,6 +19,7 @@ import com.darkos.kmp.feature.splash.di.SplashDiFacade
 import com.darkos.kmp.source.remote.RemoteStorage
 import com.darkos.kmp.source.remote.SignInRemote
 import com.darkos.kmp.source.remote.SplashRemote
+import com.darkos.kmp.source.secure.DebugSecure
 import com.darkos.kmp.source.secure.SignInSecure
 import com.darkos.kmp.source.secure.SplashSecure
 import com.darkos.kmp.source.secure.common.SecureStorage
@@ -45,6 +49,18 @@ object CommonInjector {
             instance<CommonNavigator>()
         }
 
+        bind() from singleton {
+            DebugFeaturesManager(
+                secure = instance()
+            )
+        }
+
+        bind() from singleton {
+            DebugScreenProcessor(
+                debugFeaturesManager = instance()
+            )
+        }
+
         importAll(
             secureStorageModule(),
             remoteStorageModule(),
@@ -67,6 +83,11 @@ object CommonInjector {
         }
         bind<ISignInSecure>() with provider {
             SignInSecure(
+                secure = instance()
+            )
+        }
+        bind<IDebugSecure>() with provider {
+            DebugSecure(
                 secure = instance()
             )
         }

@@ -30,6 +30,10 @@ class SecureStorage {
         get() = storage.getLong(REFRESH_EXPIRE, 0L)
         set(value) = storage.putLong(REFRESH_EXPIRE, value)
 
+    var useTestAccount: Boolean
+        get() = storage.getBoolean(USE_TEST_ACCOUNT, false)
+        set(value) = storage.putBoolean(USE_TEST_ACCOUNT, value)
+
     var auth: Token
         get() = Token(
             token = authToken,
@@ -66,5 +70,6 @@ class SecureStorage {
         private const val REFRESH_TOKEN = "refreshToken"
         private const val REFRESH_EXPIRE = "refreshExpire"
         private const val STORAGE_STATE = "storageState"
+        private const val USE_TEST_ACCOUNT = "useTestAccount"
     }
 }

@@ -19,7 +19,7 @@ kotlin {
                 implementation(AppLibs.MVU.program)
 
                 api(project(AppLibs.Modules.Shared.utils))
-                api(project(AppLibs.Modules.Drawer.api))
+                implementation(project(AppLibs.Modules.Drawer.api))
             }
         }
         val commonTest by getting {

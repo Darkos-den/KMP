@@ -15,11 +15,14 @@ import org.kodein.di.provider
 class DashboardDI {
 
     val module = DI.Module(TAG) {
-        bind<IDashboardReducer>() with provider { DashboardReducer() }
+        bind<IDashboardReducer>() with provider {
+            DashboardReducer(
+                drawerReducer = instance()
+            )
+        }
         bind<IDashboardEffectHandler>() with provider {
             DashboardEffectHandler(
-                authManager = instance(),
-                navigation = instance()
+                drawerEffectHandler = instance()
             )
         }
         bind<IDashboardComponent>() with provider {

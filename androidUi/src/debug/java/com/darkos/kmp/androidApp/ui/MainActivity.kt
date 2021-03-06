@@ -18,9 +18,10 @@ class MainActivity : CoreMainActivity() {
     }
 
     private val debugNotification: DebugNotificationManager by instance()
+    private val debugScreenProcessor: DebugScreenProcessor by instance()
 
     override fun onScreenChanged(screenName: String) {
-        DebugScreenProcessor.onScreenChanged(screenName)
+        debugScreenProcessor.onScreenChanged(screenName)
     }
 
     override fun onResume() {

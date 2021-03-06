@@ -1,15 +1,17 @@
 package com.darkos.kmp.common.debugFeatures
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.native.concurrent.ThreadLocal
 
-@ThreadLocal
-object DebugScreenProcessor {
-    var currentScreenName: String = ""
+class DebugScreenProcessor(
+    private val debugFeaturesManager: DebugFeaturesManager
+) {
+    var currentScreenName = MutableStateFlow("")
 
     fun onScreenChanged(screenName: String) {
-        currentScreenName = screenName
+        currentScreenName.value = screenName
 
-        if (DebugFeaturesManager.logScreenChanges) {
+        if (debugFeaturesManager.logScreenChanges.value) {
             logScreenChanges(screenName)
         }
     }
