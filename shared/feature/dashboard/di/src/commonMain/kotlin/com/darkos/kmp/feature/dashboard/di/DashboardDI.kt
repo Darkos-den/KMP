@@ -22,7 +22,8 @@ class DashboardDI {
         }
         bind<IDashboardEffectHandler>() with provider {
             DashboardEffectHandler(
-                drawerEffectHandler = instance()
+                drawerEffectHandler = instance(),
+                navigation = instance()
             )
         }
         bind<IDashboardComponent>() with provider {

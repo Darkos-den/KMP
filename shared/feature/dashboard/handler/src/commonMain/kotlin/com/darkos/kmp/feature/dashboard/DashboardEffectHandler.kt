@@ -15,14 +15,14 @@ import com.darkos.mvu.model.Message
 import kotlinx.coroutines.delay
 
 class DashboardEffectHandler(
-    private val drawerEffectHandler: IDrawerEffectHandler
+    private val drawerEffectHandler: IDrawerEffectHandler,
+    private val navigation: IDashboardNavigation
 ) : IDashboardEffectHandler {
 
     override suspend fun call(effect: Effect): Message {
         return when (effect) {
-            is DrawerEffect -> {
-                drawerEffectHandler.call(effect)
-            }
+            is DrawerEffect -> drawerEffectHandler.call(effect)
+            is DashboardEffect.AddItem -> navigate(navigation::fromDashboardToAddItem)
             else -> throw UnsupportedOperationException(effect.toString())
         }
     }

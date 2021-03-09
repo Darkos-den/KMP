@@ -25,6 +25,7 @@ import com.darkos.kmp.androidApp.ui.home.DashboardScreen
 import com.darkos.kmp.androidApp.ui.home.DashboardUiState
 import com.darkos.kmp.androidApp.ui.home.mapFromDashboardUi
 import com.darkos.kmp.androidApp.ui.home.mapToDashboardUi
+import com.darkos.kmp.androidApp.ui.item.add.AddItemScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
@@ -76,13 +77,21 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
 
         init {
             common.mGoToHome = {
-                navController?.navigate(dashboard)
+                navController?.navigate(dashboard) {
+                    popUpTo(splash){
+                        inclusive = true
+                    }
+                }
             }
             common.mGoToLogin = {
-                navController?.navigate(signIn){
-                    launchSingleTop = true
-
+                navController?.navigate(signIn) {
+                    popUpTo(splash){
+                        inclusive = true
+                    }
                 }
+            }
+            common.mGoToAddItem = {
+                navController?.navigate(addItem)
             }
         }
 
@@ -234,9 +243,13 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                         mapFrom = ::mapFromDashboardUi
                     ) { component, ui ->
                         DashboardScreen(
-                            onLogoutClick = component::onLogoutClick
+                            onLogoutClick = component::onLogoutClick,
+                            onAddClick = component::onAddClick
                         )
                     }
+                }
+                composable(addItem) {
+                    AddItemScreen()
                 }
             }
         }
@@ -260,6 +273,8 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         private const val signIn = "auth.singIn"
         private const val signUp = "auth.signUp"
         private const val dashboard = "dashboard"
+
+        private const val addItem = "item.add"
     }
 
 }

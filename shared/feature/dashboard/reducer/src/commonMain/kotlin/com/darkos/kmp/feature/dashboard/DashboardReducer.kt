@@ -16,15 +16,14 @@ class DashboardReducer(
 
     override fun update(state: DashboardState, message: Message): StateCmdData<DashboardState> {
         return when (message) {
-            is DrawerMessage -> {
-                drawerReducer.update(state = DrawerState, message = message).let {
-                    state andEffect it.effect
-                }
-            }
-            is ComponentInitialized -> {
-                state.none()
-            }
+            is DrawerMessage -> drawerReducer.update(
+                state = DrawerState,
+                message = message
+            ) replaceState state
+            is ComponentInitialized -> state.none()
+            is DashboardMessage.AddClick -> state andEffect DashboardEffect.AddItem
             is Idle -> state.none()
+            is RestoreState<*> -> state.none()
             else -> throw UnsupportedOperationException(message.toString())
         }
     }
