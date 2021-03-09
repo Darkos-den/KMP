@@ -79,7 +79,7 @@ object AppLibs {
     object MVU {
         object Version {
             const val core = "1.0.0-rc1"
-            const val program = "1.0.0-rc1"
+            const val program = "1.0.0-rc2"
 
             const val navigator = "1.1.0"
         }

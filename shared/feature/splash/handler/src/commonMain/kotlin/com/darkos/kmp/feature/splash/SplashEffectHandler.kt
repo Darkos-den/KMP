@@ -35,9 +35,9 @@ class SplashEffectHandler(
                     navigate(navigation::fromSplashToHome)
                 } else {
                     secure.getRefreshToken()
-                    if(debugFeaturesManager.useTestAccount.value){
+                    if (debugFeaturesManager.useTestAccount.value) {
                         authByDefaultAccount()
-                    }else {
+                    } else {
                         navigate(navigation::fromSplashToLogin)
                     }
                 }

@@ -21,10 +21,6 @@ class DashboardComponent(
         return DashboardState()
     }
 
-    override fun restore(state: DashboardState) {//todo: move to core
-        accept(RestoreState(state))
-    }
-
     override fun onLogoutClick() {
         accept(DrawerMessage.LogoutClicked)
     }

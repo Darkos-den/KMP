@@ -8,7 +8,6 @@ import com.darkos.mvu.component.MVUComponent
 import com.darkos.mvu.model.RestoreState
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@OptIn(InternalCoroutinesApi::class)//todo: move annotation to core
 class SplashComponent(
     reducer: ISplashReducer,
     effectHandler: ISplashEffectHandler
@@ -19,9 +18,5 @@ class SplashComponent(
 
     override fun createInitialState(): SplashState {
         return SplashState.Init
-    }
-
-    override fun restore(state: SplashState) {//todo: move to core
-        accept(RestoreState(state))
     }
 }

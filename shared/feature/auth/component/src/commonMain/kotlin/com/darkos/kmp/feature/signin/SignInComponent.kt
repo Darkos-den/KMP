@@ -31,10 +31,6 @@ class SignInComponent(
         accept(SignInMessage.PasswordChanged(value))
     }
 
-    override fun restore(state: SignInState) {
-        accept(RestoreState(state))
-    }
-
     override fun createInitialState(): SignInState {
         return SignInState(
             email = FieldState(
