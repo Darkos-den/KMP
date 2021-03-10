@@ -22,6 +22,7 @@ class DashboardReducer(
             ) replaceState state
             is ComponentInitialized -> state.none()
             is DashboardMessage.AddClick -> state andEffect DashboardEffect.AddItem
+            is DashboardMessage.SettingsClick -> state andEffect DashboardEffect.OpenSettings
             is Idle -> state.none()
             is RestoreState<*> -> state.none()
             else -> throw UnsupportedOperationException(message.toString())

@@ -29,4 +29,8 @@ class DashboardComponent(
     override fun onAddClick() {
         accept(DashboardMessage.AddClick)
     }
+
+    override fun onSettingsClick() {
+        accept(DashboardMessage.SettingsClick)
+    }
 }

@@ -6,4 +6,5 @@ import com.darkos.mvu.component.ProgramComponent
 
 interface IDashboardComponent : ProgramComponent<DashboardState>, IDrawerComponentDelegate {
     fun onAddClick()
+    fun onSettingsClick()
 }

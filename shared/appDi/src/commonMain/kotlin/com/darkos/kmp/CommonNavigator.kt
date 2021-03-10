@@ -10,6 +10,7 @@ class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigati
     var mGoToLogin: () -> Unit = {}
     var mGoToHome: () -> Unit = {}
     var mGoToAddItem: () -> Unit = {}
+    var mGoToWorkspace: ()->Unit = {}
 
     override fun fromSplashToLogin() {
         mGoToLogin()
@@ -29,5 +30,9 @@ class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigati
 
     override fun fromDashboardToAddItem() {
         mGoToAddItem()
+    }
+
+    override fun fromDashboardToWorkspace() {
+        mGoToWorkspace()
     }
 }

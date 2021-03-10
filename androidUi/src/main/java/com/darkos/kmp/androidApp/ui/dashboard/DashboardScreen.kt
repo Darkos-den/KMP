@@ -1,23 +1,22 @@
-package com.darkos.kmp.androidApp.ui.home
+package com.darkos.kmp.androidApp.ui.dashboard
 
 import android.os.Parcelable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.darkos.kmp.androidApp.ui.auth.signIn.FieldUiState
-import com.darkos.kmp.androidApp.ui.auth.signIn.SignInUiState
-import com.darkos.kmp.androidApp.ui.auth.signIn.map
 import com.darkos.kmp.androidApp.ui.common.NotImplementedScreen
+import com.darkos.kmp.androidApp.ui.drawer.DrawerDestination
 import com.darkos.kmp.androidApp.ui.drawer.DrawerScreen
 import com.darkos.kmp.feature.dashboard.model.DashboardState
-import com.darkos.kmp.feature.signin.model.ScreenState
-import com.darkos.kmp.feature.signin.model.SignInState
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -42,11 +41,23 @@ fun mapFromDashboardUi(state: DashboardUiState): DashboardState {
 @Composable
 fun DashboardScreen(
     onLogoutClick: () -> Unit,
-    onAddClick: ()->Unit
+    onAddClick: ()->Unit,
+    onSettingsClick: ()->Unit
 ) {
     DrawerScreen(
         title = "Dashboard",
-        onLogoutClick = onLogoutClick
+        onLogoutClick = onLogoutClick,
+        actions = {
+            Icon(
+                Icons.Filled.Settings,
+                "Settings",
+                tint = Color.White,
+                modifier = Modifier.padding(end = 12.dp).clickable {
+                    onSettingsClick()
+                }
+            )
+        },
+        currentDestination = DrawerDestination.Dashboard
     ) {
         Box {
             NotImplementedScreen()

@@ -21,14 +21,15 @@ import com.darkos.kmp.androidApp.ui.auth.signIn.mapToSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
-import com.darkos.kmp.androidApp.ui.home.DashboardScreen
-import com.darkos.kmp.androidApp.ui.home.DashboardUiState
-import com.darkos.kmp.androidApp.ui.home.mapFromDashboardUi
-import com.darkos.kmp.androidApp.ui.home.mapToDashboardUi
+import com.darkos.kmp.androidApp.ui.dashboard.DashboardScreen
+import com.darkos.kmp.androidApp.ui.dashboard.DashboardUiState
+import com.darkos.kmp.androidApp.ui.dashboard.mapFromDashboardUi
+import com.darkos.kmp.androidApp.ui.dashboard.mapToDashboardUi
 import com.darkos.kmp.androidApp.ui.item.add.AddItemScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
+import com.darkos.kmp.androidApp.ui.workspace.WorkspaceScreen
 import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.dashboard.api.IDashboardComponent
@@ -92,6 +93,9 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
             }
             common.mGoToAddItem = {
                 navController?.navigate(addItem)
+            }
+            common.mGoToWorkspace = {
+                navController?.navigate(workspace)
             }
         }
 
@@ -244,12 +248,16 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     ) { component, ui ->
                         DashboardScreen(
                             onLogoutClick = component::onLogoutClick,
-                            onAddClick = component::onAddClick
+                            onAddClick = component::onAddClick,
+                            onSettingsClick = component::onSettingsClick
                         )
                     }
                 }
                 composable(addItem) {
                     AddItemScreen()
+                }
+                composable(workspace) {
+                    WorkspaceScreen()
                 }
             }
         }
@@ -273,6 +281,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         private const val signIn = "auth.singIn"
         private const val signUp = "auth.signUp"
         private const val dashboard = "dashboard"
+        private const val workspace = "workspace"
 
         private const val addItem = "item.add"
     }

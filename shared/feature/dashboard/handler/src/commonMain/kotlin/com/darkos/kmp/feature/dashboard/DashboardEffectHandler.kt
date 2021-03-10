@@ -23,6 +23,7 @@ class DashboardEffectHandler(
         return when (effect) {
             is DrawerEffect -> drawerEffectHandler.call(effect)
             is DashboardEffect.AddItem -> navigate(navigation::fromDashboardToAddItem)
+            is DashboardEffect.OpenSettings -> navigate(navigation::fromDashboardToWorkspace)
             else -> throw UnsupportedOperationException(effect.toString())
         }
     }
