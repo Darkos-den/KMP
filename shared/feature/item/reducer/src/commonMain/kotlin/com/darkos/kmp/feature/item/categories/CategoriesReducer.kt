@@ -1,9 +1,9 @@
-package com.darkos.kmp.feature.dashboard
+package com.darkos.kmp.feature.item.categories
 
-import com.darkos.kmp.feature.dashboard.api.IDashboardReducer
-import com.darkos.kmp.feature.dashboard.model.DashboardEffect
-import com.darkos.kmp.feature.dashboard.model.DashboardMessage
-import com.darkos.kmp.feature.dashboard.model.DashboardState
+import com.darkos.kmp.feature.item.categories.api.ICategoriesReducer
+import com.darkos.kmp.feature.item.categories.model.CategoriesEffect
+import com.darkos.kmp.feature.item.categories.model.CategoriesMessage
+import com.darkos.kmp.feature.item.categories.model.CategoriesState
 import com.darkos.kmp.feature.drawer.api.IDrawerReducer
 import com.darkos.kmp.feature.drawer.model.DrawerDestination
 import com.darkos.kmp.feature.drawer.model.DrawerMessage
@@ -11,19 +11,17 @@ import com.darkos.kmp.feature.drawer.model.DrawerState
 import com.darkos.mvu.common.none
 import com.darkos.mvu.model.*
 
-class DashboardReducer(
+class CategoriesReducer(
     private val drawerReducer: IDrawerReducer
-) : IDashboardReducer {
+) : ICategoriesReducer {
 
-    override fun update(state: DashboardState, message: Message): StateCmdData<DashboardState> {
+    override fun update(state: CategoriesState, message: Message): StateCmdData<CategoriesState> {
         return when (message) {
             is DrawerMessage -> drawerReducer.update(
-                state = DrawerState(DrawerDestination.Dashboard),
+                state = DrawerState(DrawerDestination.Categories),
                 message = message
             ) replaceState state
             is ComponentInitialized -> state.none()
-            is DashboardMessage.AddClick -> state andEffect DashboardEffect.AddItem
-            is DashboardMessage.SettingsClick -> state andEffect DashboardEffect.OpenSettings
             is Idle -> state.none()
             is RestoreState<*> -> state.none()
             else -> throw UnsupportedOperationException(message.toString())

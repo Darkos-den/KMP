@@ -21,6 +21,9 @@ import com.darkos.kmp.androidApp.ui.auth.signIn.mapFromSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signIn.mapToSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
 import com.darkos.kmp.androidApp.ui.categories.CategoriesScreen
+import com.darkos.kmp.androidApp.ui.categories.CategoriesUiState
+import com.darkos.kmp.androidApp.ui.categories.mapFromCategoriesUi
+import com.darkos.kmp.androidApp.ui.categories.mapToCategoriesUi
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardScreen
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardUiState
 import com.darkos.kmp.androidApp.ui.dashboard.mapFromDashboardUi
@@ -36,6 +39,8 @@ import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.dashboard.api.IDashboardComponent
 import com.darkos.kmp.feature.dashboard.model.DashboardState
+import com.darkos.kmp.feature.item.categories.api.ICategoriesComponent
+import com.darkos.kmp.feature.item.categories.model.CategoriesState
 import com.darkos.kmp.feature.signin.api.ISignInComponent
 import com.darkos.kmp.feature.signin.model.SignInState
 import com.darkos.mvu.component.ProgramComponent
@@ -101,9 +106,14 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
             }
             common.mGoToLogin = {
                 navController?.navigate(signIn) {
-                    popUpTo(splash) {
-                        inclusive = true
+                    if (currentDrawerDestination.isEmpty()) {
+                        popUpTo(splash) {
+                            inclusive = true
+                        }
+                    } else {
+                        clearCurrent()
                     }
+                    currentDrawerDestination = ""
                 }
             }
             common.mGoToAddItem = {
@@ -301,14 +311,19 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     onScreenChanged(categories)
                     it.destination.label = categories
 
-                    CategoriesScreen(
-                        onLogoutClick = {},
-                        onContactClick = {},
-                        onProfileClick = {},
-                        onCategoriesClick = {},
-                        onSearchClick = {},
-                        onDashboardClick = {}
-                    )
+                    ComponentScreen<ICategoriesComponent, CategoriesUiState, CategoriesState>(
+                        mapTo = ::mapToCategoriesUi,
+                        mapFrom = ::mapFromCategoriesUi
+                    ) { component, ui ->
+                        CategoriesScreen(
+                            onLogoutClick = component::onLogoutClick,
+                            onContactClick = component::onContactClick,
+                            onProfileClick = component::onProfileClick,
+                            onCategoriesClick = component::onCategoriesClick,
+                            onSearchClick = component::onSearchClick,
+                            onDashboardClick = component::onDashboardClick
+                        )
+                    }
                 }
                 composable(search) {
                     TODO()

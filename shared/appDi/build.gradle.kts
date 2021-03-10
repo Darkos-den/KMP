@@ -36,6 +36,9 @@ kotlin {
                 api(project(AppLibs.Modules.Dashboard.api))
                 api(project(AppLibs.Modules.Dashboard.di))
 
+                api(project(AppLibs.Modules.Item.api))
+                api(project(AppLibs.Modules.Item.di))
+
                 api(project(AppLibs.Modules.Drawer.api))
                 api(project(AppLibs.Modules.Drawer.di))
 

@@ -58,6 +58,7 @@ dependencies {
     implementation(project(AppLibs.Modules.Splash.api))
     implementation(project(AppLibs.Modules.Auth.api))
     implementation(project(AppLibs.Modules.Dashboard.api))
+    implementation(project(AppLibs.Modules.Item.api))
     implementation(project(AppLibs.Modules.Shared.utils))
 
     debugImplementation(project(AppLibs.Modules.Shared.debugFeatures))

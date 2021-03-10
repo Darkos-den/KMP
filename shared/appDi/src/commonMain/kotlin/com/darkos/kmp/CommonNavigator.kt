@@ -2,11 +2,12 @@ package com.darkos.kmp
 
 import com.darkos.kmp.feature.dashboard.api.IDashboardNavigation
 import com.darkos.kmp.feature.drawer.api.IDrawerNavigation
+import com.darkos.kmp.feature.item.categories.api.ICategoriesNavigation
 import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
 
 class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigation,
-    IDrawerNavigation {
+    IDrawerNavigation, ICategoriesNavigation {
     var mGoToLogin: () -> Unit = {}
     var mGoToDashboard: () -> Unit = {}
     var mGoToAddItem: () -> Unit = {}
