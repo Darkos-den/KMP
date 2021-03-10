@@ -17,7 +17,7 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(AppLibs.Modules.Dashboard.api))
+                implementation(project(AppLibs.Modules.Workspace.api))
                 implementation(project(AppLibs.Modules.Drawer.api))
             }
         }

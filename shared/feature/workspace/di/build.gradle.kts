@@ -18,10 +18,10 @@ kotlin {
                 implementation(AppLibs.MVU.core)
                 implementation(AppLibs.MVU.program)
 
-                implementation(project(AppLibs.Modules.Dashboard.api))
-                implementation(project(AppLibs.Modules.Dashboard.reducer))
-                implementation(project(AppLibs.Modules.Dashboard.handler))
-                implementation(project(AppLibs.Modules.Dashboard.component))
+                implementation(project(AppLibs.Modules.Workspace.api))
+                implementation(project(AppLibs.Modules.Workspace.reducer))
+                implementation(project(AppLibs.Modules.Workspace.handler))
+                implementation(project(AppLibs.Modules.Workspace.component))
 
                 implementation(project(AppLibs.Modules.Shared.utils))
 

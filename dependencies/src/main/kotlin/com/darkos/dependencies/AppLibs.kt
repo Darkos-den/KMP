@@ -139,6 +139,14 @@ object AppLibs {
             const val component = ":shared:feature:item:component"
         }
 
+        object Workspace {
+            const val api = ":shared:feature:workspace:api"
+            const val di = ":shared:feature:workspace:di"
+            const val reducer = ":shared:feature:workspace:reducer"
+            const val handler = ":shared:feature:workspace:handler"
+            const val component = ":shared:feature:workspace:component"
+        }
+
         object Drawer {
             const val api = ":shared:feature:drawer:api"
             const val di = ":shared:feature:drawer:di"
