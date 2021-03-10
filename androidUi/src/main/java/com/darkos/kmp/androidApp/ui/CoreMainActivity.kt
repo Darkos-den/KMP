@@ -24,6 +24,7 @@ import com.darkos.kmp.androidApp.ui.categories.CategoriesScreen
 import com.darkos.kmp.androidApp.ui.categories.CategoriesUiState
 import com.darkos.kmp.androidApp.ui.categories.mapFromCategoriesUi
 import com.darkos.kmp.androidApp.ui.categories.mapToCategoriesUi
+import com.darkos.kmp.androidApp.ui.contacts.ContactsScreen
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardScreen
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardUiState
 import com.darkos.kmp.androidApp.ui.dashboard.mapFromDashboardUi
@@ -31,10 +32,15 @@ import com.darkos.kmp.androidApp.ui.dashboard.mapToDashboardUi
 import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
 import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.item.add.AddItemScreen
+import com.darkos.kmp.androidApp.ui.profile.ProfileScreen
+import com.darkos.kmp.androidApp.ui.search.SearchScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
 import com.darkos.kmp.androidApp.ui.splash.mapToSplashUi
 import com.darkos.kmp.androidApp.ui.workspace.WorkspaceScreen
+import com.darkos.kmp.androidApp.ui.workspace.WorkspaceUiState
+import com.darkos.kmp.androidApp.ui.workspace.mapFromWorkspaceUi
+import com.darkos.kmp.androidApp.ui.workspace.mapToWorkspaceUi
 import com.darkos.kmp.common.attachable.Attachable
 import com.darkos.kmp.common.errorHandler.ErrorHandler
 import com.darkos.kmp.feature.dashboard.api.IDashboardComponent
@@ -43,6 +49,8 @@ import com.darkos.kmp.feature.item.categories.api.ICategoriesComponent
 import com.darkos.kmp.feature.item.categories.model.CategoriesState
 import com.darkos.kmp.feature.signin.api.ISignInComponent
 import com.darkos.kmp.feature.signin.model.SignInState
+import com.darkos.kmp.feature.workspace.api.IWorkspaceComponent
+import com.darkos.kmp.feature.workspace.model.WorkspaceState
 import com.darkos.mvu.component.ProgramComponent
 import com.darkos.mvu.model.MVUState
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -326,13 +334,22 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable(search) {
-                    TODO()
+                    onScreenChanged(search)
+                    it.destination.label = search
+
+                    SearchScreen()
                 }
                 composable(profile) {
-                    TODO()
+                    onScreenChanged(profile)
+                    it.destination.label = profile
+
+                    ProfileScreen()
                 }
                 composable(contacts) {
-                    TODO()
+                    onScreenChanged(contacts)
+                    it.destination.label = contacts
+
+                    ContactsScreen()
                 }
                 composable(addItem) {
                     onScreenChanged(addItem)
@@ -344,7 +361,12 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     onScreenChanged(workspace)
                     it.destination.label = workspace
 
-                    WorkspaceScreen()
+                    ComponentScreen<IWorkspaceComponent, WorkspaceUiState, WorkspaceState>(
+                        mapTo = ::mapToWorkspaceUi,
+                        mapFrom = ::mapFromWorkspaceUi
+                    ) { component, ui ->
+                        WorkspaceScreen(this@CoreMainActivity::onBackPressed)
+                    }
                 }
             }
         }

@@ -5,17 +5,18 @@ import com.darkos.kmp.feature.drawer.api.IDrawerNavigation
 import com.darkos.kmp.feature.item.categories.api.ICategoriesNavigation
 import com.darkos.kmp.feature.signin.api.ISignInNavigation
 import com.darkos.kmp.feature.splash.api.ISplashNavigation
+import com.darkos.kmp.feature.workspace.api.IWorkspaceNavigation
 
 class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigation,
-    IDrawerNavigation, ICategoriesNavigation {
+    IDrawerNavigation, ICategoriesNavigation, IWorkspaceNavigation {
     var mGoToLogin: () -> Unit = {}
     var mGoToDashboard: () -> Unit = {}
     var mGoToAddItem: () -> Unit = {}
-    var mGoToCategories: ()->Unit = {}
-    var mGoToSearch: ()->Unit = {}
-    var mGoToProfile: ()->Unit = {}
-    var mGoToContacts: ()->Unit = {}
-    var mGoToWorkspace: ()->Unit = {}
+    var mGoToCategories: () -> Unit = {}
+    var mGoToSearch: () -> Unit = {}
+    var mGoToProfile: () -> Unit = {}
+    var mGoToContacts: () -> Unit = {}
+    var mGoToWorkspace: () -> Unit = {}
 
     override fun fromSplashToLogin() {
         mGoToLogin()

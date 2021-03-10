@@ -1,6 +1,5 @@
 import com.darkos.dependencies.AppLibs
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
@@ -38,6 +37,9 @@ kotlin {
 
                 api(project(AppLibs.Modules.Item.api))
                 api(project(AppLibs.Modules.Item.di))
+
+                api(project(AppLibs.Modules.Workspace.api))
+                api(project(AppLibs.Modules.Workspace.di))
 
                 api(project(AppLibs.Modules.Drawer.api))
                 api(project(AppLibs.Modules.Drawer.di))

@@ -17,6 +17,7 @@ import com.darkos.kmp.feature.splash.api.ISplashRemote
 import com.darkos.kmp.feature.splash.api.ISplashSecure
 import com.darkos.kmp.feature.splash.di.SplashDI
 import com.darkos.kmp.feature.splash.di.SplashDiFacade
+import com.darkos.kmp.feature.workspace.di.WorkspaceDI
 import com.darkos.kmp.source.remote.RemoteStorage
 import com.darkos.kmp.source.remote.SignInRemote
 import com.darkos.kmp.source.remote.SplashRemote
@@ -70,7 +71,8 @@ object CommonInjector {
             SignInDI().module,
             DashboardDI().module,
             DrawerDI().module,
-            CategoriesDI().module
+            CategoriesDI().module,
+            WorkspaceDI().module
         )
     }
 

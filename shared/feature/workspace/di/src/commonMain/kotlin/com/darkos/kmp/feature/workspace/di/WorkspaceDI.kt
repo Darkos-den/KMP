@@ -15,13 +15,10 @@ class WorkspaceDI {
 
     val module = DI.Module(TAG) {
         bind<IWorkspaceReducer>() with provider {
-            WorkspaceReducer(
-                drawerReducer = instance()
-            )
+            WorkspaceReducer()
         }
         bind<IWorkspaceEffectHandler>() with provider {
             WorkspaceEffectHandler(
-                drawerEffectHandler = instance(),
                 navigation = instance()
             )
         }
@@ -34,6 +31,6 @@ class WorkspaceDI {
     }
 
     companion object {
-        private const val TAG = "Dashboard"
+        private const val TAG = "Workspace"
     }
 }
