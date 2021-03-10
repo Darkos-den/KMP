@@ -50,6 +50,14 @@ include(
 )
 
 include(
+    ":shared:feature:workspace:api",
+    ":shared:feature:workspace:reducer",
+    ":shared:feature:workspace:handler",
+    ":shared:feature:workspace:component",
+    ":shared:feature:workspace:di"
+)
+
+include(
     ":shared:feature:drawer:api",
     ":shared:feature:drawer:reducer",
     ":shared:feature:drawer:handler",

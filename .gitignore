@@ -57,3 +57,8 @@ local.properties
 /shared/feature/item/reducer/build
 /shared/feature/item/handler/build
 /shared/feature/item/component/build
+/shared/feature/workspace/api/build
+/shared/feature/workspace/di/build
+/shared/feature/workspace/reducer/build
+/shared/feature/workspace/handler/build
+/shared/feature/workspace/component/build
