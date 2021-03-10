@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.darkos.kmp.androidApp.ui.common.NotImplementedScreen
-import com.darkos.kmp.androidApp.ui.drawer.DrawerDestination
 import com.darkos.kmp.androidApp.ui.drawer.DrawerScreen
 import com.darkos.kmp.feature.dashboard.model.DashboardState
+import com.darkos.kmp.feature.drawer.model.DrawerDestination
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -41,6 +41,11 @@ fun mapFromDashboardUi(state: DashboardUiState): DashboardState {
 @Composable
 fun DashboardScreen(
     onLogoutClick: () -> Unit,
+    onDashboardClick: () -> Unit,
+    onCategoriesClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onProfileClick: () -> Unit,
+    onContactClick: () -> Unit,
     onAddClick: ()->Unit,
     onSettingsClick: ()->Unit
 ) {
@@ -57,7 +62,12 @@ fun DashboardScreen(
                 }
             )
         },
-        currentDestination = DrawerDestination.Dashboard
+        currentDestination = DrawerDestination.Dashboard,
+        onDashboardClick = onDashboardClick,
+        onSearchClick = onSearchClick,
+        onCategoriesClick = onCategoriesClick,
+        onProfileClick = onProfileClick,
+        onContactClick = onContactClick
     ) {
         Box {
             NotImplementedScreen()

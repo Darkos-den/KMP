@@ -8,8 +8,12 @@ import com.darkos.kmp.feature.splash.api.ISplashNavigation
 class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigation,
     IDrawerNavigation {
     var mGoToLogin: () -> Unit = {}
-    var mGoToHome: () -> Unit = {}
+    var mGoToDashboard: () -> Unit = {}
     var mGoToAddItem: () -> Unit = {}
+    var mGoToCategories: ()->Unit = {}
+    var mGoToSearch: ()->Unit = {}
+    var mGoToProfile: ()->Unit = {}
+    var mGoToContacts: ()->Unit = {}
     var mGoToWorkspace: ()->Unit = {}
 
     override fun fromSplashToLogin() {
@@ -17,11 +21,11 @@ class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigati
     }
 
     override fun fromSplashToHome() {
-        mGoToHome()
+        mGoToDashboard()
     }
 
     override fun fromSignInToHome() {
-        mGoToHome()
+        mGoToDashboard()
     }
 
     override fun fromDrawerToSignIn() {
@@ -34,5 +38,25 @@ class CommonNavigator : ISplashNavigation, ISignInNavigation, IDashboardNavigati
 
     override fun fromDashboardToWorkspace() {
         mGoToWorkspace()
+    }
+
+    override fun fromDrawerToDashboard() {
+        mGoToDashboard()
+    }
+
+    override fun fromDrawerToCategories() {
+        mGoToCategories()
+    }
+
+    override fun fromDrawerToSearch() {
+        mGoToSearch()
+    }
+
+    override fun fromDrawerToProfile() {
+        mGoToProfile()
+    }
+
+    override fun fromDrawerToContacts() {
+        mGoToContacts()
     }
 }

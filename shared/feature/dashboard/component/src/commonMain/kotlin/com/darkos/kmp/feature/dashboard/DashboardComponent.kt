@@ -33,4 +33,24 @@ class DashboardComponent(
     override fun onSettingsClick() {
         accept(DashboardMessage.SettingsClick)
     }
+
+    override fun onDashboardClick() {
+        accept(DrawerMessage.DashboardClicked)
+    }
+
+    override fun onCategoriesClick() {
+        accept(DrawerMessage.CategoriesClicked)
+    }
+
+    override fun onSearchClick() {
+        accept(DrawerMessage.SearchClicked)
+    }
+
+    override fun onProfileClick() {
+        accept(DrawerMessage.ProfileClicked)
+    }
+
+    override fun onContactClick() {
+        accept(DrawerMessage.ContactClicked)
+    }
 }

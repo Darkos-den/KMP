@@ -23,6 +23,11 @@ class DrawerEffectHandler(
                 authManager.signOut()
                 navigate(navigation::fromDrawerToSignIn)
             }
+            is DrawerEffect.OpenDashboard -> navigate(navigation::fromDrawerToDashboard)
+            is DrawerEffect.OpenCategories -> navigate(navigation::fromDrawerToCategories)
+            is DrawerEffect.OpenSearch -> navigate(navigation::fromDrawerToSearch)
+            is DrawerEffect.OpenProfile -> navigate(navigation::fromDrawerToProfile)
+            is DrawerEffect.OpenContacts -> navigate(navigation::fromDrawerToContacts)
             else -> throw UnsupportedOperationException(effect.toString())
         }
     }

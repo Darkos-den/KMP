@@ -12,17 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.darkos.kmp.feature.drawer.model.DrawerDestination
 
 @Composable
-fun MenuItem(text: String, selected: Boolean) {
+fun MenuItem(text: String, selected: Boolean, onClick: () -> Unit) {
     val selectedState = Modifier.fillMaxWidth()
         .background(Color.LightGray).padding(8.dp)
     val unselectedState = Modifier.fillMaxWidth()
         .padding(8.dp)
 
-    val current = if(selected) selectedState else unselectedState
+    val current = if (selected) selectedState else unselectedState
 
-    Row(current) {
+    Row(current.clickable { onClick() }) {
         Icon(Icons.Filled.Menu, text)
         Text(
             text,
@@ -31,15 +32,16 @@ fun MenuItem(text: String, selected: Boolean) {
     }
 }
 
-enum class DrawerDestination {
-    Dashboard, Categories, Search, Profile, Contact
-}
-
 @Composable
 fun DrawerScreen(
     title: String,
     currentDestination: DrawerDestination,
     onLogoutClick: () -> Unit,
+    onDashboardClick: () -> Unit,
+    onCategoriesClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onProfileClick: () -> Unit,
+    onContactClick: () -> Unit,
     actions: @Composable RowScope.() -> Unit = {},
     block: @Composable () -> Unit
 ) {
@@ -76,12 +78,32 @@ fun DrawerScreen(
                         Text("Apte4ka", fontSize = 48.sp, color = Color.White)
                     }
                     Spacer(Modifier.height(8.dp))
-                    MenuItem("Dashboard", currentDestination == DrawerDestination.Dashboard)
-                    MenuItem("Categories", currentDestination == DrawerDestination.Categories)
-                    MenuItem("Search", currentDestination == DrawerDestination.Search)
-                    MenuItem("Profile", currentDestination == DrawerDestination.Profile)
+                    MenuItem(
+                        "Dashboard",
+                        currentDestination == DrawerDestination.Dashboard,
+                        onDashboardClick
+                    )
+                    MenuItem(
+                        "Categories",
+                        currentDestination == DrawerDestination.Categories,
+                        onCategoriesClick
+                    )
+                    MenuItem(
+                        "Search",
+                        currentDestination == DrawerDestination.Search,
+                        onSearchClick
+                    )
+                    MenuItem(
+                        "Profile",
+                        currentDestination == DrawerDestination.Profile,
+                        onProfileClick
+                    )
 
-                    MenuItem("Contact", currentDestination == DrawerDestination.Contact)
+                    MenuItem(
+                        "Contact",
+                        currentDestination == DrawerDestination.Contact,
+                        onContactClick
+                    )
                 }
 
                 Button(

@@ -5,6 +5,7 @@ import com.darkos.kmp.feature.dashboard.model.DashboardEffect
 import com.darkos.kmp.feature.dashboard.model.DashboardMessage
 import com.darkos.kmp.feature.dashboard.model.DashboardState
 import com.darkos.kmp.feature.drawer.api.IDrawerReducer
+import com.darkos.kmp.feature.drawer.model.DrawerDestination
 import com.darkos.kmp.feature.drawer.model.DrawerMessage
 import com.darkos.kmp.feature.drawer.model.DrawerState
 import com.darkos.mvu.common.none
@@ -17,7 +18,7 @@ class DashboardReducer(
     override fun update(state: DashboardState, message: Message): StateCmdData<DashboardState> {
         return when (message) {
             is DrawerMessage -> drawerReducer.update(
-                state = DrawerState,
+                state = DrawerState(DrawerDestination.Dashboard),
                 message = message
             ) replaceState state
             is ComponentInitialized -> state.none()

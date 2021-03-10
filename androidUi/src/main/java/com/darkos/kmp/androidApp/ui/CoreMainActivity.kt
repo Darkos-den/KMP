@@ -10,6 +10,7 @@ import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.NavController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.*
 import com.darkos.kmp.CommonNavigator
 import com.darkos.kmp.androidApp.common.AndroidAlertProcessor
@@ -19,12 +20,13 @@ import com.darkos.kmp.androidApp.ui.auth.signIn.SignInUiState
 import com.darkos.kmp.androidApp.ui.auth.signIn.mapFromSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signIn.mapToSignInUi
 import com.darkos.kmp.androidApp.ui.auth.signUp.SignUpScreen
-import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
-import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
+import com.darkos.kmp.androidApp.ui.categories.CategoriesScreen
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardScreen
 import com.darkos.kmp.androidApp.ui.dashboard.DashboardUiState
 import com.darkos.kmp.androidApp.ui.dashboard.mapFromDashboardUi
 import com.darkos.kmp.androidApp.ui.dashboard.mapToDashboardUi
+import com.darkos.kmp.androidApp.ui.error.app.AppErrorScreen
+import com.darkos.kmp.androidApp.ui.error.connection.ConnectionErrorScreen
 import com.darkos.kmp.androidApp.ui.item.add.AddItemScreen
 import com.darkos.kmp.androidApp.ui.splash.SplashScreen
 import com.darkos.kmp.androidApp.ui.splash.mapFromSplashUi
@@ -76,17 +78,30 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         private val navController: NavController?
             get() = attachedObject.get()
 
+        private fun NavOptionsBuilder.clearCurrent() {
+            popUpTo(current) {
+                inclusive = true
+            }
+        }
+
+        private var current = splash
+
         init {
-            common.mGoToHome = {
+            common.mGoToDashboard = {
                 navController?.navigate(dashboard) {
-                    popUpTo(splash){
-                        inclusive = true
+                    if (current == splash || current == signIn || current == signUp) {
+                        popUpTo(splash) {
+                            inclusive = true
+                        }
+                    } else {
+                        clearCurrent()
                     }
                 }
+                current = dashboard
             }
             common.mGoToLogin = {
                 navController?.navigate(signIn) {
-                    popUpTo(splash){
+                    popUpTo(splash) {
                         inclusive = true
                     }
                 }
@@ -96,6 +111,30 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
             }
             common.mGoToWorkspace = {
                 navController?.navigate(workspace)
+            }
+            common.mGoToCategories = {
+                navController?.navigate(categories) {
+                    clearCurrent()
+                }
+                current = categories
+            }
+            common.mGoToSearch = {
+                navController?.navigate(search) {
+                    clearCurrent()
+                }
+                current = search
+            }
+            common.mGoToProfile = {
+                navController?.navigate(profile) {
+                    clearCurrent()
+                }
+                current = profile
+            }
+            common.mGoToContacts = {
+                navController?.navigate(contacts) {
+                    clearCurrent()
+                }
+                current = contacts
             }
         }
 
@@ -249,9 +288,26 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                         DashboardScreen(
                             onLogoutClick = component::onLogoutClick,
                             onAddClick = component::onAddClick,
-                            onSettingsClick = component::onSettingsClick
+                            onSettingsClick = component::onSettingsClick,
+                            onContactClick = component::onContactClick,
+                            onProfileClick = component::onProfileClick,
+                            onCategoriesClick = component::onCategoriesClick,
+                            onSearchClick = component::onSearchClick,
+                            onDashboardClick = component::onDashboardClick
                         )
                     }
+                }
+                composable(categories) {
+                    CategoriesScreen(this@CoreMainActivity::onBackPressed)
+                }
+                composable(search) {
+                    TODO()
+                }
+                composable(profile) {
+                    TODO()
+                }
+                composable(contacts) {
+                    TODO()
                 }
                 composable(addItem) {
                     AddItemScreen()
@@ -282,6 +338,10 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
         private const val signUp = "auth.signUp"
         private const val dashboard = "dashboard"
         private const val workspace = "workspace"
+        private const val categories = "categories"
+        private const val search = "search"
+        private const val profile = "profile"
+        private const val contacts = "contacts"
 
         private const val addItem = "item.add"
     }
