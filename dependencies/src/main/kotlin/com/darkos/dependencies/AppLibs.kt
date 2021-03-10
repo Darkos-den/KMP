@@ -131,6 +131,14 @@ object AppLibs {
             const val component = ":shared:feature:dashboard:component"
         }
 
+        object Item {
+            const val api = ":shared:feature:item:api"
+            const val di = ":shared:feature:item:di"
+            const val reducer = ":shared:feature:item:reducer"
+            const val handler = ":shared:feature:item:handler"
+            const val component = ":shared:feature:item:component"
+        }
+
         object Drawer {
             const val api = ":shared:feature:drawer:api"
             const val di = ":shared:feature:drawer:di"

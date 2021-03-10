@@ -42,6 +42,14 @@ include(
 )
 
 include(
+    ":shared:feature:item:api",
+    ":shared:feature:item:reducer",
+    ":shared:feature:item:handler",
+    ":shared:feature:item:component",
+    ":shared:feature:item:di"
+)
+
+include(
     ":shared:feature:drawer:api",
     ":shared:feature:drawer:reducer",
     ":shared:feature:drawer:handler",

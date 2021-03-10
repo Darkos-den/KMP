@@ -52,3 +52,8 @@ local.properties
 /shared/feature/drawer/reducer/build
 /shared/feature/drawer/handler/build
 /shared/feature/drawer/component/build
+/shared/feature/item/api/build
+/shared/feature/item/di/build
+/shared/feature/item/reducer/build
+/shared/feature/item/handler/build
+/shared/feature/item/component/build

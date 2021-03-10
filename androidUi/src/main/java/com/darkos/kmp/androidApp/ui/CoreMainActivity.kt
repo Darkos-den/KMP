@@ -79,17 +79,17 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
             get() = attachedObject.get()
 
         private fun NavOptionsBuilder.clearCurrent() {
-            popUpTo(current) {
+            popUpTo(currentDrawerDestination) {
                 inclusive = true
             }
         }
 
-        private var current = splash
+        private var currentDrawerDestination = ""
 
         init {
             common.mGoToDashboard = {
                 navController?.navigate(dashboard) {
-                    if (current == splash || current == signIn || current == signUp) {
+                    if (currentDrawerDestination.isEmpty()) {
                         popUpTo(splash) {
                             inclusive = true
                         }
@@ -97,7 +97,7 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                         clearCurrent()
                     }
                 }
-                current = dashboard
+                currentDrawerDestination = dashboard
             }
             common.mGoToLogin = {
                 navController?.navigate(signIn) {
@@ -116,25 +116,25 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                 navController?.navigate(categories) {
                     clearCurrent()
                 }
-                current = categories
+                currentDrawerDestination = categories
             }
             common.mGoToSearch = {
                 navController?.navigate(search) {
                     clearCurrent()
                 }
-                current = search
+                currentDrawerDestination = search
             }
             common.mGoToProfile = {
                 navController?.navigate(profile) {
                     clearCurrent()
                 }
-                current = profile
+                currentDrawerDestination = profile
             }
             common.mGoToContacts = {
                 navController?.navigate(contacts) {
                     clearCurrent()
                 }
-                current = contacts
+                currentDrawerDestination = contacts
             }
         }
 
@@ -298,7 +298,17 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     }
                 }
                 composable(categories) {
-                    CategoriesScreen(this@CoreMainActivity::onBackPressed)
+                    onScreenChanged(categories)
+                    it.destination.label = categories
+
+                    CategoriesScreen(
+                        onLogoutClick = {},
+                        onContactClick = {},
+                        onProfileClick = {},
+                        onCategoriesClick = {},
+                        onSearchClick = {},
+                        onDashboardClick = {}
+                    )
                 }
                 composable(search) {
                     TODO()
@@ -310,9 +320,15 @@ abstract class CoreMainActivity : AppCompatActivity(), DIAware {
                     TODO()
                 }
                 composable(addItem) {
+                    onScreenChanged(addItem)
+                    it.destination.label = addItem
+
                     AddItemScreen()
                 }
                 composable(workspace) {
+                    onScreenChanged(workspace)
+                    it.destination.label = workspace
+
                     WorkspaceScreen()
                 }
             }
